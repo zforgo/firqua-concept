@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
+         child.project.url.inherit.append.path="false">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.zforgo.firqua</groupId>
+        <artifactId>firqua-concept-parent</artifactId>
+        <version>${revision}</version>
+        <relativePath>../../tools/parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>firqua-concept-bom-base</artifactId>
+    <packaging>pom</packaging>
+
+    <name>FIRQUA :: Base BOM</name>
+    <description>FIRQUA Base BOM</description>
+
+    <properties>
+        <jboss-logging.version>3.6.3.Final</jboss-logging.version>
+        <jboss-logmanager.version>3.2.2.Final</jboss-logmanager.version>
+        <liquibase.version>5.0.3</liquibase.version>
+
+        <junit.jupiter.version>6.1.2</junit.jupiter.version>
+        <h2.version>2.4.240</h2.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>${jboss-logging.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.logmanager</groupId>
+                <artifactId>jboss-logmanager</artifactId>
+                <version>${jboss-logmanager.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jboss.modules</groupId>
+                        <artifactId>jboss-modules</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.eclipse.parsson</groupId>
+                        <artifactId>jakarta.json</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-core</artifactId>
+                <version>${liquibase.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

@@ -1,0 +1,64 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="organisations_schema_init" author="zforgo">
+        <createSequence sequenceName="ORGANISATIONS_SEQ" startValue="1" incrementBy="50"/>
+        <createTable tableName="ORGANISATIONS">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_ORGANISATIONS"/>
+            </column>
+            <column name="NAME" type="VARCHAR(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="organisations_data" author="zforgo">
+        <insert tableName="ORGANISATIONS">
+            <column name="ID" valueSequenceNext="ORGANISATIONS_SEQ"/>
+            <column name="NAME" value="foo"/>
+        </insert>
+        <insert tableName="ORGANISATIONS">
+            <column name="ID" valueSequenceNext="ORGANISATIONS_SEQ"/>
+            <column name="NAME" value="bar"/>
+        </insert>
+        <insert tableName="ORGANISATIONS">
+            <column name="ID" valueSequenceNext="ORGANISATIONS_SEQ"/>
+            <column name="NAME" value="baz"/>
+        </insert>
+    </changeSet>
+    <changeSet id="devices_schema_init" author="zforgo">
+        <createSequence sequenceName="DEVICES_SEQ" startValue="1" incrementBy="50"/>
+        <createTable tableName="DEVICES">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_DEVICES"/>
+            </column>
+            <column name="NAME" type="VARCHAR(200)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="ORGANISATION_ID" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="ORGANISATION_ID"
+                                 baseTableName="DEVICES"
+                                 constraintName="FK_DEVICES_TO_ORGANISATIONS"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="ORGANISATIONS"/>
+    </changeSet>
+    <changeSet id="devices_data_lookup" author="zforgo">
+        <ext:insertWithLookup tableName="DEVICES">
+            <column name="ID" valueSequenceNext="DEVICES_SEQ"/>
+            <column name="NAME" value="dev_foo"/>
+            <lookupColumn table="ORGANISATIONS" keyColumn="name" keyValue="foo"
+                          idColumn="id" targetColumn="ORGANISATION_ID"/>
+        </ext:insertWithLookup>
+    </changeSet>
+</databaseChangeLog>

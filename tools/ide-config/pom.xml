@@ -14,7 +14,7 @@
 
     <artifactId>firqua-concept-ide-config</artifactId>
 
-    <name>FIRQUA :: IDE/Tools - Config</name>
+    <name>FIRQUA :: Tools :: IDE Config</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
