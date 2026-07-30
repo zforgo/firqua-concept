@@ -77,7 +77,6 @@
 
     </properties>
     <!-- TODO add SCM -->
-
     <build>
         <plugins>
             <plugin>

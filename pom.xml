@@ -16,6 +16,18 @@
     <name>FIRQUA :: Project POM</name>
     <packaging>pom</packaging>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>firqua-concept-bom-base</artifactId>
+                <version>${project.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <profiles>
         <profile>
             <id>format</id>
@@ -102,5 +114,8 @@
     <modules>
         <module>tools/parent</module>
         <module>tools/ide-config</module>
+        <module>tools/liquibase-lookup-extension</module>
+
+        <module>bom/base</module>
     </modules>
 </project>
