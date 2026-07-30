@@ -10,6 +10,7 @@ public class LookupNotFoundException extends UnexpectedLiquibaseException {
     private static final long serialVersionUID = 1L;
 
     public LookupNotFoundException(LookupColumnConfig lc, Database database) {
-        super("No result found in " + lc.getTable() + " with " + lc.getKeyColumn() + "=" + lc.getKeyValue() + " for " + database);
+        super("No result found in " + lc.getTable() + " with " + lc.getKeyColumn() + "=" + lc.getKeyValue() + " for "
+                + database);
     }
 }
