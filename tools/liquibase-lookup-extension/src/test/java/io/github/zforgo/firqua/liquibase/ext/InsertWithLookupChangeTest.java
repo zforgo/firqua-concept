@@ -6,14 +6,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import java.sql.DriverManager;
 import java.util.UUID;
 
-import liquibase.database.Database;
-import liquibase.database.DatabaseFactory;
-import liquibase.database.jvm.JdbcConnection;
-import liquibase.statement.core.InsertStatement;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.statement.core.InsertStatement;
 
 class InsertWithLookupChangeTest {
 
@@ -35,8 +36,8 @@ class InsertWithLookupChangeTest {
     }
 
     @Test
-	@DisplayName("Existing lookup value resolves to the referenced row's id")
-	void resolvesForeignKeyFromLookupTable() {
+    @DisplayName("Existing lookup value resolves to the referenced row's id")
+    void resolvesForeignKeyFromLookupTable() {
         var change = newChange("foo");
 
         var statements = change.generateStatements(database);
@@ -47,7 +48,7 @@ class InsertWithLookupChangeTest {
     }
 
     @Test
-	@DisplayName("Missing lookup value fails the change")
+    @DisplayName("Missing lookup value fails the change")
     void failsWhenLookupValueIsMissing() {
         var change = newChange("missing");
 

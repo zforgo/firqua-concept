@@ -20,7 +20,10 @@ import liquibase.executor.ExecutorService;
 import liquibase.statement.SqlStatement;
 import liquibase.statement.core.RawParameterizedSqlStatement;
 
-@DatabaseChange(name = "insertWithLookup", description = "Insert with FK resolved from a natural-key lookup table", priority = ChangeMetaData.PRIORITY_DEFAULT, appliesTo = "table")
+@DatabaseChange(name = "insertWithLookup",
+        description = "Insert with FK resolved from a natural-key lookup table",
+        priority = ChangeMetaData.PRIORITY_DEFAULT,
+        appliesTo = "table")
 public class InsertWithLookupChange extends InsertDataChange {
 
     private static final Map<String, Map<String, Object>> cache = new HashMap<>();
@@ -30,7 +33,8 @@ public class InsertWithLookupChange extends InsertDataChange {
         lookupColumns.add(c);
     }
 
-    @DatabaseChangeProperty(description = "Foreign key columns resolved from a natural key of the referenced table", requiredForDatabase = "all")
+    @DatabaseChangeProperty(description = "Foreign key columns resolved from a natural key of the referenced table",
+            requiredForDatabase = "all")
     public List<LookupColumnConfig> getLookupColumns() {
         return lookupColumns;
     }
@@ -41,7 +45,9 @@ public class InsertWithLookupChange extends InsertDataChange {
      * {@link #generateStatementsVolatile(Database) volatile}, which would leave the table name unvalidated.
      */
     @Override
-    @DatabaseChangeProperty(mustEqualExisting = "table", description = "Name of the table to insert data into", requiredForDatabase = "all")
+    @DatabaseChangeProperty(mustEqualExisting = "table",
+            description = "Name of the table to insert data into",
+            requiredForDatabase = "all")
     public String getTableName() {
         return super.getTableName();
     }

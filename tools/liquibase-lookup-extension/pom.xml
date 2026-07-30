@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.zforgo.firqua</groupId>
-        <artifactId>firqua-concept-parent</artifactId>
+        <artifactId>firqua-concept</artifactId>
         <version>${revision}</version>
-        <relativePath>../parent/pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>liquibase-lookup-extension</artifactId>
