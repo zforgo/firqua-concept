@@ -67,11 +67,6 @@
         <maven.compiler.argument.testSource>${maven.compiler.testSource}</maven.compiler.argument.testSource>
         <maven.compiler.argument.testRelease>${maven.compiler.testRelease}</maven.compiler.argument.testRelease>
 
-        <!-- maven-enforcer-plugin -->
-        <maven.min.version>3.9.6</maven.min.version>
-        <jdk.min.version>${maven.compiler.argument.source}</jdk.min.version>
-        <insecure.repositories>ERROR</insecure.repositories>
-
         <!-- maven-release-plugin -->
         <useReleaseProfile>false</useReleaseProfile>
 
@@ -79,55 +74,6 @@
     <!-- TODO add SCM -->
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-enforcer-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>enforce</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <bannedRepositories>
-                                    <message>To build this project, don't use maven repositories over HTTP. Please use
-                                        HTTPS in your settings.xml or run the build with property
-                                        insecure.repositories=WARN
-                                    </message>
-                                    <level>${insecure.repositories}</level>
-                                    <bannedRepositories>
-                                        <!--suppress HttpUrlsUsage -->
-                                        <bannedRepository>http://*</bannedRepository>
-                                    </bannedRepositories>
-                                    <bannedPluginRepositories>
-                                        <!--suppress HttpUrlsUsage -->
-                                        <bannedPluginRepository>http://*</bannedPluginRepository>
-                                    </bannedPluginRepositories>
-                                </bannedRepositories>
-                                <requireJavaVersion>
-                                    <message>To build this project JDK ${jdk.min.version} (or greater) is required.
-                                        Please install it.
-                                    </message>
-                                    <version>${jdk.min.version}</version>
-                                </requireJavaVersion>
-                                <requireMavenVersion>
-                                    <message>To build this project Maven ${maven.min.version} (or greater) is required.
-                                        Please install it.
-                                    </message>
-                                    <version>${maven.min.version}</version>
-                                </requireMavenVersion>
-                                <banDynamicVersions>
-                                    <!-- while we don't allow snapshots in the tree, it's handy to be able to use a snapshot for testing -->
-                                    <allowSnapshots>true</allowSnapshots>
-                                </banDynamicVersions>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

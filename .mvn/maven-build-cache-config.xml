@@ -23,6 +23,7 @@
     <executionControl>
         <runAlways>
             <plugins>
+                <plugin artifactId="maven-enforcer-plugin"/>
                 <plugin artifactId="maven-failsafe-plugin"/>
             </plugins>
             <executions>
@@ -44,12 +45,19 @@
             <plugins>
                 <plugin artifactId="maven-surefire-plugin" goal="test">
                     <reconciles>
-                        <reconcile propertyName="maven.test.skip" skipValue="true"/>
                         <reconcile propertyName="skip" skipValue="true"/>
                         <reconcile propertyName="skipExec" skipValue="true"/>
                         <reconcile propertyName="skipTests" skipValue="true"/>
                         <reconcile propertyName="testFailureIgnore" skipValue="true"/>
                     </reconciles>
+                </plugin>
+                <plugin artifactId="maven-enforcer-plugin" goal="enforce">
+                    <reconciles>
+                        <reconcile propertyName="skip" skipValue="true"/>
+                    </reconciles>
+                    <nologs>
+                        <nolog propertyName="commandLineRules"/>
+                    </nologs>
                 </plugin>
             </plugins>
         </reconcile>
