@@ -25,6 +25,7 @@
             <plugins>
                 <plugin artifactId="maven-enforcer-plugin"/>
                 <plugin artifactId="maven-failsafe-plugin"/>
+                <plugin artifactId="flatten-maven-plugin"/>
             </plugins>
             <executions>
                 <execution artifactId="maven-dependency-plugin">

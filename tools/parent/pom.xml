@@ -22,6 +22,7 @@
         <deploy-plugin.version>3.1.4</deploy-plugin.version>
         <enforcer-plugin.version>3.6.3</enforcer-plugin.version>
         <exec-plugin.version>3.6.3</exec-plugin.version>
+        <flatten-plugin.version>1.1.0</flatten-plugin.version>
         <formatter-plugin.version>2.27.0</formatter-plugin.version>
         <gpg-plugin.version>3.2.8</gpg-plugin.version>
         <impsort-plugin.version>1.13.0</impsort-plugin.version>
@@ -92,6 +93,28 @@
                         <arg>-Xlint:unchecked</arg>
                     </compilerArgs>
                 </configuration>
+            </plugin>
+
+            <!-- Install and deploy poms with a resolved version, otherwise ${revision} reaches the consumers.-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Attach source jar to all builds.  Runs during the package phase.-->
@@ -248,10 +271,20 @@
                     </dependencies>
                     <configuration>
                         <!-- store outside of target to speed up formatting when mvn clean is used -->
-                        <cachedir>.cache/formatter-maven-plugin-${formatter-plugin.version}</cachedir>
+                        <cachedir>${maven.multiModuleProjectDirectory}/.cache/formatter-maven-plugin-${formatter-plugin.version}</cachedir>
                         <configFile>eclipse-format.xml</configFile>
                         <lineEnding>LF</lineEnding>
                         <skip>${format.skip}</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>${flatten-plugin.version}</version>
+                    <configuration>
+                        <!-- resolve ${revision} in the installed pom, everything else is kept as is -->
+                        <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                        <updatePomFile>true</updatePomFile>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -260,7 +293,7 @@
                     <version>${impsort-plugin.version}</version>
                     <configuration>
                         <!-- store outside of target to speed up formatting when mvn clean is used -->
-                        <cachedir>.cache/impsort-maven-plugin-${impsort-plugin.version}</cachedir>
+                        <cachedir>${maven.multiModuleProjectDirectory}/.cache/impsort-maven-plugin-${impsort-plugin.version}</cachedir>
                         <groups>java.,javax.,jakarta.,org.,com.</groups>
                         <staticGroups>*</staticGroups>
                         <skip>${format.skip}</skip>
@@ -293,7 +326,7 @@
                                 <configuration>
                                     <filesets>
                                         <fileset>
-                                            <directory>.cache</directory>
+                                            <directory>${maven.multiModuleProjectDirectory}/.cache</directory>
                                         </fileset>
                                     </filesets>
                                 </configuration>
