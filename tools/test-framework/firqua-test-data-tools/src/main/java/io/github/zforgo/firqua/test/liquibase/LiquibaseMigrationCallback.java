@@ -12,6 +12,7 @@ import io.quarkus.liquibase.runtime.LiquibaseFactoryUtil;
 import io.quarkus.test.junit.callback.QuarkusTestBeforeEachCallback;
 import io.quarkus.test.junit.callback.QuarkusTestMethodContext;
 import liquibase.Contexts;
+import liquibase.UpdateSummaryOutputEnum;
 import liquibase.exception.LiquibaseException;
 
 public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback {
@@ -36,6 +37,7 @@ public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback
         var factory = factoryOf(ann.datasource());
 
         try (var liquibase = factory.createLiquibase()) {
+            liquibase.setShowSummaryOutput(UpdateSummaryOutputEnum.LOG);
             if (ann.dropFirst()) {
                 liquibase.dropAll();
             }
