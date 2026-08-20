@@ -115,8 +115,8 @@
         <module>tools/parent</module>
         <module>tools/ide-config</module>
         <module>tools/liquibase-lookup-extension</module>
-        <module>tools/test-framework</module>
 
         <module>bom/base</module>
+        <module>firqua-quarkus-parent</module>
     </modules>
 </project>
