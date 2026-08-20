@@ -125,5 +125,6 @@
 
     <modules>
         <module>../tools/test-data-tools</module>
+        <module>../device-management</module>
     </modules>
 </project>
