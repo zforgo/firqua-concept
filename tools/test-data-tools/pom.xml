@@ -15,7 +15,6 @@
     <name>FIRQUA :: Test Framework :: Data Management Support</name>
     <packaging>jar</packaging>
 
-
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
