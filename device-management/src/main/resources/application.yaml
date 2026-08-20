@@ -1,0 +1,7 @@
+quarkus:
+  rest:
+    path: "/api"
+
+  smallrye-openapi:
+    info-title: ${quarkus.application.name}
+    info-version: ${quarkus.application.version}
