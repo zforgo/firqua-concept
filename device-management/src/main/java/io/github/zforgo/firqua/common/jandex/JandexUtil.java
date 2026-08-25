@@ -57,7 +57,7 @@ public final class JandexUtil {
 
     static String normalize(String... parts) {
         Objects.requireNonNull(parts, "parts must not be null");
-		var path = Arrays.stream(parts)
+        var path = Arrays.stream(parts)
                 .map(JandexUtil::stripSlashes)
                 .collect(Collectors.joining("/"))
                 .replaceAll("/{2,}", "/");
