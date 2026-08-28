@@ -8,4 +8,5 @@
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <include file="shared/common_types.xml" relativeToChangelogFile="true"/>
     <includeAll path="schema" relativeToChangelogFile="true" />
+    <includeAll path="data" relativeToChangelogFile="true" />
 </databaseChangeLog>

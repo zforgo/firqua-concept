@@ -4,15 +4,6 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <!--
-     asset base:    id, asset_type, name, vendor_name,  vendor_model
-     sos asset: station_id, ip_address, service_provider
-     meteo asset: station_id, ip_address
-     -->
-    <!--    SOS: J&R Technology             JR321-SC -->
-    <!--    MET:
-            metWoIp2.vendor = "Lufft";
-            metWoIp2.model = "WS500";-->
     <changeSet id="sample_assets" context="sample-data" author="zforgo">
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
