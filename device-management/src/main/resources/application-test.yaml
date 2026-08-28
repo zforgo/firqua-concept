@@ -1,0 +1,5 @@
+quarkus:
+  log:
+    category:
+      "liquibase":
+        level: ERROR

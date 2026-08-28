@@ -1,0 +1,63 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+     asset base:    id, asset_type, name, vendor_name,  vendor_model
+     sos asset: station_id, ip_address, service_provider
+     meteo asset: station_id, ip_address
+     -->
+    <!--    SOS: J&R Technology             JR321-SC -->
+    <!--    MET:
+            metWoIp2.vendor = "Lufft";
+            metWoIp2.model = "WS500";-->
+    <changeSet id="sample_assets" context="sample-data" author="zforgo">
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="SOS"/>
+            <column name="NAME" value="SOS-001"/>
+            <column name="VENDOR_NAME" value="J&amp;R Technology"/>
+            <column name="VENDOR_MODEL" value="JR321-SC"/>
+        </insert>
+        <insert tableName="ASSETS_SOS_STATIONS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="SOS-FOO-001"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="SOS"/>
+            <column name="NAME" value="SOS-002"/>
+            <column name="VENDOR_NAME" value="J&amp;R Technology"/>
+            <column name="VENDOR_MODEL" value="JR321-SC"/>
+        </insert>
+        <insert tableName="ASSETS_SOS_STATIONS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="SOS-FOO-002"/>
+            <column name="SERVICE_PROVIDER" value="Verizon"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="METEO"/>
+            <column name="NAME" value="MET-001"/>
+            <column name="VENDOR_NAME" value="Lufft"/>
+            <column name="VENDOR_MODEL" value="WS500"/>
+        </insert>
+        <insert tableName="ASSETS_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="MET-FOO-001"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="METEO"/>
+            <column name="NAME" value="MET-002"/>
+            <column name="VENDOR_NAME" value="Lufft"/>
+            <column name="VENDOR_MODEL" value="WS500"/>
+        </insert>
+        <insert tableName="ASSETS_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="MET-FOO-002"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
