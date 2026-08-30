@@ -1,0 +1,70 @@
+name: Firqua CI
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
+  workflow_dispatch:
+env:
+  LANG: en_US.UTF-8
+  COMMON_MAVEN_ARGS: "--errors --batch-mode --fail-at-end"
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  configure:
+    name: "Configure workflow jobs"
+    runs-on: ubuntu-latest
+    outputs:
+      maven-repo-monthly-branch-cache-key: ${{ steps.cache-key.outputs.maven-repo-monthly-branch-cache-key }}
+      maven-repo-monthly-cache-key: ${{ steps.cache-key.outputs.maven-repo-monthly-cache-key }}
+      maven-repo-cache-key: ${{ steps.cache-key.outputs.maven-repo-cache-key }}
+    steps:
+      - name: Generate cache key
+        id: cache-key
+        run: |
+          CURRENT_BRANCH="${{github.base_ref || github.ref_name }}"
+          CURRENT_MONTH=$(/bin/date -u "+%Y-%m")
+          CURRENT_WEEK=$(/bin/date -u "+%Y-%U")
+          ROOT_CACHE_KEY="maven-repo-cache"
+          echo "maven-repo-monthly-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}" >> $GITHUB_OUTPUT
+          echo "maven-repo-monthly-branch-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
+          echo "maven-repo-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}-${CURRENT_WEEK}" >> $GITHUB_OUTPUT
+  build:
+    name: "Build and run tests"
+    needs: configure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+
+      - name: Setup JDK
+        uses: actions/setup-java@v5.7.0
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Restore cached Maven Local Repository
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ~/.m2/repository
+          key: ${{ needs.configure.outputs.maven-repo-cache-key }}
+          restore-keys: |
+            ${{ needs.configure.outputs.maven-repo-monthly-branch-cache-key }}-
+            ${{ needs.configure.outputs.maven-repo-monthly-cache-key }}-
+
+      - name: Populate Maven Local Repository
+        run: ./mvnw -T2C $COMMON_MAVEN_ARGS -q dependency:go-offline
+
+      - name: Build
+        run: ./mvnw  $COMMON_MAVEN_ARGS -Dno-format package
+
+      - name: Delete snapshots from cache
+        if: always()
+        run: find ~/.m2 -name \*-SNAPSHOT -type d -exec rm -rf {} +
+
+      - name: Save Maven Local Repository
+        if: always()
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: ~/.m2/repository
+          key: ${{ needs.configure.outputs.maven-repo-cache-key }}
