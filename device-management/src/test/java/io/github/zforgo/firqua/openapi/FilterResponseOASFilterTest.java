@@ -80,8 +80,10 @@ class FilterResponseOASFilterTest {
     static class DummyApp extends Application {
     }
 
-    private final Index index = IndexBuilder.build(DummyResource.class, DummyApp.class, ResponseDto.class,
-            ResponseDtoUnion.class);
+    private final Index index = IndexBuilder.build(
+            DummyResource.class, DummyApp.class, ResponseDto.class,
+            ResponseDtoUnion.class
+    );
     private final String basePath = JandexUtil.resolveHttpBasePath(index);
 
     private final FilterResponseOASFilter filter = new FilterResponseOASFilter(index);
@@ -128,8 +130,10 @@ class FilterResponseOASFilterTest {
         var openAPI = OASFactory.createOpenAPI()
                 .components(OASFactory.createComponents());
         var response200 = OASFactory.createAPIResponse()
-                .content(OASFactory.createContent()
-                        .addMediaType(MediaType.APPLICATION_JSON, OASFactory.createMediaType()));
+                .content(
+                        OASFactory.createContent()
+                                .addMediaType(MediaType.APPLICATION_JSON, OASFactory.createMediaType())
+                );
         var operation = OASFactory.createOperation()
                 .responses(OASFactory.createAPIResponses().addAPIResponse("200", response200));
         openAPI.paths(OASFactory.createPaths().addPathItem(path, OASFactory.createPathItem().GET(operation)));

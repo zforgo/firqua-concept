@@ -1,7 +1,5 @@
 package io.github.zforgo.firqua.test.liquibase;
 
-import static org.junit.platform.commons.util.AnnotationUtils.findAnnotation;
-
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Function;
@@ -15,10 +13,13 @@ import liquibase.Contexts;
 import liquibase.UpdateSummaryOutputEnum;
 import liquibase.exception.LiquibaseException;
 
+import static org.junit.platform.commons.util.AnnotationUtils.findAnnotation;
+
 public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback {
 
     private static final Function<QuarkusTestMethodContext, Optional<LiquibaseMigration>> getConfig = ctx -> findAnnotation(
-            ctx.getTestMethod(), LiquibaseMigration.class)
+            ctx.getTestMethod(), LiquibaseMigration.class
+    )
             .or(() -> Optional.ofNullable(ctx.getTestInstance().getClass().getDeclaredAnnotation(LiquibaseMigration.class)));
 
     @Override
@@ -44,7 +45,8 @@ public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback
             liquibase.update(populateContext(factory.createContexts(), ann.additionalContexts()), factory.createLabels());
         } catch (LiquibaseException e) {
             throw new IllegalStateException(
-                    "Unable to run Liquibase migration for datasource '%s'".formatted(ann.datasource()), e);
+                    "Unable to run Liquibase migration for datasource '%s'".formatted(ann.datasource()), e
+            );
         }
     }
 
@@ -52,8 +54,11 @@ public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback
         return Optional.of(LiquibaseFactoryUtil.getLiquibaseFactory(datasource))
                 .filter(InstanceHandle::isAvailable)
                 .map(InstanceHandle::get)
-                .orElseThrow(() -> new IllegalStateException(
-                        "No Liquibase factory found for datasource '%s'".formatted(datasource)));
+                .orElseThrow(
+                        () -> new IllegalStateException(
+                                "No Liquibase factory found for datasource '%s'".formatted(datasource)
+                        )
+                );
     }
 
     private static boolean needsRun(LiquibaseMigration ann, QuarkusTestMethodContext ctx) {

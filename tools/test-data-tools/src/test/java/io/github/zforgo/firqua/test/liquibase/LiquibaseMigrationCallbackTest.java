@@ -1,7 +1,5 @@
 package io.github.zforgo.firqua.test.liquibase;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -21,6 +19,8 @@ import org.junit.jupiter.api.TestMethodOrder;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
 @LiquibaseMigration(runMode = RunMode.PER_CLASS, dropFirst = true)
@@ -75,10 +75,13 @@ class LiquibaseMigrationCallbackTest {
     }
 
     private List<ChangeSetEntry> changeLog() {
-        try (var connection = dataSource.getConnection();
+        try (
+                var connection = dataSource.getConnection();
                 var statement = connection.prepareStatement(
-                        "SELECT ID, DATEEXECUTED FROM DATABASECHANGELOG ORDER BY DATEEXECUTED, ORDEREXECUTED");
-                var resultSet = statement.executeQuery()) {
+                        "SELECT ID, DATEEXECUTED FROM DATABASECHANGELOG ORDER BY DATEEXECUTED, ORDEREXECUTED"
+                );
+                var resultSet = statement.executeQuery()
+        ) {
             var entries = new ArrayList<ChangeSetEntry>();
             while (resultSet.next()) {
                 entries.add(new ChangeSetEntry(resultSet.getString(1), resultSet.getTimestamp(2)));
