@@ -1,4 +1,4 @@
-package io.github.zforgo.firqua.common.jandex;
+package io.github.zforgo.firqua.filter.jandex;
 
 import java.util.Arrays;
 import java.util.Objects;

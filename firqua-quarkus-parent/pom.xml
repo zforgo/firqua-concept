@@ -125,6 +125,8 @@
 
     <modules>
         <module>../tools/test-data-tools</module>
+        <module>../tools/openapi-filter-response</module>
+
         <module>../device-management</module>
     </modules>
 </project>

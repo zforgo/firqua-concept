@@ -1,4 +1,4 @@
-package io.github.zforgo.firqua.common;
+package io.github.zforgo.firqua.filter;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package io.github.zforgo.firqua.openapi;
+package io.github.zforgo.firqua.filter.openapi;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
