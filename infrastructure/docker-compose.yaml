@@ -1,0 +1,17 @@
+name: firqua-concept
+services:
+  device-manager-db:
+    image: postgres:18-alpine
+    ports:
+      - "65432:5432"
+    environment:
+      POSTGRES_USER: firqua
+      POSTGRES_PASSWORD: firqua1234
+      POSTGRES_DB: firqua
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+      start_interval: 1s
