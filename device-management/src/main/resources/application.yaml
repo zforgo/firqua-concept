@@ -1,7 +1,19 @@
 quarkus:
-  rest:
-    path: "/api"
+  datasource:
+    db-kind: postgresql
+    username: firqua
+    password: firqua1234
+    jdbc:
+      url: jdbc:postgresql://localhost:65432/firqua
 
-  smallrye-openapi:
-    info-title: ${quarkus.application.name}
-    info-version: ${quarkus.application.version}
+  liquibase:
+    migrate-at-start: true
+    change-log: liquibase/changeLog.xml
+    database-change-log-table-name: '_LIQ_DATABASE_CHANGELOG'
+    database-change-log-lock-table-name: '_LIQ_DATABASE_CHANGELOG_LOCK'
+
+  log:
+    category:
+      "liquibase.util":
+        # noinspection QsYaml
+        level: WARN
