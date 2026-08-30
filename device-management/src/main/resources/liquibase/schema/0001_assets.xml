@@ -1,0 +1,86 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="assets_init" author="zforgo">
+        <createTable tableName="ASSETS_IP_ADDRESSES" remarks="IP address registry of Assets to guarantee uniqueness">
+            <column name="IP_ADDRESS" type="${ipAddr}" remarks="Unique identifier (the ip address)">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_ASSETS_IP_ADDRESSES"/>
+            </column>
+
+        </createTable>
+        <createSequence sequenceName="ASSETS_SEQ" startValue="1" incrementBy="50"/>
+        <createTable tableName="ASSETS" remarks="Base table of Asset">
+            <column name="ID" type="${numericId}" remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_ASSETS"/>
+            </column>
+            <column name="ASSET_TYPE" type="${enumName}" remarks="Type of an Asset (enumerated discriminator)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="${shortString}" remarks="Name of an Asset">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VENDOR_NAME" type="${shortString}" remarks="Vendor's name of an Asset">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VENDOR_MODEL" type="${shortString}" remarks="Vendor's model of an Asset"/>
+        </createTable>
+        <createTable tableName="ASSETS_METEO_SENSORS" remarks="Base table of Meteo Asset">
+            <column name="ID" type="${numericId}" remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_ASSETS_METEO_SENSORS"/>
+            </column>
+            <column name="STATION_ID" type="${slugId}" remarks="External identifier of the meteo station (slug)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="IP_ADDRESS" type="${ipAddr}" remarks="IP Address of the meteo station">
+                <constraints unique="true" uniqueConstraintName="UQ_ASSETS_METEO_SENSORS_IP_ADDRESS"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="ID"
+                                 baseTableName="ASSETS_METEO_SENSORS"
+                                 constraintName="FK_ASSETS_METEO_SENSORS_TO_ASSETS"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="ASSETS"/>
+        <addForeignKeyConstraint baseColumnNames="IP_ADDRESS"
+                                 baseTableName="ASSETS_METEO_SENSORS"
+                                 constraintName="FK_ASSETS_METEO_SENSORS_TO_ASSETS_IP_ADDRESSES"
+                                 referencedColumnNames="IP_ADDRESS"
+                                 referencedTableName="ASSETS_IP_ADDRESSES"/>
+
+        <createTable tableName="ASSETS_SOS_STATIONS" remarks="Base table of SOS Asset">
+            <column name="ID" type="${numericId}" remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_ASSETS_SOS_STATIONS"/>
+            </column>
+            <column name="STATION_ID" type="${slugId}" remarks="External identifier of the meteo station (slug)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="SERVICE_PROVIDER" type="${slugId}"
+                    remarks="URL-friendly identifier of the associated service provider"/>
+            <column name="IP_ADDRESS" type="${ipAddr}" remarks="IP Address of the meteo station">
+                <constraints unique="true" uniqueConstraintName="UQ_ASSETS_SOS_STATIONS_IP_ADDRESS"/>
+            </column>
+
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="ID"
+                                 baseTableName="ASSETS_SOS_STATIONS"
+                                 constraintName="FK_ASSETS_SOS_STATIONS_ASSETS"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="ASSETS"/>
+        <addForeignKeyConstraint baseColumnNames="IP_ADDRESS"
+                                 baseTableName="ASSETS_SOS_STATIONS"
+                                 constraintName="FK_ASSETS_SOS_STATIONS_TO_ASSETS_IP_ADDRESSES"
+                                 referencedColumnNames="IP_ADDRESS"
+                                 referencedTableName="ASSETS_IP_ADDRESSES"/>
+    </changeSet>
+</databaseChangeLog>
