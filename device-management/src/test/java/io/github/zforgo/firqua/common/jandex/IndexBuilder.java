@@ -17,8 +17,10 @@ public class IndexBuilder {
         var indexer = new Indexer();
         Arrays.stream(classes)
                 .forEach(c -> {
-                    try (var is = c.getClassLoader()
-                            .getResourceAsStream(c.getName().replace('.', '/') + ".class")) {
+                    try (
+                            var is = c.getClassLoader()
+                                    .getResourceAsStream(c.getName().replace('.', '/') + ".class")
+                    ) {
                         assert is != null;
                         indexer.index(is);
                     } catch (IOException e) {

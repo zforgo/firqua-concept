@@ -1,9 +1,5 @@
 package io.github.zforgo.firqua.liquibase.ext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,6 +12,10 @@ import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class InsertWithLookupChangeFunctionalTest {
 
     @Test
@@ -27,7 +27,8 @@ class InsertWithLookupChangeFunctionalTest {
             var liquibase = new Liquibase(
                     "changelogs/sample-changelog.xml",
                     new ClassLoaderResourceAccessor(Thread.currentThread().getContextClassLoader()),
-                    database);
+                    database
+            );
             liquibase.update("");
 
             assertTableExists(conn, "ORGANISATIONS");

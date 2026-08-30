@@ -1,8 +1,5 @@
 package io.github.zforgo.firqua.liquibase.ext;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.sql.DriverManager;
 import java.util.UUID;
 
@@ -15,6 +12,9 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.statement.core.InsertStatement;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class InsertWithLookupChangeTest {
 

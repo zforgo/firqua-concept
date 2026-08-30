@@ -159,7 +159,7 @@ class JandexUtilTest {
 
         @Test
         void normalizeNull() {
-			final String[] parts = null;
+            final String[] parts = null;
             assertThrows(NullPointerException.class, () -> JandexUtil.normalize(parts));
         }
 
@@ -175,7 +175,8 @@ class JandexUtilTest {
                     arguments("/foo/bar", new String[] { "foo", "bar" }),
                     arguments("/foo/bar", new String[] { "foo ", "bar /" }),
                     arguments("/foo/bar", new String[] { "foo", "bar/" }),
-                    arguments("/foo/{id}/bar", new String[] { "foo", "/{id}", "bar" }));
+                    arguments("/foo/{id}/bar", new String[] { "foo", "/{id}", "bar" })
+            );
         }
 
         @ParameterizedTest
@@ -191,16 +192,26 @@ class JandexUtilTest {
 
         static Stream<Arguments> pathByAnnotationProvider() {
             return Stream.of(
-                    argumentSet("@Path presents only on class",
-                            DotName.createSimple(OPTIONS.class.getName()), "/"),
-                    argumentSet("@Path present on both class and method",
-                            DotName.createSimple(DELETE.class.getName()), "/{id}"),
-                    argumentSet("@Path presents only on class without leading slash",
-                            DotName.createSimple(GET.class.getName()), "/foo"),
-                    argumentSet("@Path present on both class and method without leading slashes",
-                            DotName.createSimple(POST.class.getName()), "/foo/{id}"),
-                    argumentSet("@Path on method contains trailing slash",
-                            DotName.createSimple(PUT.class.getName()), "/foo/bar")
+                    argumentSet(
+                            "@Path presents only on class",
+                            DotName.createSimple(OPTIONS.class.getName()), "/"
+                    ),
+                    argumentSet(
+                            "@Path present on both class and method",
+                            DotName.createSimple(DELETE.class.getName()), "/{id}"
+                    ),
+                    argumentSet(
+                            "@Path presents only on class without leading slash",
+                            DotName.createSimple(GET.class.getName()), "/foo"
+                    ),
+                    argumentSet(
+                            "@Path present on both class and method without leading slashes",
+                            DotName.createSimple(POST.class.getName()), "/foo/{id}"
+                    ),
+                    argumentSet(
+                            "@Path on method contains trailing slash",
+                            DotName.createSimple(PUT.class.getName()), "/foo/bar"
+                    )
 
             );
         }
@@ -232,9 +243,12 @@ class JandexUtilTest {
             return Stream.of(
                     argumentSet("@Path has value attribute", DotName.createSimple(Path.class.getName()), "somePath"),
                     argumentSet("@POST has no attributes", DotName.createSimple(POST.class.getName()), ""),
-                    argumentSet("@RequestBody has no value attribute but name was set",
-                            DotName.createSimple(RequestBody.class.getName()), ""),
-                    argumentSet("@Valid has no value attribute", DotName.createSimple(Valid.class.getName()), ""));
+                    argumentSet(
+                            "@RequestBody has no value attribute but name was set",
+                            DotName.createSimple(RequestBody.class.getName()), ""
+                    ),
+                    argumentSet("@Valid has no value attribute", DotName.createSimple(Valid.class.getName()), "")
+            );
         }
     }
 

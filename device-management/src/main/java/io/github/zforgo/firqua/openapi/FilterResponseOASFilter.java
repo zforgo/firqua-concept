@@ -15,12 +15,11 @@ import org.jboss.jandex.IndexView;
 import org.jboss.jandex.MethodInfo;
 import org.jboss.jandex.Type;
 
+import io.github.zforgo.firqua.common.FilterResult;
+import io.github.zforgo.firqua.common.jandex.JandexUtil;
 import io.quarkus.logging.Log;
 import io.quarkus.smallrye.openapi.OpenApiFilter;
 import io.quarkus.smallrye.openapi.OpenApiFilter.RunStage;
-
-import io.github.zforgo.firqua.common.FilterResult;
-import io.github.zforgo.firqua.common.jandex.JandexUtil;
 
 import static io.github.zforgo.firqua.common.jandex.JandexUtil.resolveHttpPath;
 import static java.util.stream.Collectors.toMap;
@@ -44,12 +43,15 @@ public class FilterResponseOASFilter implements OASFilter {
                     var mi = ann.target().asMethod();
                     return RETURN_TYPE.equals(mi.returnType().name())
                             && mi.returnType().kind() == Type.Kind.PARAMETERIZED_TYPE;
-                }).collect(toMap(
-                        ann -> {
-                            var mi = ann.target().asMethod();
-                            return resolveHttpPath(basePath, mi);
-                        },
-                        ann -> resolveReference(view, ann)));
+                }).collect(
+                        toMap(
+                                ann -> {
+                                    var mi = ann.target().asMethod();
+                                    return resolveHttpPath(basePath, mi);
+                                },
+                                ann -> resolveReference(view, ann)
+                        )
+                );
     }
 
     private static String resolveReference(IndexView view, AnnotationInstance ann) {
@@ -65,8 +67,10 @@ public class FilterResponseOASFilter implements OASFilter {
         return Optional.ofNullable(view.getClassByName(itemType.name()))
                 .map(ci -> {
                     if (ci.isSealed() && !ci.permittedSubclasses().isEmpty()) {
-                        Log.warnf("Sealed result type found (%s) on %s#%s, but no explicit reference() set.",
-                                ci.simpleName(), mi.declaringClass().simpleName(), mi.name());
+                        Log.warnf(
+                                "Sealed result type found (%s) on %s#%s, but no explicit reference() set.",
+                                ci.simpleName(), mi.declaringClass().simpleName(), mi.name()
+                        );
                     }
                     return ci;
                 })
@@ -106,9 +110,11 @@ public class FilterResponseOASFilter implements OASFilter {
                     final var schemaName = "FilterResult" + genericType;
                     final var responseSchema = createSchema()
                             .addType(SchemaType.OBJECT)
-                            .addProperty("items", createSchema()
-                                    .addType(SchemaType.ARRAY)
-                                    .items(createSchema().ref("#/components/schemas/" + genericType)))
+                            .addProperty(
+                                    "items", createSchema()
+                                            .addType(SchemaType.ARRAY)
+                                            .items(createSchema().ref("#/components/schemas/" + genericType))
+                            )
                             .addProperty("pagination", createSchema().ref("#/components/schemas/Pagination"));
                     final var referencedSchema = createSchema().ref("#/components/schemas/" + schemaName);
                     openAPI.getComponents().addSchema(schemaName, responseSchema);
