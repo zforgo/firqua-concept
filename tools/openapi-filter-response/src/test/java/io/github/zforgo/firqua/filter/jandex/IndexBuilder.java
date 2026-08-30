@@ -1,4 +1,4 @@
-package io.github.zforgo.firqua.common.jandex;
+package io.github.zforgo.firqua.filter.jandex;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;

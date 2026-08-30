@@ -1,4 +1,4 @@
-package io.github.zforgo.firqua.openapi;
+package io.github.zforgo.firqua.filter.openapi;
 
 import java.util.Map;
 import java.util.Optional;
@@ -15,13 +15,13 @@ import org.jboss.jandex.IndexView;
 import org.jboss.jandex.MethodInfo;
 import org.jboss.jandex.Type;
 
-import io.github.zforgo.firqua.common.FilterResult;
-import io.github.zforgo.firqua.common.jandex.JandexUtil;
+import io.github.zforgo.firqua.filter.FilterResult;
+import io.github.zforgo.firqua.filter.jandex.JandexUtil;
 import io.quarkus.logging.Log;
 import io.quarkus.smallrye.openapi.OpenApiFilter;
 import io.quarkus.smallrye.openapi.OpenApiFilter.RunStage;
 
-import static io.github.zforgo.firqua.common.jandex.JandexUtil.resolveHttpPath;
+import static io.github.zforgo.firqua.filter.jandex.JandexUtil.resolveHttpPath;
 import static java.util.stream.Collectors.toMap;
 import static org.eclipse.microprofile.openapi.OASFactory.createSchema;
 
