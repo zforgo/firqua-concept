@@ -30,7 +30,7 @@ public class AssetQueryService {
     }
 
     public FilterResult<AssetDto> filter(PagingAndSorting pas) {
-        var finalSort = pas.sortingCriteria
+        var finalSort = Optional.ofNullable(pas.sortingCriteria)
                 .map(cr -> Sort.by(cr, pas.sortDirection))
                 .map(s -> mergeSort(s, DEFAULT_SORT))
                 .orElse(DEFAULT_SORT);
