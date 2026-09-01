@@ -1,7 +1,5 @@
 package io.github.zforgo.firqua.assets;
 
-import java.util.Optional;
-
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -141,7 +139,7 @@ public class AssetQueryServiceFilterTest {
         var pas = new PagingAndSorting();
         pas.pageSize = pageSize;
         pas.sortDirection = Sort.Direction.Descending;
-        pas.sortingCriteria = Optional.of("id");
+        pas.sortingCriteria = "id";
         var result = queryService.filter(pas);
         assertNotNull(result);
         assertEquals(total, result.pagination().total());
