@@ -1,12 +1,10 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
-    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
-    http://www.liquibase.org/xml/ns/dbchangelog
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <include file="shared/common_types.xml" relativeToChangelogFile="true"/>
-    <includeAll path="schema" relativeToChangelogFile="true" />
-    <includeAll path="data" relativeToChangelogFile="true" />
+    <include file="shared/common_types.xml" relativeToChangelogFile="true" />
+    <includeAll path="schema" relativeToChangelogFile="true" context="schema"/>
+    <includeAll path="data/base" relativeToChangelogFile="true" context="base-data" errorIfMissingOrEmpty="false"/>
+    <includeAll path="data/sample" relativeToChangelogFile="true" context="sample-data" errorIfMissingOrEmpty="false"/>
 </databaseChangeLog>
