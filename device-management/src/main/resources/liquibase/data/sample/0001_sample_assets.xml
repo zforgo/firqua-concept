@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="sample_assets" context="sample-data" author="zforgo">
+    <changeSet id="sample_assets"  author="zforgo">
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="SOS"/>

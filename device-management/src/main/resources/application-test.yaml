@@ -1,4 +1,14 @@
 quarkus:
+  datasource:
+    db-kind: h2
+    jdbc:
+      driver: org.h2.Driver
+      url: jdbc:h2:tcp://localhost/mem:test
+
+  liquibase:
+    change-log: liquibase/test-changeLog.xml
+    contexts: "schema,base-data,test-data"
+
   log:
     category:
       "liquibase":
