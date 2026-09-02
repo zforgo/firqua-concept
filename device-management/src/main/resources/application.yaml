@@ -6,6 +6,13 @@ quarkus:
     jdbc:
       url: jdbc:postgresql://localhost:65432/firqua
 
+  hibernate-orm:
+    mapping:
+      id:
+        optimizer:
+          # noinspection QsYaml
+          default: none
+
   liquibase:
     migrate-at-start: true
     change-log: liquibase/changeLog.xml
@@ -18,3 +25,4 @@ quarkus:
       "liquibase.util":
         # noinspection QsYaml
         level: WARN
+
