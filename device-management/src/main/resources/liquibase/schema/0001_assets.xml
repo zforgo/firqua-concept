@@ -14,7 +14,7 @@
             </column>
 
         </createTable>
-        <createSequence sequenceName="ASSETS_SEQ" startValue="1" incrementBy="50"/>
+        <createSequence sequenceName="ASSETS_SEQ" startValue="1" incrementBy="1"/>
         <createTable tableName="ASSETS" remarks="Base table of Asset">
             <column name="ID" type="${numericId}" remarks="Unique identifier">
                 <constraints nullable="false"
