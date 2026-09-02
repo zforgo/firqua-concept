@@ -7,6 +7,7 @@ import java.util.function.Function;
 import io.quarkus.arc.InstanceHandle;
 import io.quarkus.liquibase.LiquibaseFactory;
 import io.quarkus.liquibase.runtime.LiquibaseFactoryUtil;
+import io.quarkus.test.junit.callback.QuarkusTestAfterConstructCallback;
 import io.quarkus.test.junit.callback.QuarkusTestBeforeEachCallback;
 import io.quarkus.test.junit.callback.QuarkusTestMethodContext;
 import liquibase.Contexts;
@@ -15,12 +16,32 @@ import liquibase.exception.LiquibaseException;
 
 import static org.junit.platform.commons.util.AnnotationUtils.findAnnotation;
 
-public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback {
+public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback, QuarkusTestAfterConstructCallback {
 
     private static final Function<QuarkusTestMethodContext, Optional<LiquibaseMigration>> getConfig = ctx -> findAnnotation(
             ctx.getTestMethod(), LiquibaseMigration.class
     )
-            .or(() -> Optional.ofNullable(ctx.getTestInstance().getClass().getDeclaredAnnotation(LiquibaseMigration.class)));
+            .or(
+                    () -> Optional
+                            .ofNullable(ctx.getTestMethod().getDeclaringClass().getDeclaredAnnotation(LiquibaseMigration.class))
+            );
+
+    @Override
+    public void afterConstruct(Object testInstance) {
+        var testClass = testInstance.getClass();
+        var ann = testClass.getDeclaredAnnotation(LiquibaseMigration.class);
+        if (ann != null && ann.runMode() == RunMode.PER_CLASS) {
+            var ran = DescriptionHolder.hasClass(testClass);
+            try {
+                if (!ran) {
+                    run(ann);
+                }
+            } finally {
+                DescriptionHolder.store(testClass, null);
+            }
+        }
+
+    }
 
     @Override
     public void beforeEach(QuarkusTestMethodContext ctx) {
