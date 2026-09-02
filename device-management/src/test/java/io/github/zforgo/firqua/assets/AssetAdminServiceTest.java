@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 
 import jakarta.inject.Inject;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +36,6 @@ class AssetAdminServiceTest {
     @Inject
     AssetAdminService service;
 
-    @Disabled
     @ParameterizedTest
     @MethodSource("validCreateParams")
     @DisplayName("Every valid AssetCreateDto subtype is persisted successfully")
@@ -56,7 +54,6 @@ class AssetAdminServiceTest {
         assertEquals(input.getIpAddress(), dto.getIpAddress());
     }
 
-    @Disabled
     @ParameterizedTest
     @MethodSource("duplicatedIpAddresses")
     @DisplayName("Duplicate ipAddress on the same AssetCreateDto subtype is rejected with NonUniqueIpAddressException")
@@ -106,7 +103,6 @@ class AssetAdminServiceTest {
 
     }
 
-    @Disabled
     @LiquibaseMigration(runMode = ALWAYS, dropFirst = true)
     @ParameterizedTest
     @MethodSource("modifiedEntities")

@@ -3,7 +3,6 @@ package io.github.zforgo.firqua.assets;
 import jakarta.inject.Inject;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -22,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.wildfly.common.Assert.assertNotNull;
 
-@Disabled("Due to failing Liquibase migration")
 @QuarkusTest
 @LiquibaseMigration(runMode = PER_CLASS, dropFirst = true)
 @QuarkusTestResource(H2DatabaseTestResource.class)
