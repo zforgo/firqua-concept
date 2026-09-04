@@ -9,6 +9,7 @@ import jakarta.ws.rs.ext.Provider;
 
 @Provider
 public class EntityNotFoundExceptionMapper implements ExceptionMapper<EntityNotFoundException> {
+
     @Override
     public Response toResponse(EntityNotFoundException exception) {
         return Response.status(Response.Status.NOT_FOUND).header(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN)

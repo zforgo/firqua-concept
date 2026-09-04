@@ -37,6 +37,7 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class JandexUtilTest {
+
     static final String CONFIG_KEY = "quarkus.rest.path";
 
     @Nested
@@ -47,8 +48,7 @@ class JandexUtilTest {
         private Config originalConfig;
 
         @ApplicationPath("annotated")
-        static class TestApp extends Application {
-        }
+        static class TestApp extends Application {}
 
         @BeforeAll
         void setUp() {
@@ -117,6 +117,7 @@ class JandexUtilTest {
 
         @Path("/")
         static class DummyRootResource {
+
             @OPTIONS
             public String list() {
                 return null;
@@ -131,6 +132,7 @@ class JandexUtilTest {
 
         @Path("foo")
         static class DummyResource {
+
             @GET
             public String list() {
                 return null;
@@ -222,6 +224,7 @@ class JandexUtilTest {
 
         @Path("somePath")
         static class DummyResource {
+
             @POST
             @RequestBody(name = "something")
             public void doSomething(@Valid Object ignoredPayload) {

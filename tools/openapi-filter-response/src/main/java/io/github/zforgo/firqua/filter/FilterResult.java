@@ -8,6 +8,5 @@ public record FilterResult<T>(List<T> items, Pagination pagination) {
         this(items, new Pagination(total, pageIndex, pageSize));
     }
 
-    public record Pagination(long total, int pageIndex, int pageSize) {
-    }
+    public record Pagination(long total, int pageIndex, int pageSize) {}
 }

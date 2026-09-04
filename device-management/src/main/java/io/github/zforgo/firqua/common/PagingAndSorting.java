@@ -7,6 +7,7 @@ import jakarta.ws.rs.QueryParam;
 import io.quarkus.panache.common.Sort;
 
 public class PagingAndSorting {
+
     public static final String param_PageIndex = "page_index";
     public static final String param_PageSize = "page_size";
     public static final String param_SortCriteria = "sort_criteria";

@@ -16,6 +16,7 @@ import static org.hibernate.validator.constraints.IpAddress.Type.IPv4;
         allOf = { AssetCreateDto.class },
         properties = @SchemaProperty(name = "type", enumeration = "METEO"))
 public final class MeteoSensorAssetCreateDto extends AssetCreateDto implements IpAddressAwareDto {
+
     {
         type = AssetType.METEO;
     }

@@ -15,6 +15,7 @@ import static io.github.zforgo.firqua.common.DataTypes.slugIdLength;
 @DiscriminatorValue(value = "SOS")
 @Table(name = "ASSETS_SOS_STATIONS")
 public class SosAsset extends Asset implements IpAddressAware {
+
     {
         type = AssetType.SOS;
     }

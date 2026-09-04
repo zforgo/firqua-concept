@@ -12,14 +12,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
-import io.github.zforgo.firqua.test.liquibase.RunMode;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+
+import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
+import io.github.zforgo.firqua.test.liquibase.RunMode;
 
 import static io.github.zforgo.firqua.test.liquibase.RunMode.ALWAYS;
 import static io.restassured.RestAssured.given;
