@@ -1,0 +1,5 @@
+  - join_wrapped_lines=false doesn't block this. tryKeepOnOneLine never consults that option — worth stating since it's the setting that normally preserves your existing breaks.
+  - Other knobs in the same family, all still one_line_never in your profile — say the word if you want any of them too: keep_enum_declaration_on_one_line, keep_annotation_declaration_on_one_line,
+    keep_method_body_on_one_line (would give void emptyMethod() {}), keep_lambda_body_block_on_one_line (() -> {}), keep_code_block_on_one_line, and keep_record_constructor_on_one_line (also absent from the profile).
+  - The next mvn run with the default format profile will reformat every existing empty class/record/anonymous body across the repo, so expect a one-off diff beyond AssetResourceTest.java.
+

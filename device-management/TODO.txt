@@ -1,0 +1,39 @@
+
+
+list asset
+    paging and sorting
+    default sor to service
+location header to create responses
+
+full openapi documentation
+    tags, operation on all endpoints
+
+    - sample assets into liquibase
+tests
+    discriminator is important
+cleanup (e.g ExampleResource and others)
+
+hibernate validator constraintViolationEx => name mapping and better status code
+    + cross table ip address registry with uniqueness
+handle other uniqueness (e.g name, stationId) with exception and status code
+ with tests
+
+service implementation
+* pageable list
+
+service test
+* query
+* list
+
+restassured test for admin resource
+* modify
+* modify to duplicated ip
+* query
+* list
+
+creation extension and filter
+    + common parent for quarkus apps
+bump plugin versions to latest or required
+
+on rest side and service
+    //TODO paging and sorting

@@ -1,0 +1,1356 @@
+[INFO] Loading cache configuration from /work/source/firqua-concept/.mvn/maven-build-cache-config.xml
+[INFO] Using XX hash algorithm for cache
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] FIRQUA :: Parent POM                                               [pom]
+[INFO] FIRQUA :: Tools :: IDE Config                                      [jar]
+[INFO] FIRQUA :: Project POM                                              [pom]
+[INFO] FIRQUA :: Tools :: Liquibase Lookup Extension                      [jar]
+[INFO] FIRQUA :: Base BOM                                                 [pom]
+[INFO] FIRQUA :: POM :: Quarkus Aggregator                                [pom]
+[INFO] FIRQUA :: Test Framework :: Data Management Support                [jar]
+[INFO] FIRQUA :: Tools :: FilterResponse OpenAPI support                  [jar]
+[INFO] FIRQUA :: Asset and Device Manaement                           [quarkus]
+[INFO] 
+[INFO] -----------< io.github.zforgo.firqua:firqua-concept-parent >------------
+[INFO] Building FIRQUA :: Parent POM 999-SNAPSHOT                         [1/9]
+[INFO]   from tools/parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:firqua-concept-parent
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ firqua-concept-parent ---
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ firqua-concept-parent ---
+[INFO] Deleting /work/source/firqua-concept/tools/parent/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-parent, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 0 input files. Project dir processing: 1, plugins: 6 millis
+[INFO] Project inputs calculated in 26 ms. XX checksum [f77d131578fa0e5a] calculated in 13 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:firqua-concept-parent from build cache
+[INFO] Local build found by checksum f77d131578fa0e5a
+[INFO] Found cached build, restoring io.github.zforgo.firqua:firqua-concept-parent from cache by checksum f77d131578fa0e5a
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-parent ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 2: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-parent ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-parent ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Mojo execution is forced by project property: flatten:flatten
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ firqua-concept-parent ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:firqua-concept-parent:pom:999-SNAPSHOT...
+[INFO] Skipping plugin execution (cached): source:jar-no-fork
+[INFO] 
+[INFO] ---------< io.github.zforgo.firqua:firqua-concept-ide-config >----------
+[INFO] Building FIRQUA :: Tools :: IDE Config 999-SNAPSHOT                [2/9]
+[INFO]   from tools/ide-config/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:firqua-concept-ide-config
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ firqua-concept-ide-config ---
+[INFO] Deleting /work/source/firqua-concept/tools/ide-config/target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ firqua-concept-ide-config ---
+[INFO] Deleting /work/source/firqua-concept/tools/ide-config/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-ide-config, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 98 input files. Project dir processing: 4, plugins: 12 millis
+[INFO] Project inputs calculated in 23 ms. XX checksum [483ba61c840e42f4] calculated in 207 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:firqua-concept-ide-config from build cache
+[INFO] Local build found by checksum 483ba61c840e42f4
+[INFO] Found cached build, restoring io.github.zforgo.firqua:firqua-concept-ide-config from cache by checksum 483ba61c840e42f4
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-ide-config ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-ide-config ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-ide-config ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Skipping plugin execution (cached): resources:resources
+[INFO] Mojo execution is forced by project property: flatten:flatten
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ firqua-concept-ide-config ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:firqua-concept-ide-config:jar:999-SNAPSHOT...
+[INFO] Skipping plugin execution (cached): compiler:compile
+[INFO] Skipping plugin execution (cached): resources:testResources
+[INFO] Skipping plugin execution (cached): compiler:testCompile
+[INFO] Skipping plugin execution (cached): surefire:test
+[INFO] Skipping plugin execution (cached): jar:jar
+[INFO] Skipping plugin execution (cached): source:jar-no-fork
+[INFO] 
+[INFO] ---------------< io.github.zforgo.firqua:firqua-concept >---------------
+[INFO] Building FIRQUA :: Project POM 999-SNAPSHOT                        [3/9]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:firqua-concept
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ firqua-concept ---
+[INFO] Deleting /work/source/firqua-concept/target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ firqua-concept ---
+[INFO] Deleting /work/source/firqua-concept/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 2 input files. Project dir processing: 1, plugins: 3 millis
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-ide-config, version=999-SNAPSHOT]
+[INFO] Project inputs calculated in 9 ms. XX checksum [102f23983d6d9a08] calculated in 1 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:firqua-concept from build cache
+[INFO] Local build was not found by checksum 102f23983d6d9a08 for io.github.zforgo.firqua:firqua-concept
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- formatter:2.27.0:format (default) @ firqua-concept ---
+[INFO] 
+[INFO] --- impsort:1.13.0:sort (sort-imports) @ firqua-concept ---
+[INFO] Processed 0 files in 00:00.002 (Already Sorted: 0, Needed Sorting: 0)
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ firqua-concept ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:firqua-concept:pom:999-SNAPSHOT...
+[INFO] 
+[INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ firqua-concept ---
+[INFO] Saved Build to local file: .cache/maven-build-cache/v1.1/io.github.zforgo.firqua/firqua-concept/102f23983d6d9a08/local/buildinfo.xml
+[INFO] 
+[INFO] ---------< io.github.zforgo.firqua:liquibase-lookup-extension >---------
+[INFO] Building FIRQUA :: Tools :: Liquibase Lookup Extension 999-SNAPSHOT [4/9]
+[INFO]   from tools/liquibase-lookup-extension/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:liquibase-lookup-extension
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ liquibase-lookup-extension ---
+[INFO] Deleting /work/source/firqua-concept/tools/liquibase-lookup-extension/target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ liquibase-lookup-extension ---
+[INFO] Deleting /work/source/firqua-concept/tools/liquibase-lookup-extension/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=liquibase-lookup-extension, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 105 input files. Project dir processing: 3, plugins: 8 millis
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-ide-config, version=999-SNAPSHOT]
+[INFO] Project inputs calculated in 15 ms. XX checksum [e43ef6152ce8ecaa] calculated in 42 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:liquibase-lookup-extension from build cache
+[INFO] Local build was not found by checksum e43ef6152ce8ecaa for io.github.zforgo.firqua:liquibase-lookup-extension
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ liquibase-lookup-extension ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ liquibase-lookup-extension ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ liquibase-lookup-extension ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- formatter:2.27.0:format (default) @ liquibase-lookup-extension ---
+[INFO] Processed 5 files in 518ms (Formatted: 0, Skipped: 5, Unchanged: 0, Failed: 0, Readonly: 0)
+[INFO] 
+[INFO] --- impsort:1.13.0:sort (sort-imports) @ liquibase-lookup-extension ---
+[INFO] Processed 5 files in 00:00.016 (Already Sorted: 5, Needed Sorting: 0)
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ liquibase-lookup-extension ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ liquibase-lookup-extension ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:liquibase-lookup-extension:jar:999-SNAPSHOT...
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ liquibase-lookup-extension ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 3 source files with javac [debug deprecation parameters release 25] to target/classes
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ liquibase-lookup-extension ---
+[INFO] Copying 1 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ liquibase-lookup-extension ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 2 source files with javac [debug deprecation parameters release 25] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.4:test (default-test) @ liquibase-lookup-extension ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running io.github.zforgo.firqua.liquibase.ext.InsertWithLookupChangeTest
+2026-08-31T18:22:08+02:00 INFO  [liquibase.database] (main) Set default schema name to PUBLIC
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.454 s -- in io.github.zforgo.firqua.liquibase.ext.InsertWithLookupChangeTest
+[INFO] Running io.github.zforgo.firqua.liquibase.ext.InsertWithLookupChangeFunctionalTest
+2026-08-31T18:22:08+02:00 INFO  [liquibase.database] (main) Set default schema name to PUBLIC
+2026-08-31T18:22:16+02:00 INFO  [liquibase.changelog] (main) Creating database changelog table with name: PUBLIC.DATABASECHANGELOG
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) Reading from PUBLIC.DATABASECHANGELOG
+2026-08-31T18:22:17+02:00 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31T18:22:17+02:00 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31T18:22:17+02:00 INFO  [liquibase.command] (main) Using deploymentId: 8193328681
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) Reading from PUBLIC.DATABASECHANGELOG
+Running Changeset: changelogs/sample-changelog.xml::organisations_schema_init::zforgo
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) Sequence ORGANISATIONS_SEQ created
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) Table ORGANISATIONS created
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) ChangeSet changelogs/sample-changelog.xml::organisations_schema_init::zforgo ran successfully in 12ms
+Running Changeset: changelogs/sample-changelog.xml::organisations_data::zforgo
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) New row inserted into ORGANISATIONS
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) New row inserted into ORGANISATIONS
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) New row inserted into ORGANISATIONS
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) ChangeSet changelogs/sample-changelog.xml::organisations_data::zforgo ran successfully in 10ms
+Running Changeset: changelogs/sample-changelog.xml::devices_schema_init::zforgo
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) Sequence DEVICES_SEQ created
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) Table DEVICES created
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) Foreign key constraint added to DEVICES (ORGANISATION_ID)
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) ChangeSet changelogs/sample-changelog.xml::devices_schema_init::zforgo ran successfully in 20ms
+Running Changeset: changelogs/sample-changelog.xml::devices_data_lookup::zforgo
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) New row inserted into DEVICES
+2026-08-31T18:22:17+02:00 INFO  [liquibase.changelog] (main) ChangeSet changelogs/sample-changelog.xml::devices_data_lookup::zforgo ran successfully in 5ms
+2026-08-31T18:22:17+02:00 INFO  [liquibase.util] (main) UPDATE SUMMARY
+2026-08-31T18:22:17+02:00 INFO  [liquibase.util] (main) Run:                          4
+2026-08-31T18:22:17+02:00 INFO  [liquibase.util] (main) Previously run:               0
+2026-08-31T18:22:17+02:00 INFO  [liquibase.util] (main) Filtered out:                 0
+2026-08-31T18:22:17+02:00 INFO  [liquibase.util] (main) -------------------------------
+2026-08-31T18:22:17+02:00 INFO  [liquibase.util] (main) Total change sets:            4
+2026-08-31T18:22:17+02:00 INFO  [liquibase.util] (main) Update summary generated
+2026-08-31T18:22:17+02:00 INFO  [liquibase.command] (main) Update command completed successfully.
+Liquibase: Update has been successful. Rows affected: 4
+2026-08-31T18:22:17+02:00 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31T18:22:17+02:00 INFO  [liquibase.command] (main) Command execution complete
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.608 s -- in io.github.zforgo.firqua.liquibase.ext.InsertWithLookupChangeFunctionalTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ liquibase-lookup-extension ---
+[INFO] Building jar: /work/source/firqua-concept/tools/liquibase-lookup-extension/target/liquibase-lookup-extension-999-SNAPSHOT.jar
+[INFO] 
+[INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ liquibase-lookup-extension ---
+[INFO] Building jar: /work/source/firqua-concept/tools/liquibase-lookup-extension/target/liquibase-lookup-extension-999-SNAPSHOT-sources.jar
+[INFO] Saved Build to local file: .cache/maven-build-cache/v1.1/io.github.zforgo.firqua/liquibase-lookup-extension/e43ef6152ce8ecaa/local/buildinfo.xml
+[INFO] 
+[INFO] ----------< io.github.zforgo.firqua:firqua-concept-bom-base >-----------
+[INFO] Building FIRQUA :: Base BOM 999-SNAPSHOT                           [5/9]
+[INFO]   from bom/base/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:firqua-concept-bom-base
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ firqua-concept-bom-base ---
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ firqua-concept-bom-base ---
+[INFO] Deleting /work/source/firqua-concept/bom/base/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-bom-base, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 0 input files. Project dir processing: 0, plugins: 1 millis
+[INFO] Project inputs calculated in 3 ms. XX checksum [f5849878a8bbd55f] calculated in 0 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:firqua-concept-bom-base from build cache
+[INFO] Local build found by checksum f5849878a8bbd55f
+[INFO] Found cached build, restoring io.github.zforgo.firqua:firqua-concept-bom-base from cache by checksum f5849878a8bbd55f
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-bom-base ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-bom-base ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Mojo execution is forced by project property: enforcer:enforce
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-concept-bom-base ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] Mojo execution is forced by project property: flatten:flatten
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ firqua-concept-bom-base ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:firqua-concept-bom-base:pom:999-SNAPSHOT...
+[INFO] Skipping plugin execution (cached): source:jar-no-fork
+[INFO] 
+[INFO] -----------< io.github.zforgo.firqua:firqua-quarkus-parent >------------
+[INFO] Building FIRQUA :: POM :: Quarkus Aggregator 999-SNAPSHOT          [6/9]
+[INFO]   from firqua-quarkus-parent/pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:firqua-quarkus-parent
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ firqua-quarkus-parent ---
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ firqua-quarkus-parent ---
+[INFO] Deleting /work/source/firqua-concept/firqua-quarkus-parent/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-quarkus-parent, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 2 input files. Project dir processing: 0, plugins: 1 millis
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-ide-config, version=999-SNAPSHOT]
+[INFO] Project inputs calculated in 4 ms. XX checksum [35fee2c87b2b496a] calculated in 1 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:firqua-quarkus-parent from build cache
+[INFO] Local build was not found by checksum 35fee2c87b2b496a for io.github.zforgo.firqua:firqua-quarkus-parent
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-quarkus-parent ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-quarkus-parent ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-quarkus-parent ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- formatter:2.27.0:format (default) @ firqua-quarkus-parent ---
+[INFO] 
+[INFO] --- impsort:1.13.0:sort (sort-imports) @ firqua-quarkus-parent ---
+[INFO] Processed 0 files in 00:00.000 (Already Sorted: 0, Needed Sorting: 0)
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ firqua-quarkus-parent ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:firqua-quarkus-parent:pom:999-SNAPSHOT...
+[INFO] 
+[INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ firqua-quarkus-parent ---
+[INFO] Saved Build to local file: .cache/maven-build-cache/v1.1/io.github.zforgo.firqua/firqua-quarkus-parent/35fee2c87b2b496a/local/buildinfo.xml
+[INFO] 
+[INFO] -----------< io.github.zforgo.firqua:firqua-test-data-tools >-----------
+[INFO] Building FIRQUA :: Test Framework :: Data Management Support 999-SNAPSHOT [7/9]
+[INFO]   from tools/test-data-tools/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:firqua-test-data-tools
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ firqua-test-data-tools ---
+[INFO] Deleting /work/source/firqua-concept/tools/test-data-tools/target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ firqua-test-data-tools ---
+[INFO] Deleting /work/source/firqua-concept/tools/test-data-tools/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-test-data-tools, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 110 input files. Project dir processing: 3, plugins: 5 millis
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=liquibase-lookup-extension, version=999-SNAPSHOT]
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-ide-config, version=999-SNAPSHOT]
+[INFO] Project inputs calculated in 12 ms. XX checksum [17c489f3cc7c3f89] calculated in 44 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:firqua-test-data-tools from build cache
+[INFO] Local build was not found by checksum 17c489f3cc7c3f89 for io.github.zforgo.firqua:firqua-test-data-tools
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-test-data-tools ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] Rule 2: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-test-data-tools ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ firqua-test-data-tools ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- formatter:2.27.0:format (default) @ firqua-test-data-tools ---
+[INFO] Processed 6 files in 928ms (Formatted: 0, Skipped: 5, Unchanged: 1, Failed: 0, Readonly: 0)
+[INFO] 
+[INFO] --- impsort:1.13.0:sort (sort-imports) @ firqua-test-data-tools ---
+[INFO] Processed 6 files in 00:00.011 (Already Sorted: 6, Needed Sorting: 0)
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ firqua-test-data-tools ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- quarkus:3.38.0:generate-code (non-deployable-build) @ firqua-test-data-tools ---
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ firqua-test-data-tools ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:firqua-test-data-tools:jar:999-SNAPSHOT...
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ firqua-test-data-tools ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 4 source files with javac [debug deprecation parameters release 25] to target/classes
+[INFO] 
+[INFO] --- quarkus:3.38.0:generate-code-tests (non-deployable-build) @ firqua-test-data-tools ---
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ firqua-test-data-tools ---
+[INFO] Copying 4 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ firqua-test-data-tools ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 2 source files with javac [debug deprecation parameters release 25] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ firqua-test-data-tools ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running io.github.zforgo.firqua.test.liquibase.LiquibaseMigrationCallbackTest
+2026-08-31 18:22:26,159 INFO  [io.quarkus.datasource.deployment.devservices.DevServicesDatasourceProcessor] (ForkJoinPool.commonPool-worker-1) Dev Services for default datasource (h2) started
+2026-08-31 18:22:26,175 INFO  [io.quarkus.test.h2.H2DatabaseTestResource] (pool-3-thread-1) H2 database started in TCP server mode; server status: TCP server running at tcp://127.0.1.1:9092 (only local connections)
+2026-08-31 18:22:26,376 INFO  [io.quarkus] (main) firqua-test-data-tools 999-SNAPSHOT on JVM (powered by Quarkus 3.38.0) started in 2.690s. 
+2026-08-31 18:22:26,376 INFO  [io.quarkus] (main) Profile test activated. 
+2026-08-31 18:22:26,376 INFO  [io.quarkus] (main) Installed features: [agroal, cdi, compose, jdbc-h2, liquibase, narayana-jta, smallrye-context-propagation]
+ **++++ Running before class :io.github.zforgo.firqua.test.liquibase.LiquibaseMigrationCallbackTest
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:h2:tcp://localhost:40409/mem:quarkus'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+All objects dropped from QUARKUS@jdbc:h2:tcp://localhost:40409/mem:quarkus
+Running Changeset: db/test-changeLog.xml::1::firqua
+
+UPDATE SUMMARY
+Run:                          1
+Previously run:               0
+Filtered out:                 6
+-------------------------------
+Total change sets:            7
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             6
+
+Liquibase: Update has been successful. Rows affected: 0
+ **++++ Running before method :additionalRun
+Running Changeset: db/test-changeLog.xml::2::firqua
+
+UPDATE SUMMARY
+Run:                          1
+Previously run:               1
+Filtered out:                 5
+-------------------------------
+Total change sets:            7
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             5
+
+Liquibase: Update has been successful. Rows affected: 0
+ **++++ Running before method :dropFirst
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:h2:tcp://localhost:40409/mem:quarkus'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+All objects dropped from QUARKUS@jdbc:h2:tcp://localhost:40409/mem:quarkus
+Running Changeset: db/test-changeLog.xml::1::firqua
+Running Changeset: db/test-changeLog.xml::2::firqua
+
+UPDATE SUMMARY
+Run:                          2
+Previously run:               0
+Filtered out:                 5
+-------------------------------
+Total change sets:            7
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             5
+
+Liquibase: Update has been successful. Rows affected: 0
+ **++++ Running before method :missingContext
+Database is up to date, no changesets to execute
+
+UPDATE SUMMARY
+Run:                          0
+Previously run:               2
+Filtered out:                 6
+-------------------------------
+Total change sets:            7
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             6
+Already ran:                  1
+
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.762 s -- in io.github.zforgo.firqua.test.liquibase.LiquibaseMigrationCallbackTest
+[INFO] Running io.github.zforgo.firqua.test.liquibase.LiquibaseMigrationCallbackWithLookupTest
+ **++++ Running before class :io.github.zforgo.firqua.test.liquibase.LiquibaseMigrationCallbackWithLookupTest
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:h2:tcp://localhost:40409/mem:quarkus'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+All objects dropped from QUARKUS@jdbc:h2:tcp://localhost:40409/mem:quarkus
+Running Changeset: db/test-changeLog.xml::1::firqua
+Running Changeset: db/lookup-changeLog.xml::organisations_schema_init::zforgo
+Running Changeset: db/lookup-changeLog.xml::organisations_data::zforgo
+Running Changeset: db/lookup-changeLog.xml::devices_schema_init::zforgo
+Running Changeset: db/lookup-changeLog.xml::devices_data_lookup::zforgo
+
+UPDATE SUMMARY
+Run:                          5
+Previously run:               0
+Filtered out:                 2
+-------------------------------
+Total change sets:            7
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+Liquibase: Update has been successful. Rows affected: 4
+ **++++ Running before method :lookup
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:h2:tcp://localhost:40409/mem:quarkus'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+All objects dropped from QUARKUS@jdbc:h2:tcp://localhost:40409/mem:quarkus
+Running Changeset: db/test-changeLog.xml::1::firqua
+Running Changeset: db/lookup-changeLog.xml::organisations_schema_init::zforgo
+Running Changeset: db/lookup-changeLog.xml::organisations_data::zforgo
+Running Changeset: db/lookup-changeLog.xml::devices_schema_init::zforgo
+Running Changeset: db/lookup-changeLog.xml::devices_data_lookup::zforgo
+
+UPDATE SUMMARY
+Run:                          5
+Previously run:               0
+Filtered out:                 2
+-------------------------------
+Total change sets:            7
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+Liquibase: Update has been successful. Rows affected: 4
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.733 s -- in io.github.zforgo.firqua.test.liquibase.LiquibaseMigrationCallbackWithLookupTest
+2026-08-31 18:22:31,515 INFO  [io.quarkus] (main) firqua-test-data-tools stopped in 0.014s
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ firqua-test-data-tools ---
+[INFO] Building jar: /work/source/firqua-concept/tools/test-data-tools/target/firqua-test-data-tools-999-SNAPSHOT.jar
+[INFO] 
+[INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ firqua-test-data-tools ---
+[INFO] Building jar: /work/source/firqua-concept/tools/test-data-tools/target/firqua-test-data-tools-999-SNAPSHOT-sources.jar
+[INFO] Saved Build to local file: .cache/maven-build-cache/v1.1/io.github.zforgo.firqua/firqua-test-data-tools/17c489f3cc7c3f89/local/buildinfo.xml
+[INFO] 
+[INFO] ----------< io.github.zforgo.firqua:openapi-filter-response >-----------
+[INFO] Building FIRQUA :: Tools :: FilterResponse OpenAPI support 999-SNAPSHOT [8/9]
+[INFO]   from tools/openapi-filter-response/pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:openapi-filter-response
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ openapi-filter-response ---
+[INFO] Deleting /work/source/firqua-concept/tools/openapi-filter-response/target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ openapi-filter-response ---
+[INFO] Deleting /work/source/firqua-concept/tools/openapi-filter-response/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=openapi-filter-response, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 106 input files. Project dir processing: 1, plugins: 5 millis
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-ide-config, version=999-SNAPSHOT]
+[INFO] Project inputs calculated in 9 ms. XX checksum [f004b07a1804e22f] calculated in 21 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:openapi-filter-response from build cache
+[INFO] Local build was not found by checksum f004b07a1804e22f for io.github.zforgo.firqua:openapi-filter-response
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ openapi-filter-response ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ openapi-filter-response ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ openapi-filter-response ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- formatter:2.27.0:format (default) @ openapi-filter-response ---
+[INFO] Processed 7 files in 22ms (Formatted: 0, Skipped: 7, Unchanged: 0, Failed: 0, Readonly: 0)
+[INFO] 
+[INFO] --- impsort:1.13.0:sort (sort-imports) @ openapi-filter-response ---
+[INFO] Processed 7 files in 00:00.001 (Already Sorted: 7, Needed Sorting: 0)
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ openapi-filter-response ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- quarkus:3.38.0:generate-code (non-deployable-build) @ openapi-filter-response ---
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ openapi-filter-response ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:openapi-filter-response:jar:999-SNAPSHOT...
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ openapi-filter-response ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 4 source files with javac [debug deprecation parameters release 25] to target/classes
+[INFO] 
+[INFO] --- quarkus:3.38.0:generate-code-tests (non-deployable-build) @ openapi-filter-response ---
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ openapi-filter-response ---
+[INFO] Copying 0 resource from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ openapi-filter-response ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug deprecation parameters release 25] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ openapi-filter-response ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running io.github.zforgo.firqua.filter.jandex.JandexUtilTest
+[INFO] Running Tests for resolveHttpPath
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.271 s -- in Tests for resolveHttpPath
+[INFO] Running io.github.zforgo.firqua.filter.jandex.JandexUtilTest$AnnotationValueTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in io.github.zforgo.firqua.filter.jandex.JandexUtilTest$AnnotationValueTest
+[INFO] Running Tests for resolveHttpBasePath
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 s -- in Tests for resolveHttpBasePath
+[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.341 s -- in io.github.zforgo.firqua.filter.jandex.JandexUtilTest
+[INFO] Running io.github.zforgo.firqua.filter.openapi.FilterResponseOASFilterTest
+2026-08-31 18:22:35,773 WARN  [io.github.zforgo.firqua.filter.openapi.FilterResponseOASFilter] (main) Sealed result type found (ResponseDto) on DummyResource#list, but no explicit reference() set.
+2026-08-31 18:22:35,823 WARN  [io.github.zforgo.firqua.filter.openapi.FilterResponseOASFilter] (main) Sealed result type found (ResponseDto) on DummyResource#list, but no explicit reference() set.
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.065 s -- in io.github.zforgo.firqua.filter.openapi.FilterResponseOASFilterTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 27, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ openapi-filter-response ---
+[INFO] Building jar: /work/source/firqua-concept/tools/openapi-filter-response/target/openapi-filter-response-999-SNAPSHOT.jar
+[INFO] 
+[INFO] --- source:3.4.0:jar-no-fork (attach-sources) @ openapi-filter-response ---
+[INFO] Building jar: /work/source/firqua-concept/tools/openapi-filter-response/target/openapi-filter-response-999-SNAPSHOT-sources.jar
+[INFO] Saved Build to local file: .cache/maven-build-cache/v1.1/io.github.zforgo.firqua/openapi-filter-response/f004b07a1804e22f/local/buildinfo.xml
+[INFO] 
+[INFO] -------------< io.github.zforgo.firqua:device-management >--------------
+[INFO] Building FIRQUA :: Asset and Device Manaement 999-SNAPSHOT         [9/9]
+[INFO]   from device-management/pom.xml
+[INFO] ------------------------------[ quarkus ]-------------------------------
+[INFO] Cache is INITIALIZED on project level for io.github.zforgo.firqua:device-management
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ device-management ---
+[INFO] Deleting /work/source/firqua-concept/device-management/target
+[INFO] 
+[INFO] --- flatten:1.7.3:clean (flatten-clean) @ device-management ---
+[INFO] Deleting /work/source/firqua-concept/device-management/.flattened-pom.xml
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=device-management, version=999-SNAPSHOT]
+[INFO] Scanning plugins configurations to find input files. Probing is enabled, values will be checked for presence in file system
+[INFO] Found 130 input files. Project dir processing: 3, plugins: 4 millis
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=openapi-filter-response, version=999-SNAPSHOT]
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=liquibase-lookup-extension, version=999-SNAPSHOT]
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-test-data-tools, version=999-SNAPSHOT]
+[INFO] Going to calculate checksum for project [groupId=io.github.zforgo.firqua, artifactId=firqua-concept-ide-config, version=999-SNAPSHOT]
+[INFO] Project inputs calculated in 9 ms. XX checksum [114d6af772566649] calculated in 19 ms.
+[INFO] Attempting to restore project io.github.zforgo.firqua:device-management from build cache
+[INFO] Local build was not found by checksum 114d6af772566649 for io.github.zforgo.firqua:device-management
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ device-management ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ device-management ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- enforcer:3.6.3:enforce (enforce-global) @ device-management ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.BannedRepositories passed
+[INFO] Rule 3: org.apache.maven.enforcer.rules.dependency.BanDynamicVersions passed
+[INFO] 
+[INFO] --- formatter:2.27.0:format (default) @ device-management ---
+[INFO] Processed 24 files in 21ms (Formatted: 0, Skipped: 24, Unchanged: 0, Failed: 0, Readonly: 0)
+[INFO] 
+[INFO] --- impsort:1.13.0:sort (sort-imports) @ device-management ---
+[INFO] Processed 24 files in 00:00.004 (Already Sorted: 24, Needed Sorting: 0)
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ device-management ---
+[INFO] Copying 6 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- quarkus:3.38.0:generate-code (default-generate-code) @ device-management ---
+[INFO] 
+[INFO] --- flatten:1.7.3:flatten (flatten) @ device-management ---
+[INFO] Generating flattened POM of project io.github.zforgo.firqua:device-management:quarkus:999-SNAPSHOT...
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ device-management ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 21 source files with javac [debug deprecation parameters release 25] to target/classes
+[INFO] Hibernate compile-time tooling 7.4.5.Final
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ device-management ---
+[INFO] Copying 2 resources from src/test/resources to target/test-classes
+[INFO] 
+[INFO] --- quarkus:3.38.0:generate-code-tests (default-generate-code-tests) @ device-management ---
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ device-management ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug deprecation parameters release 25] to target/test-classes
+[INFO] Hibernate compile-time tooling 7.4.5.Final
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ device-management ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running io.github.zforgo.firqua.assets.AssetAdminServiceTest
+2026-08-31 18:22:44,719 INFO  [io.quarkus.test.h2.H2DatabaseTestResource] (pool-3-thread-1) H2 database started in TCP server mode; server status: TCP server running at tcp://127.0.1.1:9092 (only local connections)
+2026-08-31 18:22:44,881 INFO  [org.hibernate.orm.jpa] (main) HHH008540: Processing PersistenceUnitInfo [name: <default>]
+2026-08-31 18:22:44,905 INFO  [org.hibernate.orm.core] (main) HHH000001: Hibernate ORM core version 7.4.5.Final
+2026-08-31 18:22:45,062 INFO  [org.hibernate.orm.connections.pooling] (main) HHH10001005: Database info:
+	Database JDBC URL [undefined/unknown]
+	Database driver: undefined/unknown
+	Database dialect: PostgreSQLDialect
+	Database version: 14.0
+	Default catalog/schema: unknown/unknown
+	Autocommit mode: undefined/unknown
+	Isolation level: <unknown>
+	JDBC fetch size: undefined/unknown
+	Pool: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-08-31 18:22:45,213 INFO  [org.hibernate.validator.internal.util.Version] (main) HV000001: Hibernate Validator 9.1.2.Final
+2026-08-31 18:22:51,263 INFO  [liquibase.database] (main) Set default schema name to public
+2026-08-31 18:22:51,367 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:22:51,778 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:22:51,796 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:22:52,039 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:22:52,061 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+No validation errors found.
+2026-08-31 18:22:52,138 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:22:55,383 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:22:55,387 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:22:55,410 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:22:55,428 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+Database is up to date, no changesets to execute
+2026-08-31 18:22:55,500 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+
+UPDATE SUMMARY
+Run:                          0
+Previously run:               1
+Filtered out:                 2
+-------------------------------
+Total change sets:            3
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+2026-08-31 18:22:55,519 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:22:55,557 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31 18:22:56,886 INFO  [io.quarkus] (main) device-management 999-SNAPSHOT on JVM (powered by Quarkus 3.38.0) started in 16.560s. Listening on: http://localhost:8081
+2026-08-31 18:22:56,886 INFO  [io.quarkus] (main) Profile test activated. 
+2026-08-31 18:22:56,887 INFO  [io.quarkus] (main) Installed features: [agroal, cdi, compose, config-yaml, hibernate-orm, hibernate-orm-panache, hibernate-validator, jdbc-h2, jdbc-postgresql, liquibase, narayana-jta, smallrye-context-propagation, smallrye-openapi, swagger-ui, vertx]
+ **++++ Running before class :io.github.zforgo.firqua.assets.AssetAdminServiceTest
+2026-08-31 18:22:56,918 INFO  [liquibase.database] (main) Set default schema name to public
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:postgresql://localhost:65432/firqua'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+2026-08-31 18:22:56,947 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:22:56,949 INFO  [liquibase.command] (main) Dropping Database Objects in schema: firqua.public
+2026-08-31 18:22:56,957 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:57,400 INFO  [liquibase.database] (main) Successfully deleted all supported object types in schema firqua.public.
+2026-08-31 18:22:57,415 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:57,422 WARNING [liquibase.lockservice] (main) Failed to release change log lock
+All objects dropped from firqua@jdbc:postgresql://localhost:65432/firqua
+2026-08-31 18:22:57,428 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:22:57,475 INFO  [liquibase.changelog] (main) Creating database changelog table with name: public._liq_database_changelog
+2026-08-31 18:22:57,489 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:22:57,492 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:22:57,509 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:22:57,525 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+2026-08-31 18:22:57,554 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:57,654 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:22:57,656 INFO  [liquibase.command] (main) Using deploymentId: 8193365587
+2026-08-31 18:22:57,658 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+Running Changeset: liquibase/schema/0001_assets.xml::assets_init::zforgo
+2026-08-31 18:22:57,682 INFO  [liquibase.changelog] (main) Table ASSETS_IP_ADDRESSES created
+2026-08-31 18:22:57,685 INFO  [liquibase.changelog] (main) Sequence ASSETS_SEQ created
+2026-08-31 18:22:57,699 INFO  [liquibase.changelog] (main) Table ASSETS created
+2026-08-31 18:22:57,711 INFO  [liquibase.changelog] (main) Table ASSETS_METEO_SENSORS created
+2026-08-31 18:22:57,716 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (ID)
+2026-08-31 18:22:57,720 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (IP_ADDRESS)
+2026-08-31 18:22:57,733 INFO  [liquibase.changelog] (main) Table ASSETS_SOS_STATIONS created
+2026-08-31 18:22:57,737 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (ID)
+2026-08-31 18:22:57,741 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (IP_ADDRESS)
+2026-08-31 18:22:57,745 INFO  [liquibase.changelog] (main) ChangeSet liquibase/schema/0001_assets.xml::assets_init::zforgo ran successfully in 73ms
+
+UPDATE SUMMARY
+Run:                          1
+Previously run:               0
+Filtered out:                 2
+-------------------------------
+Total change sets:            3
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+2026-08-31 18:22:57,762 INFO  [liquibase.command] (main) Update command completed successfully.
+Liquibase: Update has been successful. Rows affected: 0
+2026-08-31 18:22:57,766 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31 18:22:57,768 INFO  [liquibase.command] (main) Command execution complete
+ **++++ Running before method :modifyToExistingIp
+2026-08-31 18:22:57,810 INFO  [liquibase.database] (main) Set default schema name to public
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:postgresql://localhost:65432/firqua'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+2026-08-31 18:22:57,821 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:22:57,822 INFO  [liquibase.command] (main) Dropping Database Objects in schema: firqua.public
+2026-08-31 18:22:57,823 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:58,130 INFO  [liquibase.database] (main) Successfully deleted all supported object types in schema firqua.public.
+2026-08-31 18:22:58,136 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:58,141 WARNING [liquibase.lockservice] (main) Failed to release change log lock
+All objects dropped from firqua@jdbc:postgresql://localhost:65432/firqua
+2026-08-31 18:22:58,146 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:22:58,186 INFO  [liquibase.changelog] (main) Creating database changelog table with name: public._liq_database_changelog
+2026-08-31 18:22:58,199 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:22:58,201 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:22:58,217 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:22:58,228 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+2026-08-31 18:22:58,247 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:58,293 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:22:58,294 INFO  [liquibase.command] (main) Using deploymentId: 8193365587
+2026-08-31 18:22:58,296 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+Running Changeset: liquibase/schema/0001_assets.xml::assets_init::zforgo
+2026-08-31 18:22:58,312 INFO  [liquibase.changelog] (main) Table ASSETS_IP_ADDRESSES created
+2026-08-31 18:22:58,314 INFO  [liquibase.changelog] (main) Sequence ASSETS_SEQ created
+2026-08-31 18:22:58,331 INFO  [liquibase.changelog] (main) Table ASSETS created
+2026-08-31 18:22:58,342 INFO  [liquibase.changelog] (main) Table ASSETS_METEO_SENSORS created
+2026-08-31 18:22:58,346 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (ID)
+2026-08-31 18:22:58,349 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (IP_ADDRESS)
+2026-08-31 18:22:58,362 INFO  [liquibase.changelog] (main) Table ASSETS_SOS_STATIONS created
+2026-08-31 18:22:58,366 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (ID)
+2026-08-31 18:22:58,369 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (IP_ADDRESS)
+2026-08-31 18:22:58,372 INFO  [liquibase.changelog] (main) ChangeSet liquibase/schema/0001_assets.xml::assets_init::zforgo ran successfully in 68ms
+
+UPDATE SUMMARY
+Run:                          1
+Previously run:               0
+Filtered out:                 2
+-------------------------------
+Total change sets:            3
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+2026-08-31 18:22:58,380 INFO  [liquibase.command] (main) Update command completed successfully.
+Liquibase: Update has been successful. Rows affected: 0
+2026-08-31 18:22:58,386 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31 18:22:58,387 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:22:58,907 WARN  [org.hibernate.orm.jdbc.error] (main) HHH000247: ErrorCode: 0, SQLState: 23505
+2026-08-31 18:22:58,907 WARN  [org.hibernate.orm.jdbc.error] (main) ERROR: duplicate key value violates unique constraint "pk_assets_ip_addresses"
+  Detail: Key (ip_address)=(192.168.1.1) already exists.
+ **++++ Running before method :createDuplicatedIpAcrossEntities
+2026-08-31 18:22:58,946 INFO  [liquibase.database] (main) Set default schema name to public
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:postgresql://localhost:65432/firqua'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+2026-08-31 18:22:58,963 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:22:58,965 INFO  [liquibase.command] (main) Dropping Database Objects in schema: firqua.public
+2026-08-31 18:22:58,965 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:59,286 INFO  [liquibase.database] (main) Successfully deleted all supported object types in schema firqua.public.
+2026-08-31 18:22:59,293 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:59,298 WARNING [liquibase.lockservice] (main) Failed to release change log lock
+All objects dropped from firqua@jdbc:postgresql://localhost:65432/firqua
+2026-08-31 18:22:59,302 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:22:59,355 INFO  [liquibase.changelog] (main) Creating database changelog table with name: public._liq_database_changelog
+2026-08-31 18:22:59,370 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:22:59,373 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:22:59,389 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:22:59,399 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+2026-08-31 18:22:59,412 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:59,451 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:22:59,452 INFO  [liquibase.command] (main) Using deploymentId: 8193365587
+2026-08-31 18:22:59,454 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+Running Changeset: liquibase/schema/0001_assets.xml::assets_init::zforgo
+2026-08-31 18:22:59,472 INFO  [liquibase.changelog] (main) Table ASSETS_IP_ADDRESSES created
+2026-08-31 18:22:59,474 INFO  [liquibase.changelog] (main) Sequence ASSETS_SEQ created
+2026-08-31 18:22:59,492 INFO  [liquibase.changelog] (main) Table ASSETS created
+2026-08-31 18:22:59,509 INFO  [liquibase.changelog] (main) Table ASSETS_METEO_SENSORS created
+2026-08-31 18:22:59,514 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (ID)
+2026-08-31 18:22:59,518 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (IP_ADDRESS)
+2026-08-31 18:22:59,536 INFO  [liquibase.changelog] (main) Table ASSETS_SOS_STATIONS created
+2026-08-31 18:22:59,541 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (ID)
+2026-08-31 18:22:59,545 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (IP_ADDRESS)
+2026-08-31 18:22:59,549 INFO  [liquibase.changelog] (main) ChangeSet liquibase/schema/0001_assets.xml::assets_init::zforgo ran successfully in 86ms
+
+UPDATE SUMMARY
+Run:                          1
+Previously run:               0
+Filtered out:                 2
+-------------------------------
+Total change sets:            3
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+2026-08-31 18:22:59,556 INFO  [liquibase.command] (main) Update command completed successfully.
+Liquibase: Update has been successful. Rows affected: 0
+2026-08-31 18:22:59,561 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31 18:22:59,562 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:22:59,583 WARN  [org.hibernate.orm.jdbc.error] (main) HHH000247: ErrorCode: 0, SQLState: 23505
+2026-08-31 18:22:59,584 WARN  [org.hibernate.orm.jdbc.error] (main) ERROR: duplicate key value violates unique constraint "pk_assets_ip_addresses"
+  Detail: Key (ip_address)=(192.168.1.1) already exists.
+[ERROR] Tests run: 5, Failures: 2, Errors: 0, Skipped: 3, Time elapsed: 15.14 s <<< FAILURE! -- in io.github.zforgo.firqua.assets.AssetAdminServiceTest
+[ERROR] io.github.zforgo.firqua.assets.AssetAdminServiceTest.modifyToExistingIp -- Time elapsed: 1.134 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <io.github.zforgo.firqua.common.NonUniqueIpAddressException> but was: <org.hibernate.exception.ConstraintViolationException>
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3234)
+	at io.github.zforgo.firqua.assets.AssetAdminServiceTest.modifyToExistingIp(AssetAdminServiceTest.java:146)
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement [ERROR: duplicate key value violates unique constraint "pk_assets_ip_addresses"
+  Detail: Key (ip_address)=(192.168.1.1) already exists.] [insert into ASSETS_IP_ADDRESSES (IP_ADDRESS) values (?)]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:73)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:189)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:145)
+	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:53)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:65)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:54)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.doStaticInserts(InsertCoordinatorStandard.java:183)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.coordinateInsert(InsertCoordinatorStandard.java:123)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.insert(InsertCoordinatorStandard.java:96)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:108)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:634)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:505)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:386)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:40)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:138)
+	at org.hibernate.internal.SessionImpl.fireFlush(SessionImpl.java:1472)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1460)
+	at io.quarkus.hibernate.orm.runtime.session.TransactionScopedSession.flush(TransactionScopedSession.java:307)
+	at org.hibernate.engine.spi.SessionLazyDelegator.flush(SessionLazyDelegator.java:90)
+	at org.hibernate.Session_x03UFp930IxQOyJJLmtWw2baujI_Synthetic_ClientProxy.flush(Unknown Source)
+	at io.quarkus.hibernate.orm.panache.common.runtime.AbstractManagedJpaOperations.flush(AbstractManagedJpaOperations.java:75)
+	at io.quarkus.hibernate.orm.panache.PanacheEntityBase.persistAndFlush(PanacheEntityBase.java:79)
+	at io.github.zforgo.firqua.assets.AssetAdminService.updateAsset(AssetAdminService.java:46)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass.updateAsset$$superforward(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass$1.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext$NextAroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:97)
+	at io.quarkus.hibernate.validator.runtime.interceptor.AbstractMethodValidationInterceptor.validateMethodInvocation(AbstractMethodValidationInterceptor.java:73)
+	at io.quarkus.hibernate.validator.runtime.interceptor.MethodValidationInterceptor.validateMethodInvocation(MethodValidationInterceptor.java:17)
+	at io.quarkus.hibernate.validator.runtime.interceptor.MethodValidationInterceptor_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:70)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:167)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:138)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:37)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:82)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:31)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass.updateAsset(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetAdminService_ClientProxy.updateAsset(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetAdminServiceTest.lambda$modifyToExistingIp$0(AssetAdminServiceTest.java:146)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:54)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	... 2 more
+Caused by: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "pk_assets_ip_addresses"
+  Detail: Key (ip_address)=(192.168.1.1) already exists.
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2993)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2656)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:197)
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:158)
+	at io.agroal.pool.wrapper.PreparedStatementWrapper.executeUpdate(PreparedStatementWrapper.java:87)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:185)
+	... 47 more
+
+[ERROR] io.github.zforgo.firqua.assets.AssetAdminServiceTest.createDuplicatedIpAcrossEntities -- Time elapsed: 0.651 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <io.github.zforgo.firqua.common.NonUniqueIpAddressException> but was: <org.hibernate.exception.ConstraintViolationException>
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3234)
+	at io.github.zforgo.firqua.assets.AssetAdminServiceTest.createDuplicatedIpAcrossEntities(AssetAdminServiceTest.java:104)
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement [ERROR: duplicate key value violates unique constraint "pk_assets_ip_addresses"
+  Detail: Key (ip_address)=(192.168.1.1) already exists.] [insert into ASSETS_IP_ADDRESSES (IP_ADDRESS) values (?)]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:73)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:189)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:145)
+	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:53)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:65)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:54)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.doStaticInserts(InsertCoordinatorStandard.java:183)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.coordinateInsert(InsertCoordinatorStandard.java:123)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.insert(InsertCoordinatorStandard.java:96)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:108)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:634)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:505)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:386)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:40)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:138)
+	at org.hibernate.internal.SessionImpl.fireFlush(SessionImpl.java:1472)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1460)
+	at io.quarkus.hibernate.orm.runtime.session.TransactionScopedSession.flush(TransactionScopedSession.java:307)
+	at org.hibernate.engine.spi.SessionLazyDelegator.flush(SessionLazyDelegator.java:90)
+	at org.hibernate.Session_x03UFp930IxQOyJJLmtWw2baujI_Synthetic_ClientProxy.flush(Unknown Source)
+	at io.quarkus.hibernate.orm.panache.common.runtime.AbstractManagedJpaOperations.flush(AbstractManagedJpaOperations.java:75)
+	at io.quarkus.hibernate.orm.panache.PanacheEntityBase.persistAndFlush(PanacheEntityBase.java:79)
+	at io.github.zforgo.firqua.assets.AssetAdminService.createAsset(AssetAdminService.java:25)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass.createAsset$$superforward(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass$0.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:167)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:138)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:37)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:82)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:31)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass.createAsset(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetAdminService_ClientProxy.createAsset(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetAdminServiceTest.lambda$createDuplicatedIpAcrossEntities$2(AssetAdminServiceTest.java:104)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:54)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	... 2 more
+Caused by: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "pk_assets_ip_addresses"
+  Detail: Key (ip_address)=(192.168.1.1) already exists.
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2993)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2656)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:197)
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:158)
+	at io.agroal.pool.wrapper.PreparedStatementWrapper.executeUpdate(PreparedStatementWrapper.java:87)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:185)
+	... 41 more
+
+[INFO] Running io.github.zforgo.firqua.assets.AssetQueryServiceFilterTest
+ **++++ Running before class :io.github.zforgo.firqua.assets.AssetQueryServiceFilterTest
+2026-08-31 18:22:59,629 INFO  [liquibase.database] (main) Set default schema name to public
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:postgresql://localhost:65432/firqua'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+2026-08-31 18:22:59,640 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:22:59,642 INFO  [liquibase.command] (main) Dropping Database Objects in schema: firqua.public
+2026-08-31 18:22:59,642 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:59,970 INFO  [liquibase.database] (main) Successfully deleted all supported object types in schema firqua.public.
+2026-08-31 18:22:59,976 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:22:59,981 WARNING [liquibase.lockservice] (main) Failed to release change log lock
+All objects dropped from firqua@jdbc:postgresql://localhost:65432/firqua
+2026-08-31 18:22:59,984 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:23:00,013 INFO  [liquibase.changelog] (main) Creating database changelog table with name: public._liq_database_changelog
+2026-08-31 18:23:00,023 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:23:00,025 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:23:00,037 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:23:00,049 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+2026-08-31 18:23:00,063 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:00,098 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:23:00,099 INFO  [liquibase.command] (main) Using deploymentId: 8193365587
+2026-08-31 18:23:00,101 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+Running Changeset: liquibase/schema/0001_assets.xml::assets_init::zforgo
+2026-08-31 18:23:00,126 INFO  [liquibase.changelog] (main) Table ASSETS_IP_ADDRESSES created
+2026-08-31 18:23:00,129 INFO  [liquibase.changelog] (main) Sequence ASSETS_SEQ created
+2026-08-31 18:23:00,146 INFO  [liquibase.changelog] (main) Table ASSETS created
+2026-08-31 18:23:00,165 INFO  [liquibase.changelog] (main) Table ASSETS_METEO_SENSORS created
+2026-08-31 18:23:00,171 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (ID)
+2026-08-31 18:23:00,176 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (IP_ADDRESS)
+2026-08-31 18:23:00,190 INFO  [liquibase.changelog] (main) Table ASSETS_SOS_STATIONS created
+2026-08-31 18:23:00,195 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (ID)
+2026-08-31 18:23:00,200 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (IP_ADDRESS)
+2026-08-31 18:23:00,202 INFO  [liquibase.changelog] (main) ChangeSet liquibase/schema/0001_assets.xml::assets_init::zforgo ran successfully in 86ms
+
+UPDATE SUMMARY
+Run:                          1
+Previously run:               0
+Filtered out:                 2
+-------------------------------
+Total change sets:            3
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+2026-08-31 18:23:00,209 INFO  [liquibase.command] (main) Update command completed successfully.
+Liquibase: Update has been successful. Rows affected: 0
+2026-08-31 18:23:00,214 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31 18:23:00,215 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:23:00,534 WARN  [org.hibernate.orm.jdbc.error] (main) HHH000247: ErrorCode: 0, SQLState: 23505
+2026-08-31 18:23:00,534 WARN  [org.hibernate.orm.jdbc.error] (main) ERROR: duplicate key value violates unique constraint "pk_assets"
+  Detail: Key (id)=(5) already exists.
+[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.919 s <<< FAILURE! -- in io.github.zforgo.firqua.assets.AssetQueryServiceFilterTest
+[ERROR] io.github.zforgo.firqua.assets.AssetQueryServiceFilterTest -- Time elapsed: 0.919 s <<< ERROR!
+org.hibernate.exception.ConstraintViolationException: 
+could not execute statement [ERROR: duplicate key value violates unique constraint "pk_assets"
+  Detail: Key (id)=(5) already exists.] [insert into ASSETS (VENDOR_MODEL,NAME,VENDOR_NAME,ASSET_TYPE,ID) values (?,?,?,'METEO',?)]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:73)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:34)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:115)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:189)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:145)
+	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorStandard.lambda$performNonBatchedOperations$1(MutationExecutorStandard.java:268)
+	at java.base/java.util.TreeMap.forEach(TreeMap.java:1318)
+	at org.hibernate.engine.jdbc.mutation.internal.PreparedStatementGroupStandard.forEachStatement(PreparedStatementGroupStandard.java:86)
+	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorStandard.performNonBatchedOperations(MutationExecutorStandard.java:268)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:65)
+	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:54)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.doStaticInserts(InsertCoordinatorStandard.java:183)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.coordinateInsert(InsertCoordinatorStandard.java:123)
+	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.insert(InsertCoordinatorStandard.java:96)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:108)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:634)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:505)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:386)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:40)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:138)
+	at org.hibernate.internal.SessionImpl.fireFlush(SessionImpl.java:1472)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1460)
+	at io.quarkus.hibernate.orm.runtime.session.TransactionScopedSession.flush(TransactionScopedSession.java:307)
+	at org.hibernate.engine.spi.SessionLazyDelegator.flush(SessionLazyDelegator.java:90)
+	at org.hibernate.Session_x03UFp930IxQOyJJLmtWw2baujI_Synthetic_ClientProxy.flush(Unknown Source)
+	at io.quarkus.hibernate.orm.panache.common.runtime.AbstractManagedJpaOperations.flush(AbstractManagedJpaOperations.java:75)
+	at io.quarkus.hibernate.orm.panache.PanacheEntityBase.persistAndFlush(PanacheEntityBase.java:79)
+	at io.github.zforgo.firqua.assets.AssetAdminService.createAsset(AssetAdminService.java:25)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass.createAsset$$superforward(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass$0.apply(Unknown Source)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:167)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:138)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:37)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:82)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:31)
+	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
+	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
+	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
+	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
+	at io.github.zforgo.firqua.assets.AssetAdminService_Subclass.createAsset(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetAdminService_ClientProxy.createAsset(Unknown Source)
+	at io.github.zforgo.firqua.assets.AssetQueryServiceFilterTest.init(AssetQueryServiceFilterTest.java:50)
+Caused by: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "pk_assets"
+  Detail: Key (id)=(5) already exists.
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2993)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2656)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:446)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:533)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:449)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:197)
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:158)
+	at io.agroal.pool.wrapper.PreparedStatementWrapper.executeUpdate(PreparedStatementWrapper.java:87)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:185)
+	... 40 more
+
+[INFO] Running io.github.zforgo.firqua.assets.AssetQueryServiceTest
+ **++++ Running before class :io.github.zforgo.firqua.assets.AssetQueryServiceTest
+2026-08-31 18:23:00,560 INFO  [liquibase.database] (main) Set default schema name to public
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:postgresql://localhost:65432/firqua'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+2026-08-31 18:23:00,568 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:23:00,568 INFO  [liquibase.command] (main) Dropping Database Objects in schema: firqua.public
+2026-08-31 18:23:00,569 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:00,833 INFO  [liquibase.database] (main) Successfully deleted all supported object types in schema firqua.public.
+2026-08-31 18:23:00,838 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:00,843 WARNING [liquibase.lockservice] (main) Failed to release change log lock
+All objects dropped from firqua@jdbc:postgresql://localhost:65432/firqua
+2026-08-31 18:23:00,846 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:23:00,882 INFO  [liquibase.changelog] (main) Creating database changelog table with name: public._liq_database_changelog
+2026-08-31 18:23:00,894 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:23:00,896 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:23:00,911 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:23:00,919 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+2026-08-31 18:23:00,933 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:00,973 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:23:00,974 INFO  [liquibase.command] (main) Using deploymentId: 8193365587
+2026-08-31 18:23:00,975 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+Running Changeset: liquibase/schema/0001_assets.xml::assets_init::zforgo
+2026-08-31 18:23:00,998 INFO  [liquibase.changelog] (main) Table ASSETS_IP_ADDRESSES created
+2026-08-31 18:23:01,001 INFO  [liquibase.changelog] (main) Sequence ASSETS_SEQ created
+2026-08-31 18:23:01,021 INFO  [liquibase.changelog] (main) Table ASSETS created
+2026-08-31 18:23:01,039 INFO  [liquibase.changelog] (main) Table ASSETS_METEO_SENSORS created
+2026-08-31 18:23:01,043 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (ID)
+2026-08-31 18:23:01,048 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (IP_ADDRESS)
+2026-08-31 18:23:01,066 INFO  [liquibase.changelog] (main) Table ASSETS_SOS_STATIONS created
+2026-08-31 18:23:01,070 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (ID)
+2026-08-31 18:23:01,074 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (IP_ADDRESS)
+2026-08-31 18:23:01,085 INFO  [liquibase.changelog] (main) ChangeSet liquibase/schema/0001_assets.xml::assets_init::zforgo ran successfully in 96ms
+
+UPDATE SUMMARY
+Run:                          1
+Previously run:               0
+Filtered out:                 2
+-------------------------------
+Total change sets:            3
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+2026-08-31 18:23:01,092 INFO  [liquibase.command] (main) Update command completed successfully.
+Liquibase: Update has been successful. Rows affected: 0
+2026-08-31 18:23:01,096 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31 18:23:01,097 INFO  [liquibase.command] (main) Command execution complete
+ **++++ Running before method :found
+2026-08-31 18:23:01,107 INFO  [liquibase.database] (main) Set default schema name to public
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:postgresql://localhost:65432/firqua'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+2026-08-31 18:23:01,119 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:23:01,120 INFO  [liquibase.command] (main) Dropping Database Objects in schema: firqua.public
+2026-08-31 18:23:01,120 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:01,419 INFO  [liquibase.database] (main) Successfully deleted all supported object types in schema firqua.public.
+2026-08-31 18:23:01,424 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:01,429 WARNING [liquibase.lockservice] (main) Failed to release change log lock
+All objects dropped from firqua@jdbc:postgresql://localhost:65432/firqua
+2026-08-31 18:23:01,432 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:23:01,470 INFO  [liquibase.changelog] (main) Creating database changelog table with name: public._liq_database_changelog
+2026-08-31 18:23:01,482 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:23:01,485 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:23:01,498 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:23:01,506 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+2026-08-31 18:23:01,519 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:01,554 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:23:01,555 INFO  [liquibase.command] (main) Using deploymentId: 8193365587
+2026-08-31 18:23:01,556 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+Running Changeset: liquibase/schema/0001_assets.xml::assets_init::zforgo
+2026-08-31 18:23:01,577 INFO  [liquibase.changelog] (main) Table ASSETS_IP_ADDRESSES created
+2026-08-31 18:23:01,579 INFO  [liquibase.changelog] (main) Sequence ASSETS_SEQ created
+2026-08-31 18:23:01,597 INFO  [liquibase.changelog] (main) Table ASSETS created
+2026-08-31 18:23:01,613 INFO  [liquibase.changelog] (main) Table ASSETS_METEO_SENSORS created
+2026-08-31 18:23:01,618 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (ID)
+2026-08-31 18:23:01,630 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (IP_ADDRESS)
+2026-08-31 18:23:01,649 INFO  [liquibase.changelog] (main) Table ASSETS_SOS_STATIONS created
+2026-08-31 18:23:01,655 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (ID)
+2026-08-31 18:23:01,660 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (IP_ADDRESS)
+2026-08-31 18:23:01,663 INFO  [liquibase.changelog] (main) ChangeSet liquibase/schema/0001_assets.xml::assets_init::zforgo ran successfully in 95ms
+Running Changeset: liquibase/data/test/asset_query_by_id.xml::test_asset_for_query_by_id::zforgo
+2026-08-31 18:23:01,678 INFO  [liquibase.changelog] (main) New row inserted into ASSETS
+2026-08-31 18:23:01,683 INFO  [liquibase.changelog] (main) New row inserted into ASSETS_METEO_SENSORS
+2026-08-31 18:23:01,685 INFO  [liquibase.changelog] (main) ChangeSet liquibase/data/test/asset_query_by_id.xml::test_asset_for_query_by_id::zforgo ran successfully in 11ms
+
+UPDATE SUMMARY
+Run:                          2
+Previously run:               0
+Filtered out:                 1
+-------------------------------
+Total change sets:            3
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             1
+
+2026-08-31 18:23:01,689 INFO  [liquibase.command] (main) Update command completed successfully.
+Liquibase: Update has been successful. Rows affected: 2
+2026-08-31 18:23:01,702 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31 18:23:01,703 INFO  [liquibase.command] (main) Command execution complete
+ **++++ Running before method :notFound
+2026-08-31 18:23:01,726 INFO  [liquibase.database] (main) Set default schema name to public
+INFO: The drop-all command may result in unrecoverable destructive changes to objects at 'jdbc:postgresql://localhost:65432/firqua'.
+To protect against unwanted drops, set --requireForce=true, which will require a --force=true flag on the command.
+Learn more at https://docs.liquibase.com/dropall.
+
+2026-08-31 18:23:01,735 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:23:01,735 INFO  [liquibase.command] (main) Dropping Database Objects in schema: firqua.public
+2026-08-31 18:23:01,736 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:02,026 INFO  [liquibase.database] (main) Successfully deleted all supported object types in schema firqua.public.
+2026-08-31 18:23:02,031 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:02,036 WARNING [liquibase.lockservice] (main) Failed to release change log lock
+All objects dropped from firqua@jdbc:postgresql://localhost:65432/firqua
+2026-08-31 18:23:02,040 INFO  [liquibase.command] (main) Command execution complete
+2026-08-31 18:23:02,077 INFO  [liquibase.changelog] (main) Creating database changelog table with name: public._liq_database_changelog
+2026-08-31 18:23:02,088 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+2026-08-31 18:23:02,090 INFO  [liquibase.changelog] (main) Reading resource: liquibase/schema/0001_assets.xml
+2026-08-31 18:23:02,104 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/sample/0001_sample_assets.xml
+2026-08-31 18:23:02,113 INFO  [liquibase.changelog] (main) Reading resource: liquibase/data/test/asset_query_by_id.xml
+2026-08-31 18:23:02,127 INFO  [liquibase.snapshot] (main) Creating snapshot
+2026-08-31 18:23:02,165 INFO  [liquibase.lockservice] (main) Successfully acquired change log lock
+2026-08-31 18:23:02,166 INFO  [liquibase.command] (main) Using deploymentId: 8193365587
+2026-08-31 18:23:02,167 INFO  [liquibase.changelog] (main) Reading from public._liq_database_changelog
+Running Changeset: liquibase/schema/0001_assets.xml::assets_init::zforgo
+2026-08-31 18:23:02,187 INFO  [liquibase.changelog] (main) Table ASSETS_IP_ADDRESSES created
+2026-08-31 18:23:02,189 INFO  [liquibase.changelog] (main) Sequence ASSETS_SEQ created
+2026-08-31 18:23:02,206 INFO  [liquibase.changelog] (main) Table ASSETS created
+2026-08-31 18:23:02,218 INFO  [liquibase.changelog] (main) Table ASSETS_METEO_SENSORS created
+2026-08-31 18:23:02,221 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (ID)
+2026-08-31 18:23:02,225 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_METEO_SENSORS (IP_ADDRESS)
+2026-08-31 18:23:02,239 INFO  [liquibase.changelog] (main) Table ASSETS_SOS_STATIONS created
+2026-08-31 18:23:02,244 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (ID)
+2026-08-31 18:23:02,249 INFO  [liquibase.changelog] (main) Foreign key constraint added to ASSETS_SOS_STATIONS (IP_ADDRESS)
+2026-08-31 18:23:02,251 INFO  [liquibase.changelog] (main) ChangeSet liquibase/schema/0001_assets.xml::assets_init::zforgo ran successfully in 74ms
+
+UPDATE SUMMARY
+Run:                          1
+Previously run:               0
+Filtered out:                 2
+-------------------------------
+Total change sets:            3
+
+
+FILTERED CHANGE SETS SUMMARY
+Context mismatch:             2
+
+2026-08-31 18:23:02,259 INFO  [liquibase.command] (main) Update command completed successfully.
+Liquibase: Update has been successful. Rows affected: 0
+2026-08-31 18:23:02,263 INFO  [liquibase.lockservice] (main) Successfully released change log lock
+2026-08-31 18:23:02,264 INFO  [liquibase.command] (main) Command execution complete
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.723 s -- in io.github.zforgo.firqua.assets.AssetQueryServiceTest
+2026-08-31 18:23:02,326 INFO  [io.quarkus] (main) device-management stopped in 0.047s
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   AssetAdminServiceTest.createDuplicatedIpAcrossEntities:104 Unexpected exception type thrown, expected: <io.github.zforgo.firqua.common.NonUniqueIpAddressException> but was: <org.hibernate.exception.ConstraintViolationException>
+[ERROR]   AssetAdminServiceTest.modifyToExistingIp:146 Unexpected exception type thrown, expected: <io.github.zforgo.firqua.common.NonUniqueIpAddressException> but was: <org.hibernate.exception.ConstraintViolationException>
+[ERROR] Errors: 
+[ERROR]   AssetQueryServiceFilterTest.init:50 » ConstraintViolation could not execute statement [ERROR: duplicate key value violates unique constraint "pk_assets"
+  Detail: Key (id)=(5) already exists.] [insert into ASSETS (VENDOR_MODEL,NAME,VENDOR_NAME,ASSET_TYPE,ID) values (?,?,?,'METEO',?)]
+[INFO] 
+[ERROR] Tests run: 8, Failures: 2, Errors: 1, Skipped: 3
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for FIRQUA :: Project POM 999-SNAPSHOT:
+[INFO] 
+[INFO] FIRQUA :: Parent POM ............................... SUCCESS [  0.696 s]
+[INFO] FIRQUA :: Tools :: IDE Config ...................... SUCCESS [  0.776 s]
+[INFO] FIRQUA :: Project POM .............................. SUCCESS [  0.465 s]
+[INFO] FIRQUA :: Tools :: Liquibase Lookup Extension ...... SUCCESS [ 12.185 s]
+[INFO] FIRQUA :: Base BOM ................................. SUCCESS [  0.027 s]
+[INFO] FIRQUA :: POM :: Quarkus Aggregator ................ SUCCESS [  0.220 s]
+[INFO] FIRQUA :: Test Framework :: Data Management Support  SUCCESS [ 14.383 s]
+[INFO] FIRQUA :: Tools :: FilterResponse OpenAPI support .. SUCCESS [  3.596 s]
+[INFO] FIRQUA :: Asset and Device Manaement ............... FAILURE [ 26.520 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:00 min
+[INFO] Finished at: 2026-08-31T18:23:02+02:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project device-management: There are test failures.
+[ERROR] 
+[ERROR] See /work/source/firqua-concept/device-management/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :device-management
