@@ -1,6 +1,7 @@
 package io.github.zforgo.firqua.openapi;
 
 public interface OpenApiConstants {
+
     String TAG_admin = "admin";
     String TAG_assets = "assets";
 

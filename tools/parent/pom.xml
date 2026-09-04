@@ -298,7 +298,8 @@
                         <cachedir>
                             ${maven.multiModuleProjectDirectory}/.cache/impsort-maven-plugin-${impsort-plugin.version}
                         </cachedir>
-                        <groups>java.,javax.,jakarta.,org.,com.</groups>
+                        <!-- keep in sync with tools/ide-config/src/main/resources/eclipse.importorder -->
+                        <groups>java.,javax.,jakarta.,org.,com.,*,io.github.zforgo.</groups>
                         <staticGroups>*</staticGroups>
                         <staticAfter>true</staticAfter>
                         <skip>${format.skip}</skip>

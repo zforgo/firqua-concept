@@ -15,6 +15,7 @@ import static io.github.zforgo.firqua.common.DataTypes.slugIdLength;
 @DiscriminatorValue(value = "METEO")
 @Table(name = "ASSETS_METEO_SENSORS")
 public class MeteoAsset extends Asset implements IpAddressAware {
+
     {
         type = AssetType.METEO;
     }

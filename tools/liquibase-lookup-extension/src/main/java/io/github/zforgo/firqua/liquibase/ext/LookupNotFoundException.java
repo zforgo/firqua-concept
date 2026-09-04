@@ -6,6 +6,7 @@ import liquibase.database.Database;
 import liquibase.exception.UnexpectedLiquibaseException;
 
 public class LookupNotFoundException extends UnexpectedLiquibaseException {
+
     @Serial
     private static final long serialVersionUID = 1L;
 

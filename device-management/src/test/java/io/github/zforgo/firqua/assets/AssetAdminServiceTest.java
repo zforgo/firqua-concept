@@ -10,11 +10,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
-import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+
+import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
+import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 
 import static io.github.zforgo.firqua.test.liquibase.RunMode.ALWAYS;
 import static io.github.zforgo.firqua.test.liquibase.RunMode.PER_METHOD;

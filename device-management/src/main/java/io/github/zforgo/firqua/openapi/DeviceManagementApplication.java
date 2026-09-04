@@ -48,5 +48,4 @@ import static io.github.zforgo.firqua.openapi.OpenApiConstants.TAG_assets;
                                 responseCode = "500",
                                 description = "An unexpected error encountered while processing the request.")
                 }))
-public class DeviceManagementApplication extends Application {
-}
+public class DeviceManagementApplication extends Application {}

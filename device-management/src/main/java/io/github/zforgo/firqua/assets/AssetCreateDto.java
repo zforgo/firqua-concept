@@ -13,6 +13,4 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
         @JsonSubTypes.Type(value = MeteoSensorAssetCreateDto.class, name = "METEO")
 })
 @Schema(name = "AssetCreate", discriminatorProperty = "type")
-public sealed abstract class AssetCreateDto extends AssetCommonFields permits SosAssetCreateDto, MeteoSensorAssetCreateDto {
-
-}
+public sealed abstract class AssetCreateDto extends AssetCommonFields permits SosAssetCreateDto, MeteoSensorAssetCreateDto {}

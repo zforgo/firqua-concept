@@ -16,6 +16,7 @@ import static org.hibernate.validator.constraints.IpAddress.Type.IPv4;
         allOf = { AssetCreateDto.class },
         properties = @SchemaProperty(name = "type", enumeration = "SOS"))
 public final class SosAssetCreateDto extends AssetCreateDto implements IpAddressAwareDto {
+
     {
         type = AssetType.SOS;
     }

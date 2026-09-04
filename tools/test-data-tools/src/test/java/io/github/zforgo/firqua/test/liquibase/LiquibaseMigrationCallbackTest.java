@@ -30,8 +30,7 @@ class LiquibaseMigrationCallbackTest {
 
     private static List<ChangeSetEntry> previousChangeLog = List.of();
 
-    private record ChangeSetEntry(String id, Timestamp dateExecuted) {
-    }
+    private record ChangeSetEntry(String id, Timestamp dateExecuted) {}
 
     @Inject
     @SuppressWarnings("CdiInjectionPointsInspection")
