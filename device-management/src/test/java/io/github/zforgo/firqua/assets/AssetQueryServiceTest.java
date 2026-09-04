@@ -5,10 +5,11 @@ import jakarta.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.Test;
 
-import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+
+import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 
 import static io.github.zforgo.firqua.test.liquibase.RunMode.PER_METHOD;
 import static org.junit.jupiter.api.Assertions.assertAll;

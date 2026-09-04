@@ -12,5 +12,4 @@ import static io.github.zforgo.firqua.openapi.OpenApiConstants.TYPE_assetCreateU
                 @DiscriminatorMapping(value = "SOS", schema = SosAssetCreateDto.class),
                 @DiscriminatorMapping(value = "METEO", schema = MeteoSensorAssetCreateDto.class)
         })
-public interface AssetCreateDtoUnion {
-}
+public interface AssetCreateDtoUnion {}

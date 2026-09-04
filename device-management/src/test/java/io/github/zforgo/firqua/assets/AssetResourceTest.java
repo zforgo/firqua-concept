@@ -6,10 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-import io.github.zforgo.firqua.common.PagingAndSorting;
-import io.github.zforgo.firqua.filter.FilterResult;
-import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
-import io.github.zforgo.firqua.test.liquibase.RunMode;
 import io.quarkus.panache.common.Sort;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
@@ -17,6 +13,11 @@ import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
+
+import io.github.zforgo.firqua.common.PagingAndSorting;
+import io.github.zforgo.firqua.filter.FilterResult;
+import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
+import io.github.zforgo.firqua.test.liquibase.RunMode;
 
 import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
@@ -91,8 +92,7 @@ public class AssetResourceTest {
                 .get();
         assertNotNull(response);
         assertEquals(OK.getStatusCode(), response.getStatusCode());
-        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {
-        });
+        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {});
         assertNotNull(responseBody);
         assertAll(
                 "Total",
@@ -110,8 +110,7 @@ public class AssetResourceTest {
                 .get();
         assertNotNull(response);
         assertEquals(OK.getStatusCode(), response.getStatusCode());
-        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {
-        });
+        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {});
         assertNotNull(responseBody);
         assertEquals(total, responseBody.pagination().total());
         assertAll(
@@ -133,8 +132,7 @@ public class AssetResourceTest {
                 .get();
         assertNotNull(response);
         assertEquals(OK.getStatusCode(), response.getStatusCode());
-        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {
-        });
+        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {});
         assertNotNull(responseBody);
         assertEquals(total, responseBody.pagination().total());
         assertEquals(pageIndex, responseBody.pagination().pageIndex());
@@ -157,8 +155,7 @@ public class AssetResourceTest {
                 .get();
         assertNotNull(response);
         assertEquals(OK.getStatusCode(), response.getStatusCode());
-        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {
-        });
+        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {});
         assertNotNull(responseBody);
         assertEquals(total, responseBody.pagination().total());
         assertEquals(pageIndex, responseBody.pagination().pageIndex());
@@ -178,8 +175,7 @@ public class AssetResourceTest {
                 .get();
         assertNotNull(response);
         assertEquals(OK.getStatusCode(), response.getStatusCode());
-        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {
-        });
+        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {});
         assertNotNull(responseBody);
         assertEquals(total, responseBody.pagination().total());
         assertEquals(pageIndex, responseBody.pagination().pageIndex());
@@ -214,8 +210,7 @@ public class AssetResourceTest {
                 .get();
         assertNotNull(response);
         assertEquals(OK.getStatusCode(), response.getStatusCode());
-        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {
-        });
+        var responseBody = response.body().as(new TypeRef<FilterResult<AssetDto>>() {});
         assertEquals(total, responseBody.pagination().total());
         assertEquals(pageSize, responseBody.pagination().pageSize());
         assertEquals(pageSize, responseBody.items().size());

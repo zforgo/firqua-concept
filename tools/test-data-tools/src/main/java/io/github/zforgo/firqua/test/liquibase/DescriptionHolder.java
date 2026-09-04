@@ -6,8 +6,7 @@ import java.util.Set;
 
 final class DescriptionHolder {
 
-    private record Description(Class<?> cls, Method method) {
-    }
+    private record Description(Class<?> cls, Method method) {}
 
     private static final ThreadLocal<Set<Description>> STORE = ThreadLocal.withInitial(HashSet::new);
 

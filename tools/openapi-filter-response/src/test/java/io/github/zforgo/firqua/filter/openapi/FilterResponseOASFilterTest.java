@@ -93,12 +93,12 @@ class FilterResponseOASFilterTest {
                     @DiscriminatorMapping(value = "FOO", schema = FooResponseDto.class),
                     @DiscriminatorMapping(value = "BAR", schema = BarResponseDto.class)
             })
-    public interface ResponseDtoUnion {
-    }
+    public interface ResponseDtoUnion {}
 
     @SuppressWarnings("unused")
     @Schema(discriminatorProperty = "type")
     static sealed abstract class ResponseDto permits FooResponseDto, BarResponseDto {
+
         Long id;
         String type;
     }
@@ -107,6 +107,7 @@ class FilterResponseOASFilterTest {
     @Schema(allOf = { ResponseDto.class },
             properties = @SchemaProperty(name = "type", constValue = "FOO"))
     static final class FooResponseDto extends ResponseDto {
+
         String fooSpecific;
     }
 
@@ -114,12 +115,14 @@ class FilterResponseOASFilterTest {
     @Schema(allOf = { ResponseDto.class },
             properties = @SchemaProperty(name = "type", constValue = "BAR"))
     static final class BarResponseDto extends ResponseDto {
+
         String barSpecific;
     }
 
     @Path("/test")
     @Produces(MediaType.APPLICATION_JSON)
     static class DummyResource {
+
         @GET
         @Path("/list")
         @FilterResponse
@@ -136,6 +139,5 @@ class FilterResponseOASFilterTest {
     }
 
     @ApplicationPath("/testApi")
-    static class DummyApp extends Application {
-    }
+    static class DummyApp extends Application {}
 }
