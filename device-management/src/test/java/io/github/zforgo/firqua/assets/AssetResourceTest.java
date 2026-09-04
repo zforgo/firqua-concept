@@ -19,7 +19,7 @@ import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
-import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
 import static jakarta.ws.rs.core.Response.Status.NOT_FOUND;
 import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -198,8 +198,8 @@ public class AssetResourceTest {
                 .queryParam(PagingAndSorting.param_PageIndex, pageIndex)
                 .get();
         assertNotNull(response);
-        assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatusCode());
-        assertThat(response.body().asString(), containsString("Page index must be >= 0"));
+        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
+        assertThat(response.body().asString(), containsString("must be greater than or equal to 0"));
     }
 
     @Test
