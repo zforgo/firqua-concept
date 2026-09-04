@@ -25,7 +25,7 @@ import static io.github.zforgo.firqua.filter.jandex.JandexUtil.resolveHttpPath;
 import static java.util.stream.Collectors.toMap;
 import static org.eclipse.microprofile.openapi.OASFactory.createSchema;
 
-@OpenApiFilter(stages = { RunStage.BUILD })
+@OpenApiFilter(stages = { RunStage.RUNTIME_STARTUP })
 public class FilterResponseOASFilter implements OASFilter {
 
     private static final DotName ANN = DotName.createSimple(FilterResponse.class.getName());

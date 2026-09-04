@@ -18,8 +18,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.wildfly.common.Assert.assertNotNull;
 
 @QuarkusTest
 @LiquibaseMigration(runMode = PER_CLASS, dropFirst = true)
