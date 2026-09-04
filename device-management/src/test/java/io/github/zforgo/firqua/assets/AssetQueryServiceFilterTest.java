@@ -1,6 +1,7 @@
 package io.github.zforgo.firqua.assets;
 
 import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,6 @@ import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
 import static io.github.zforgo.firqua.test.liquibase.RunMode.PER_CLASS;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.startsWith;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -127,8 +126,10 @@ public class AssetQueryServiceFilterTest {
         var pas = new PagingAndSorting();
         pas.pageSize = pageSize;
         pas.pageIndex = pageIndex;
-        var ex = assertThrows(IllegalArgumentException.class, () -> queryService.filter(pas));
-        assertThat(ex.getMessage(), startsWith("Page index must be >= 0"));
+        var ex = assertThrows(ConstraintViolationException.class, () -> queryService.filter(pas));
+        assertEquals(1, ex.getConstraintViolations().size());
+        var violation = ex.getConstraintViolations().iterator().next();
+        assertEquals("{jakarta.validation.constraints.PositiveOrZero.message}", violation.getMessageTemplate());
     }
 
     @Test
