@@ -1,5 +1,6 @@
 package io.github.zforgo.firqua.common;
 
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.QueryParam;
 
@@ -22,6 +23,7 @@ public class PagingAndSorting {
     @DefaultValue(directionAscending)
     public Sort.Direction sortDirection;
 
+    @PositiveOrZero
     @QueryParam(param_PageIndex)
     public int pageIndex;
 

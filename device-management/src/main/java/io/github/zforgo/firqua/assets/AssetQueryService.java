@@ -7,6 +7,7 @@ import java.util.stream.Collector;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import io.github.zforgo.firqua.common.PagingAndSorting;
@@ -28,7 +29,7 @@ public class AssetQueryService {
         return assetMapper.toDto(asset);
     }
 
-    public FilterResult<AssetDto> filter(PagingAndSorting pas) {
+    public FilterResult<AssetDto> filter(@Valid PagingAndSorting pas) {
         var finalSort = Optional.ofNullable(pas.sortingCriteria)
                 .map(cr -> Sort.by(cr, pas.sortDirection))
                 .map(s -> mergeSort(s, DEFAULT_SORT))
