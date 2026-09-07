@@ -81,7 +81,6 @@ public class DeviceServiceTest {
     @Transactional
     @BeforeEach
     void beforeEach() {
-        //        System.out.println("dob");
         Device.deleteAll();
     }
 

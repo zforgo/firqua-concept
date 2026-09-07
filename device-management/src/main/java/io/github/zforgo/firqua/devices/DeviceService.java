@@ -21,7 +21,6 @@ import io.github.zforgo.firqua.common.IncompatibleAssetTypeException;
 import io.github.zforgo.firqua.common.PagingAndSorting;
 import io.github.zforgo.firqua.filter.FilterResult;
 
-//TODO get rid of generic warning
 //TODo dedup
 @ApplicationScoped
 public class DeviceService {
@@ -43,7 +42,7 @@ public class DeviceService {
                 .map(s -> mergeSort(s, DEFAULT_SORT))
                 .orElse(DEFAULT_SORT);
 
-        var baseQuery = Device.<Device> findAll(finalSort);
+        var baseQuery = Device.<Device<? extends Asset>> findAll(finalSort);
 
         Optional.of(pas)
                 .filter(ps -> ps.pageSize > 0)
