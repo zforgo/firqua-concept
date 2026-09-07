@@ -10,10 +10,14 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.ConstraintViolationException.ConstraintKind;
 
+import io.quarkus.arc.profile.IfBuildProfile;
+import io.quarkus.runtime.LaunchMode;
+
 import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
 
+@IfBuildProfile(anyOf = { LaunchMode.DEV_PROFILE, LaunchMode.TEST_PROFILE })
 @ApplicationScoped
-class AssetAdminService {
+public class AssetAdminService {
 
     @Inject
     AssetMapper assetMapper;

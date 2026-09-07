@@ -1,0 +1,24 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="base_organisation_units" context="base-data" author="zforgo">
+        <insert tableName="ORGANISATION_UNITS">
+            <column name="ID" valueSequenceNext="ORGANISATION_UNITS_SEQ"/>
+            <column name="NAME" value="Foo Unit"/>
+            <column name="SLUG" value="OU_FOO"/>
+        </insert>
+        <insert tableName="ORGANISATION_UNITS">
+            <column name="ID" valueSequenceNext="ORGANISATION_UNITS_SEQ"/>
+            <column name="NAME" value="Bar Unit"/>
+            <column name="SLUG" value="OU_BAR"/>
+        </insert>
+        <insert tableName="ORGANISATION_UNITS">
+            <column name="ID" valueSequenceNext="ORGANISATION_UNITS_SEQ"/>
+            <column name="NAME" value="Baz Unit"/>
+            <column name="SLUG" value="OU_BAZ"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
