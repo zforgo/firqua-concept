@@ -1,10 +1,11 @@
 package io.github.zforgo.firqua.test.liquibase;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.function.Function;
 
 import io.quarkus.arc.InstanceHandle;
+import io.quarkus.arc.Subclass;
 import io.quarkus.liquibase.LiquibaseFactory;
 import io.quarkus.liquibase.runtime.LiquibaseFactoryUtil;
 import io.quarkus.test.junit.callback.QuarkusTestAfterConstructCallback;
@@ -18,22 +19,13 @@ import static org.junit.platform.commons.util.AnnotationUtils.findAnnotation;
 
 public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback, QuarkusTestAfterConstructCallback {
 
-    private static final Function<QuarkusTestMethodContext, Optional<LiquibaseMigration>> getConfig = ctx -> findAnnotation(
-            ctx.getTestMethod(), LiquibaseMigration.class
-    )
-            .or(
-                    () -> Optional
-                            .ofNullable(ctx.getTestMethod().getDeclaringClass().getDeclaredAnnotation(LiquibaseMigration.class))
-            );
-
     @Override
     public void afterConstruct(Object testInstance) {
-        var testClass = testInstance.getClass();
+        var testClass = testClassOf(testInstance);
         var ann = testClass.getDeclaredAnnotation(LiquibaseMigration.class);
         if (ann != null && ann.runMode() == RunMode.PER_CLASS) {
-            var ran = DescriptionHolder.hasClass(testClass);
             try {
-                if (!ran) {
+                if (!DescriptionHolder.hasClass(testClass)) {
                     run(ann);
                 }
             } finally {
@@ -45,13 +37,13 @@ public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback
 
     @Override
     public void beforeEach(QuarkusTestMethodContext ctx) {
+        var testClass = testClassOf(ctx.getTestInstance());
         try {
-            getConfig
-                    .apply(ctx)
-                    .filter(ann -> needsRun(ann, ctx))
+            configOf(testClass, ctx.getTestMethod())
+                    .filter(ann -> needsRun(ann, testClass, ctx.getTestMethod()))
                     .ifPresent(LiquibaseMigrationCallback::run);
         } finally {
-            DescriptionHolder.store(ctx.getTestInstance().getClass(), ctx.getTestMethod());
+            DescriptionHolder.store(testClass, ctx.getTestMethod());
         }
     }
 
@@ -71,6 +63,16 @@ public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback
         }
     }
 
+    private static Class<?> testClassOf(Object testInstance) {
+        var testClass = testInstance.getClass();
+        return testInstance instanceof Subclass ? testClass.getSuperclass() : testClass;
+    }
+
+    private static Optional<LiquibaseMigration> configOf(Class<?> testClass, Method testMethod) {
+        return findAnnotation(testMethod, LiquibaseMigration.class)
+                .or(() -> Optional.ofNullable(testClass.getDeclaredAnnotation(LiquibaseMigration.class)));
+    }
+
     private static LiquibaseFactory factoryOf(String datasource) {
         return Optional.of(LiquibaseFactoryUtil.getLiquibaseFactory(datasource))
                 .filter(InstanceHandle::isAvailable)
@@ -82,11 +84,11 @@ public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback
                 );
     }
 
-    private static boolean needsRun(LiquibaseMigration ann, QuarkusTestMethodContext ctx) {
+    private static boolean needsRun(LiquibaseMigration ann, Class<?> testClass, Method testMethod) {
         return switch (ann.runMode()) {
             case ALWAYS -> true;
-            case PER_CLASS -> !DescriptionHolder.hasClass(ctx.getTestInstance().getClass());
-            case PER_METHOD -> !DescriptionHolder.hasMethod(ctx.getTestInstance().getClass(), ctx.getTestMethod());
+            case PER_CLASS -> !DescriptionHolder.hasClass(testClass);
+            case PER_METHOD -> !DescriptionHolder.hasMethod(testClass, testMethod);
         };
     }
 
