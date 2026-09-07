@@ -1,9 +1,5 @@
 package io.github.zforgo.firqua.devices;
 
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.stream.Collector;
-
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,7 +8,9 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-import io.quarkus.panache.common.Page;
+import org.hibernate.exception.ConstraintViolationException;
+
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Sort;
 
 import io.github.zforgo.firqua.assets.Asset;
@@ -21,14 +19,26 @@ import io.github.zforgo.firqua.common.IncompatibleAssetTypeException;
 import io.github.zforgo.firqua.common.PagingAndSorting;
 import io.github.zforgo.firqua.filter.FilterResult;
 
+import static io.github.zforgo.firqua.devices.DeviceServiceExceptionHandler.handleException;
+
 //TODo dedup
 @ApplicationScoped
-public class DeviceService {
+public class DeviceService implements PagedFilter<Device<? extends Asset>> {
 
     private static final Sort DEFAULT_SORT = Sort.ascending(Device_.NAME).and(Device_.ID, Sort.Direction.Ascending);
 
     @Inject
     DeviceMapper deviceMapper;
+
+    @Override
+    public Sort defaultSort() {
+        return DEFAULT_SORT;
+    }
+
+    @Override
+    public PanacheQuery<Device<? extends Asset>> baseQuery(Sort sort) {
+        return Device.findAll(sort);
+    }
 
     public DeviceDto<? extends AssetDto> getById(@NotNull Long id) {
         var device = Device.<Device<? extends Asset>> findByIdOptional(id)
@@ -37,23 +47,7 @@ public class DeviceService {
     }
 
     public FilterResult<DeviceDto<? extends AssetDto>> filter(@Valid PagingAndSorting pas) {
-        var finalSort = Optional.ofNullable(pas.sortingCriteria)
-                .map(cr -> Sort.by(cr, pas.sortDirection))
-                .map(s -> mergeSort(s, DEFAULT_SORT))
-                .orElse(DEFAULT_SORT);
-
-        var baseQuery = Device.<Device<? extends Asset>> findAll(finalSort);
-
-        Optional.of(pas)
-                .filter(ps -> ps.pageSize > 0)
-                .map(ps -> Page.of(ps.pageIndex, ps.pageSize))
-                .ifPresent(baseQuery::page);
-
-        var totalCount = baseQuery.count();
-        var items = baseQuery.stream()
-                .<DeviceDto<? extends AssetDto>> map(deviceMapper::toDto)
-                .toList();
-        return new FilterResult<>(items, totalCount, pas.pageIndex, pas.pageSize);
+        return pagedResult(pas, deviceMapper::toDto);
     }
 
     @Transactional
@@ -65,6 +59,8 @@ public class DeviceService {
 
         } catch (ClassCastException e) {
             throw new IncompatibleAssetTypeException(dto.assetId, dto.type);
+        } catch (ConstraintViolationException e) {
+            throw handleException(e, dto);
         }
     }
 
@@ -78,18 +74,8 @@ public class DeviceService {
             return deviceMapper.toDto(device);
         } catch (ClassCastException e) {
             throw new IncompatibleAssetTypeException(dto.assetId, dto.type);
+        } catch (ConstraintViolationException e) {
+            throw handleException(e, dto);
         }
-    }
-
-    private static Sort mergeSort(Sort... parts) {
-        return Arrays.stream(parts)
-                .flatMap(part -> part.getColumns().stream())
-                .collect(
-                        Collector.of(
-                                Sort::empty,
-                                (s, c) -> s.and(c.getName(), c.getDirection(), c.getNullPrecedence()),
-                                (a, _) -> a
-                        )
-                );
     }
 }

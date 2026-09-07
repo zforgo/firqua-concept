@@ -5,7 +5,7 @@ import jakarta.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -19,18 +19,19 @@ import io.github.zforgo.firqua.assets.MeteoSensorAssetCreateDto;
 import io.github.zforgo.firqua.assets.MeteoSensorAssetDto;
 import io.github.zforgo.firqua.assets.SosAssetCreateDto;
 import io.github.zforgo.firqua.assets.SosAssetDto;
+import io.github.zforgo.firqua.common.ConflictException;
 import io.github.zforgo.firqua.common.IncompatibleAssetTypeException;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 
 import static io.github.zforgo.firqua.test.liquibase.RunMode.PER_CLASS;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-//TODO displayName
 @QuarkusTest
 @LiquibaseMigration(runMode = PER_CLASS, dropFirst = true)
 @QuarkusTestResource(H2DatabaseTestResource.class)
@@ -85,6 +86,7 @@ public class DeviceServiceTest {
     }
 
     @Test
+    @DisplayName("SOS device created successfully")
     void sosDeviceCreated() {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
@@ -98,6 +100,7 @@ public class DeviceServiceTest {
     }
 
     @Test
+    @DisplayName("Meteo sensor device created successfully")
     void meteoDeviceCreated() {
         var input = new MeteoSensorDeviceCreateDto();
         input.organisationId = 1L;
@@ -111,6 +114,7 @@ public class DeviceServiceTest {
     }
 
     @Test
+    @DisplayName("Creation rejected when the asset type does not match the device type")
     void incompatibleTypeCreate() {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
@@ -119,12 +123,31 @@ public class DeviceServiceTest {
         assertThrows(IncompatibleAssetTypeException.class, () -> deviceService.createDevice(input));
     }
 
-    //CREATION
-    //TODO create duplicated name
-
-    @Disabled("Constraint violation not handled yet")
     @Test
-    //TODO refine assertions
+    @DisplayName("Creation rejected when the name is already taken")
+    void duplicatedNameCreate() {
+        var sos = new SosDeviceCreateDto();
+        sos.organisationId = 1L;
+        sos.assetId = sosAsset.id;
+        sos.name = "SOS-CREATE-MULTI-001";
+        deviceService.createDevice(sos);
+
+        var met = new MeteoSensorDeviceCreateDto();
+        met.organisationId = 1L;
+        met.assetId = metAsset.id;
+        met.name = sos.name;
+        var ex = assertThrows(ConflictException.class, () -> deviceService.createDevice(met));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("name", ex.getKey()),
+                () -> assertEquals(sos.name, ex.getValue())
+
+        );
+
+    }
+
+    @Test
+    @DisplayName("Creation rejected when the asset is already assigned to another device")
     void multipleAssignmentCreate() {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
@@ -138,10 +161,17 @@ public class DeviceServiceTest {
 
         input.organisationId = 2L;
         input.name = "SOS-TEST-002";
-        var wtf = deviceService.createDevice(input);
+        var ex = assertThrows(ConflictException.class, () -> deviceService.createDevice(input));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("assetId", ex.getKey()),
+                () -> assertEquals(sosAsset.id, ex.getValue())
+
+        );
     }
 
     @Test
+    @DisplayName("Name and asset updated successfully")
     void validUpdate() {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
@@ -160,6 +190,7 @@ public class DeviceServiceTest {
     }
 
     @Test
+    @DisplayName("Update rejected when the modified asset type does not match the device type")
     void incompatibleUpdate() {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
@@ -173,12 +204,33 @@ public class DeviceServiceTest {
         assertThrows(IncompatibleAssetTypeException.class, () -> deviceService.updateDevice(result.id, input));
     }
 
-    //MODIFICATION
-    //TODO update to duplicated name
-
-    @Disabled("Constraint violation not handled yet")
     @Test
-    //TODO refine assertions
+    @DisplayName("Update rejected when the name is already taken")
+    void duplicatedNameUpdate() {
+        var sos = new SosDeviceCreateDto();
+        sos.organisationId = 1L;
+        sos.assetId = sosAsset.id;
+        sos.name = "SOS-UPDATE-MULTIPLE-001";
+        deviceService.createDevice(sos);
+
+        var met = new MeteoSensorDeviceCreateDto();
+        met.organisationId = 1L;
+        met.assetId = metAsset.id;
+        met.name = "MET-UPDATE-001";
+        var dto = deviceService.createDevice(met);
+        assertNotNull(dto);
+        met.name = sos.name;
+        var ex = assertThrows(ConflictException.class, () -> deviceService.updateDevice(dto.id, met));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("name", ex.getKey()),
+                () -> assertEquals(met.name, ex.getValue())
+
+        );
+    }
+
+    @Test
+    @DisplayName("Update rejected when the asset is already assigned to another device")
     void multipleAssignmentUpdate() {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
@@ -195,10 +247,17 @@ public class DeviceServiceTest {
         assertNotNull(second.id);
 
         input02.assetId = first.asset.id;
-        var x = deviceService.updateDevice(second.id, input02);
+        var ex = assertThrows(ConflictException.class, () -> deviceService.updateDevice(second.id, input02));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("assetId", ex.getKey()),
+                () -> assertEquals(sosAsset.id, ex.getValue())
+
+        );
     }
 
     @Test
+    @DisplayName("Update rejected when the device type would change")
     void deviceTypeUpdate() {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
