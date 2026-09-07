@@ -8,8 +8,10 @@ import io.quarkus.arc.InstanceHandle;
 import io.quarkus.arc.Subclass;
 import io.quarkus.liquibase.LiquibaseFactory;
 import io.quarkus.liquibase.runtime.LiquibaseFactoryUtil;
+import io.quarkus.test.junit.callback.QuarkusTestAfterAllCallback;
 import io.quarkus.test.junit.callback.QuarkusTestAfterConstructCallback;
 import io.quarkus.test.junit.callback.QuarkusTestBeforeEachCallback;
+import io.quarkus.test.junit.callback.QuarkusTestContext;
 import io.quarkus.test.junit.callback.QuarkusTestMethodContext;
 import liquibase.Contexts;
 import liquibase.UpdateSummaryOutputEnum;
@@ -17,7 +19,8 @@ import liquibase.exception.LiquibaseException;
 
 import static org.junit.platform.commons.util.AnnotationUtils.findAnnotation;
 
-public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback, QuarkusTestAfterConstructCallback {
+public class LiquibaseMigrationCallback
+        implements QuarkusTestBeforeEachCallback, QuarkusTestAfterConstructCallback, QuarkusTestAfterAllCallback {
 
     @Override
     public void afterConstruct(Object testInstance) {
@@ -32,7 +35,6 @@ public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback
                 DescriptionHolder.store(testClass, null);
             }
         }
-
     }
 
     @Override
@@ -45,6 +47,13 @@ public class LiquibaseMigrationCallback implements QuarkusTestBeforeEachCallback
         } finally {
             DescriptionHolder.store(testClass, ctx.getTestMethod());
         }
+    }
+
+    @Override
+    public void afterAll(QuarkusTestContext ctx) {
+        Optional.ofNullable(ctx.getTestInstance())
+                .map(LiquibaseMigrationCallback::testClassOf)
+                .ifPresent(DescriptionHolder::discard);
     }
 
     private static void run(LiquibaseMigration ann) {
