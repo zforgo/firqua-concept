@@ -8,6 +8,7 @@ import jakarta.ws.rs.ext.Provider;
 
 import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
 
+@Deprecated
 @Provider
 public class NonUniqueIpAddressExceptionMapper implements ExceptionMapper<NonUniqueIpAddressException> {
 

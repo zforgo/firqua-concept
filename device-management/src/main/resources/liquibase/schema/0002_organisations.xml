@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="organisation_units_init" author="zforgo">
+        <createSequence sequenceName="ORGANISATION_UNITS_SEQ" startValue="1" incrementBy="1"/>
+        <createTable tableName="ORGANISATION_UNITS" remarks="Base table of Organisation Units">
+            <column name="ID" type="${numericId}" remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_ORGANISATION_UNITS"/>
+            </column>
+            <column name="NAME" type="${shortString}" remarks="Name of an Organisation Unit">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SLUG" type="${enumName}" remarks="SLUG (url friendly name) of an Organisation Unit">
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_ORGANISATION_UNITS_SLUG"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+</databaseChangeLog>

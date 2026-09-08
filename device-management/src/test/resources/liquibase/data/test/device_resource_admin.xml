@@ -4,30 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="sample_assets" context="sample-data" author="zforgo">
-        <insert tableName="ASSETS">
-            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
-            <column name="ASSET_TYPE" value="SOS"/>
-            <column name="NAME" value="SOS-001"/>
-            <column name="VENDOR_NAME" value="J&amp;R Technology"/>
-            <column name="VENDOR_MODEL" value="JR321-SC"/>
-        </insert>
-        <insert tableName="ASSETS_SOS_STATIONS">
-            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
-            <column name="STATION_ID" value="SOS-FOO-001"/>
-        </insert>
-        <insert tableName="ASSETS">
-            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
-            <column name="ASSET_TYPE" value="SOS"/>
-            <column name="NAME" value="SOS-002"/>
-            <column name="VENDOR_NAME" value="J&amp;R Technology"/>
-            <column name="VENDOR_MODEL" value="JR321-SC"/>
-        </insert>
-        <insert tableName="ASSETS_SOS_STATIONS">
-            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
-            <column name="STATION_ID" value="SOS-FOO-002"/>
-            <column name="SERVICE_PROVIDER" value="Verizon"/>
-        </insert>
+    <changeSet id="test_assets_for_device_admin" author="zforgo" context="device_resource_admin">
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="METEO"/>
@@ -49,6 +26,28 @@
         <insert tableName="ASSETS_METEO_SENSORS">
             <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
             <column name="STATION_ID" value="MET-FOO-002"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="SOS"/>
+            <column name="NAME" value="SOS-001"/>
+            <column name="VENDOR_NAME" value="J&amp;R Technology"/>
+            <column name="VENDOR_MODEL" value="JR321-SC"/>
+        </insert>
+        <insert tableName="ASSETS_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="SOS-FOO-001"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="SOS"/>
+            <column name="NAME" value="SOS-002"/>
+            <column name="VENDOR_NAME" value="J&amp;R Technology"/>
+            <column name="VENDOR_MODEL" value="JR321-SC"/>
+        </insert>
+        <insert tableName="ASSETS_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="SOS-FOO-002"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

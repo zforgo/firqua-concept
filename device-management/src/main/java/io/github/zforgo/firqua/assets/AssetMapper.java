@@ -32,6 +32,7 @@ public interface AssetMapper {
         switch (dto) {
             case SosAssetCreateDto sos when entity instanceof SosAsset target -> updateEntity(sos, target);
             case MeteoSensorAssetCreateDto meteo when entity instanceof MeteoAsset target -> updateEntity(meteo, target);
+            //TODO custom exception would be better to map it a client error on rest side
             default -> throw new IllegalArgumentException(
                     "Cannot apply %s on %s, asset type is immutable"
                             .formatted(dto.getClass().getSimpleName(), entity.getClass().getSimpleName())
