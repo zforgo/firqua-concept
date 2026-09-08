@@ -1,7 +1,6 @@
 package io.github.zforgo.firqua.devices;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import io.github.zforgo.firqua.assets.Asset;
@@ -11,7 +10,7 @@ import io.github.zforgo.firqua.assets.AssetMapper;
 import static org.mapstruct.MappingConstants.ComponentModel.JAKARTA_CDI;
 
 @Mapper(componentModel = JAKARTA_CDI, uses = { AssetMapper.class, DeviceReferenceResolver.class })
-public interface DeviceMapper {
+interface DeviceMapper {
 
     SosDeviceDto toDto(SosDevice entity);
 
@@ -26,14 +25,10 @@ public interface DeviceMapper {
         };
     }
 
-    @Mapping(target = "asset", source = "assetId")
-    @Mapping(target = "organisationUnit", source = "organisationId")
-    @Mapping(target = "id", ignore = true)
+    @DefaultMapperConfig
     MeteoSensorDevice toEntity(MeteoSensorDeviceCreateDto dto);
 
-    @Mapping(target = "asset", source = "assetId")
-    @Mapping(target = "organisationUnit", source = "organisationId")
-    @Mapping(target = "id", ignore = true)
+    @DefaultMapperConfig
     SosDevice toEntity(SosDeviceCreateDto dto);
 
     default Device<? extends Asset> toEntity(DeviceCreateDto dto) {
@@ -44,14 +39,10 @@ public interface DeviceMapper {
 
     }
 
-    @Mapping(target = "asset", source = "assetId")
-    @Mapping(target = "organisationUnit", source = "organisationId")
-    @Mapping(target = "id", ignore = true)
+    @DefaultMapperConfig
     void updateEntity(SosDeviceCreateDto dto, @MappingTarget SosDevice entity);
 
-    @Mapping(target = "asset", source = "assetId")
-    @Mapping(target = "organisationUnit", source = "organisationId")
-    @Mapping(target = "id", ignore = true)
+    @DefaultMapperConfig
     void updateEntity(MeteoSensorDeviceCreateDto dto, @MappingTarget MeteoSensorDevice entity);
 
     default void updateEntity(DeviceCreateDto dto, @MappingTarget Device<? extends Asset> entity) {
