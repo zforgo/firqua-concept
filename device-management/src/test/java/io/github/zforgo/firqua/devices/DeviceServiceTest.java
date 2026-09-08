@@ -100,7 +100,7 @@ public class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("Meteo sensor device created successfully")
+    @DisplayName("MET device created successfully")
     void meteoDeviceCreated() {
         var input = new MeteoSensorDeviceCreateDto();
         input.organisationId = 1L;
@@ -141,9 +141,7 @@ public class DeviceServiceTest {
                 "Exception parameters",
                 () -> assertEquals("name", ex.getKey()),
                 () -> assertEquals(sos.name, ex.getValue())
-
         );
-
     }
 
     @Test
@@ -166,7 +164,6 @@ public class DeviceServiceTest {
                 "Exception parameters",
                 () -> assertEquals("assetId", ex.getKey()),
                 () -> assertEquals(sosAsset.id, ex.getValue())
-
         );
     }
 
@@ -252,7 +249,6 @@ public class DeviceServiceTest {
                 "Exception parameters",
                 () -> assertEquals("assetId", ex.getKey()),
                 () -> assertEquals(sosAsset.id, ex.getValue())
-
         );
     }
 

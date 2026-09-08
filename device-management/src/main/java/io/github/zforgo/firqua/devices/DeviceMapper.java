@@ -59,6 +59,7 @@ public interface DeviceMapper {
             case SosDeviceCreateDto sos when entity instanceof SosDevice target -> updateEntity(sos, target);
             case MeteoSensorDeviceCreateDto meteo when entity instanceof MeteoSensorDevice target ->
                 updateEntity(meteo, target);
+            //TODO custom exception would be better to map it a client error on rest side
             default -> throw new IllegalArgumentException(
                     "Cannot apply %s on %s, device type is immutable"
                             .formatted(dto.getClass().getSimpleName(), entity.getClass().getSimpleName())
