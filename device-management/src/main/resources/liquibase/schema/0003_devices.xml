@@ -1,0 +1,74 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="devices_init" author="zforgo">
+        <createSequence sequenceName="DEVICES_SEQ" startValue="1" incrementBy="1"/>
+        <createTable tableName="DEVICES" remarks="Base table of Device">
+            <column name="ID" type="${numericId}" remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_DEVICES"/>
+            </column>
+            <column name="DEVICE_TYPE" type="${enumName}" remarks="Type of a Device (enumerated discriminator)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="${shortString}" remarks="Name of a Device">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ASSET_ID" type="${numericId}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ORGANISATION_UNIT_ID" type="${numericId}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="ASSET_ID"
+                                 baseTableName="DEVICES"
+                                 constraintName="FK_DEVICES_TO_ASSETS"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="ASSETS"/>
+        <addForeignKeyConstraint baseColumnNames="ORGANISATION_UNIT_ID"
+                                 baseTableName="DEVICES"
+                                 constraintName="FK_DEVICES_TO_ORGANISATION_UNITS"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="ORGANISATION_UNITS"/>
+        <addUniqueConstraint columnNames="ASSET_ID"
+                             constraintName="UQ_DEVICES_ASSET"
+                             tableName="DEVICES"/>
+        <addUniqueConstraint columnNames="NAME"
+                             constraintName="UQ_DEVICES_NAME"
+                             tableName="DEVICES"/>
+
+        <createTable tableName="DEVICES_METEO_SENSORS" remarks="Specific table of Meteo Devices">
+            <column name="ID" type="${numericId}" remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_DEVICES_METEO_SENSORS"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="ID"
+                                 baseTableName="DEVICES_METEO_SENSORS"
+                                 constraintName="FK_DEVICES_METEO_SENSORS_TO_DEVICES"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="DEVICES"/>
+
+        <createTable tableName="DEVICES_SOS_STATIONS" remarks="Specific table of SOS stations">
+            <column name="ID" type="${numericId}" remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_DEVICES_SOS_STATIONS"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="ID"
+                                 baseTableName="DEVICES_SOS_STATIONS"
+                                 constraintName="FK_DEVICES_SOS_STATIONS_TO_DEVICES"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="DEVICES"/>
+    </changeSet>
+
+
+</databaseChangeLog>

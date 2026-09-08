@@ -1,5 +1,6 @@
 package io.github.zforgo.firqua.common;
 
+@Deprecated
 public class NonUniqueIpAddressException extends RuntimeException {
 
     private static final String template = "Ip address %s already in use.";
