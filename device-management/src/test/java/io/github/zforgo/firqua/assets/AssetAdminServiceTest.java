@@ -14,6 +14,7 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
+import io.github.zforgo.firqua.common.ConflictException;
 import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 
@@ -40,7 +41,7 @@ class AssetAdminServiceTest {
     @ParameterizedTest
     @MethodSource("validCreateParams")
     @DisplayName("Every valid AssetCreateDto subtype is persisted successfully")
-    <I extends AssetCreateDto & IpAddressAwareDto, R extends AssetDto & IpAddressAwareDto> void sampleCreate(
+    <I extends AssetCreateDto & IpAddressAwareDto, R extends AssetDto & IpAddressAwareDto> void validCreate(
             I input,
             Class<R> resultClass
     ) {
@@ -104,11 +105,105 @@ class AssetAdminServiceTest {
 
     }
 
+    @Test
+    @DisplayName("Creation rejected when the name is already taken")
+    void createDuplicatedName() {
+        var sos = new SosAssetCreateDto();
+        sos.stationId = "SOS-TEST-001";
+        sos.name = "DUPLICATION-001";
+        sos.serviceProvider = "AT&T";
+        sos.vendor = "J&R Technology";
+        sos.model = "JR321-SC";
+
+        var met = new MeteoSensorAssetCreateDto();
+        met.stationId = "MET-TEST-001";
+        met.name = "DUPLICATION-001";
+        met.vendor = "Lufft";
+        met.model = "WS500";
+
+        var result = service.createAsset(sos);
+        assertNotNull(result);
+        assertInstanceOf(SosAssetDto.class, result);
+        assertAll(
+                () -> assertNotNull(result.id),
+                () -> assertTrue(result.id > 0)
+        );
+        var ex = assertThrows(ConflictException.class, () -> service.createAsset(met));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("name", ex.getKey()),
+                () -> assertEquals(met.name, ex.getValue())
+        );
+    }
+
+    @Test
+    @DisplayName("Creation SOS asset rejected when the stationId is already taken")
+    void createDuplicatedSosStationId() {
+        var sos = new SosAssetCreateDto();
+        sos.stationId = "DUPLICATED-001";
+        sos.name = "SOS-001";
+        sos.serviceProvider = "AT&T";
+        sos.vendor = "J&R Technology";
+        sos.model = "JR321-SC";
+
+        var duplication = new SosAssetCreateDto();
+        duplication.stationId = "DUPLICATED-001";
+        duplication.name = "SOS-002";
+        duplication.serviceProvider = "AT&T";
+        duplication.vendor = "J&R Technology";
+        duplication.model = "JR321-SC";
+
+        var result = service.createAsset(sos);
+        assertNotNull(result);
+        assertInstanceOf(SosAssetDto.class, result);
+        assertAll(
+                () -> assertNotNull(result.id),
+                () -> assertTrue(result.id > 0)
+        );
+        var ex = assertThrows(ConflictException.class, () -> service.createAsset(duplication));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("stationId", ex.getKey()),
+                () -> assertEquals(duplication.stationId, ex.getValue())
+        );
+    }
+
+    @Test
+    @DisplayName("Creation MET asset rejected when the stationId is already taken")
+    void createDuplicatedMeteoStationId() {
+
+        var met = new MeteoSensorAssetCreateDto();
+        met.stationId = "DUPLICATED-001";
+        met.name = "METS-001";
+        met.vendor = "Lufft";
+        met.model = "WS500";
+
+        var duplication = new MeteoSensorAssetCreateDto();
+        duplication.stationId = "DUPLICATED-001";
+        duplication.name = "MET-002";
+        duplication.vendor = "Lufft";
+        duplication.model = "WS500";
+
+        var result = service.createAsset(met);
+        assertNotNull(result);
+        assertInstanceOf(MeteoSensorAssetDto.class, result);
+        assertAll(
+                () -> assertNotNull(result.id),
+                () -> assertTrue(result.id > 0)
+        );
+        var ex = assertThrows(ConflictException.class, () -> service.createAsset(duplication));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("stationId", ex.getKey()),
+                () -> assertEquals(duplication.stationId, ex.getValue())
+        );
+    }
+
     @LiquibaseMigration(runMode = ALWAYS, dropFirst = true)
     @ParameterizedTest
     @MethodSource("modifiedEntities")
     @DisplayName("Every valid Asset modification is persisted successfully")
-    <I extends AssetCreateDto & IpAddressAwareDto, R extends AssetDto & IpAddressAwareDto> void modify(
+    <I extends AssetCreateDto & IpAddressAwareDto, R extends AssetDto & IpAddressAwareDto> void validModification(
             I orig,
             I modified, Class<R> resultClass
     ) {
@@ -117,6 +212,87 @@ class AssetAdminServiceTest {
         var modifiedResult = service.updateAsset(createResult.id, modified);
         var dto = assertInstanceOf(resultClass, modifiedResult);
         assertEquals(modified.getIpAddress(), dto.getIpAddress());
+    }
+
+    @Test
+    @DisplayName("Update rejected when the name is already taken")
+    void modifyToExistingName() {
+        var sos = new SosAssetCreateDto();
+        sos.stationId = "SOS-FOO-001";
+        sos.name = "SOS-001";
+        sos.serviceProvider = "AT&T";
+        sos.vendor = "J&R Technology";
+        sos.model = "JR321-SC";
+
+        var met = new MeteoSensorAssetCreateDto();
+        met.stationId = "MET-FOO-001";
+        met.name = "METS-001";
+        met.vendor = "Lufft";
+        met.model = "WS500";
+        service.createAsset(sos);
+        var created = service.createAsset(met);
+        met.name = sos.name;
+
+        var ex = assertThrows(ConflictException.class, () -> service.updateAsset(created.id, met));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("name", ex.getKey()),
+                () -> assertEquals(met.name, ex.getValue())
+        );
+    }
+
+    @Test
+    @DisplayName("Update SOS asset rejected when stationId is taken")
+    void modifySosToExistingStationId() {
+        var first = new SosAssetCreateDto();
+        first.stationId = "SOS-FOO-001";
+        first.name = "SOS-001";
+        first.serviceProvider = "AT&T";
+        first.vendor = "J&R Technology";
+        first.model = "JR321-SC";
+        service.createAsset(first);
+
+        var second = new SosAssetCreateDto();
+        second.stationId = "SOS-FOO-002";
+        second.name = "SOS-002";
+        second.serviceProvider = "AT&T";
+        second.vendor = "J&R Technology";
+        second.model = "JR321-SC";
+        var created = service.createAsset(second);
+        second.stationId = first.stationId;
+
+        var ex = assertThrows(ConflictException.class, () -> service.updateAsset(created.id, second));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("stationId", ex.getKey()),
+                () -> assertEquals(second.stationId, ex.getValue())
+        );
+    }
+
+    @Test
+    @DisplayName("Update SOS asset rejected when stationId is taken")
+    void modifyMetToExistingStationId() {
+        var first = new MeteoSensorAssetCreateDto();
+        first.stationId = "MET-FOO-001";
+        first.name = "METS-001";
+        first.vendor = "Lufft";
+        first.model = "WS500";
+        service.createAsset(first);
+
+        var second = new MeteoSensorAssetCreateDto();
+        second.stationId = "MET-FOO-002";
+        second.name = "METS-002";
+        second.vendor = "Lufft";
+        second.model = "WS500";
+        var created = service.createAsset(second);
+
+        second.stationId = first.stationId;
+        var ex = assertThrows(ConflictException.class, () -> service.updateAsset(created.id, second));
+        assertAll(
+                "Exception parameters",
+                () -> assertEquals("stationId", ex.getKey()),
+                () -> assertEquals(second.stationId, ex.getValue())
+        );
     }
 
     @Test
@@ -142,7 +318,27 @@ class AssetAdminServiceTest {
         metWithIp.setIpAddress(sosWithIp.getIpAddress());
         var ex = assertThrows(NonUniqueIpAddressException.class, () -> service.updateAsset(metResult.id, metWithIp));
         assertThat(ex.getMessage(), containsString(metWithIp.getIpAddress()));
+    }
 
+    @Test
+    @DisplayName("Update rejected when the modified entity type does not match the dto type")
+    void incompatibleUpdate() {
+        var sos = new SosAssetCreateDto();
+        sos.stationId = "SOS-FOO-001";
+        sos.name = "SOS-001";
+        sos.serviceProvider = "AT&T";
+        sos.vendor = "J&R Technology";
+        sos.model = "JR321-SC";
+        var created = service.createAsset(sos);
+
+        var met = new MeteoSensorAssetCreateDto();
+        met.stationId = "MET-FOO-001";
+        met.name = "METS-001";
+        met.vendor = "Lufft";
+        met.model = "WS500";
+
+        var ex = assertThrows(IllegalArgumentException.class, () -> service.updateAsset(created.id, met));
+        assertThat(ex.getMessage(), containsString("asset type is immutable"));
     }
 
     static Stream<Arguments> modifiedEntities() {

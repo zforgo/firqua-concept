@@ -8,12 +8,9 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotNull;
 
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.exception.ConstraintViolationException.ConstraintKind;
 
 import io.quarkus.arc.profile.IfBuildProfile;
 import io.quarkus.runtime.LaunchMode;
-
-import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
 
 @IfBuildProfile(anyOf = { LaunchMode.DEV_PROFILE, LaunchMode.TEST_PROFILE })
 @ApplicationScoped
@@ -27,16 +24,9 @@ public class AssetAdminService {
         var asset = assetMapper.toEntity(dto);
         try {
             asset.persistAndFlush();
-
             return assetMapper.toDto(asset);
-        } catch (ConstraintViolationException e) { //TODO dedup
-            if (
-                e.getKind() == ConstraintKind.UNIQUE && e.getConstraintName() != null
-                        && e.getConstraintName().toUpperCase().contains("PK_ASSETS_IP_ADDRESSES")
-            ) {
-                throw NonUniqueIpAddressException.byAddress(((IpAddressAware) asset).getIpAddress().getAddress(), e);
-            }
-            throw e;
+        } catch (ConstraintViolationException e) {
+            throw AssetServiceExceptionHandler.INSTANCE.handleException(e, dto);
         }
     }
 
@@ -48,16 +38,9 @@ public class AssetAdminService {
         assetMapper.updateEntity(dto, asset);
         try {
             asset.persistAndFlush();
-
             return assetMapper.toDto(asset);
-        } catch (ConstraintViolationException e) { //TODO dedup
-            if (
-                e.getKind() == ConstraintKind.UNIQUE && e.getConstraintName() != null
-                        && e.getConstraintName().toUpperCase().contains("PK_ASSETS_IP_ADDRESSES")
-            ) {
-                throw NonUniqueIpAddressException.byAddress(((IpAddressAware) asset).getIpAddress().getAddress(), e);
-            }
-            throw e;
+        } catch (ConstraintViolationException e) {
+            throw AssetServiceExceptionHandler.INSTANCE.handleException(e, dto);
         }
     }
 }

@@ -25,13 +25,14 @@
                 <constraints nullable="false"/>
             </column>
             <column name="NAME" type="${shortString}" remarks="Name of an Asset">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_ASSETS_NAME"/>
             </column>
             <column name="VENDOR_NAME" type="${shortString}" remarks="Vendor's name of an Asset">
                 <constraints nullable="false"/>
             </column>
             <column name="VENDOR_MODEL" type="${shortString}" remarks="Vendor's model of an Asset"/>
         </createTable>
+
         <createTable tableName="ASSETS_METEO_SENSORS" remarks="Base table of Meteo Asset">
             <column name="ID" type="${numericId}" remarks="Unique identifier">
                 <constraints nullable="false"
@@ -39,7 +40,7 @@
                              primaryKeyName="PK_ASSETS_METEO_SENSORS"/>
             </column>
             <column name="STATION_ID" type="${slugId}" remarks="External identifier of the meteo station (slug)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_METEO_ASSETS_STATION_ID"/>
             </column>
             <column name="IP_ADDRESS" type="${ipAddr}" remarks="IP Address of the meteo station">
                 <constraints unique="true" uniqueConstraintName="UQ_ASSETS_METEO_SENSORS_IP_ADDRESS"/>
@@ -62,8 +63,8 @@
                              primaryKey="true"
                              primaryKeyName="PK_ASSETS_SOS_STATIONS"/>
             </column>
-            <column name="STATION_ID" type="${slugId}" remarks="External identifier of the meteo station (slug)">
-                <constraints nullable="false" unique="true"/>
+            <column name="STATION_ID" type="${slugId}" remarks="External identifier of the sos station (slug)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_SOS_ASSETS_STATION_ID"/>
             </column>
             <column name="SERVICE_PROVIDER" type="${slugId}"
                     remarks="URL-friendly identifier of the associated service provider"/>

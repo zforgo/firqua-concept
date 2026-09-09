@@ -17,10 +17,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="NAME" type="${shortString}" remarks="Name of a Device">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_DEVICES_NAME"/>
             </column>
             <column name="ASSET_ID" type="${numericId}">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_DEVICES_ASSET"/>
             </column>
             <column name="ORGANISATION_UNIT_ID" type="${numericId}">
                 <constraints nullable="false"/>
@@ -36,12 +36,6 @@
                                  constraintName="FK_DEVICES_TO_ORGANISATION_UNITS"
                                  referencedColumnNames="ID"
                                  referencedTableName="ORGANISATION_UNITS"/>
-        <addUniqueConstraint columnNames="ASSET_ID"
-                             constraintName="UQ_DEVICES_ASSET"
-                             tableName="DEVICES"/>
-        <addUniqueConstraint columnNames="NAME"
-                             constraintName="UQ_DEVICES_NAME"
-                             tableName="DEVICES"/>
 
         <createTable tableName="DEVICES_METEO_SENSORS" remarks="Specific table of Meteo Devices">
             <column name="ID" type="${numericId}" remarks="Unique identifier">
