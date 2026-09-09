@@ -15,7 +15,7 @@ import static org.hibernate.validator.constraints.IpAddress.Type.IPv4;
 @Schema(name = "MeteoSensorAssetCreate",
         allOf = { AssetCreateDto.class },
         properties = @SchemaProperty(name = "type", enumeration = "METEO"))
-public final class MeteoSensorAssetCreateDto extends AssetCreateDto implements IpAddressAwareDto {
+public final class MeteoSensorAssetCreateDto extends AssetCreateDto implements IpAddressAwareDto, StationAwareDto {
 
     {
         type = AssetType.METEO;
@@ -38,5 +38,10 @@ public final class MeteoSensorAssetCreateDto extends AssetCreateDto implements I
     @Override
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    @Override
+    public String getStationId() {
+        return stationId;
     }
 }

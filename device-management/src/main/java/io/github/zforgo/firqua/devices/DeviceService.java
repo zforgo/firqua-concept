@@ -19,8 +19,6 @@ import io.github.zforgo.firqua.common.IncompatibleAssetTypeException;
 import io.github.zforgo.firqua.common.PagingAndSorting;
 import io.github.zforgo.firqua.filter.FilterResult;
 
-import static io.github.zforgo.firqua.devices.DeviceServiceExceptionHandler.handleException;
-
 //TODo dedup
 @ApplicationScoped
 public class DeviceService implements PagedFilter<Device<? extends Asset>> {
@@ -60,7 +58,7 @@ public class DeviceService implements PagedFilter<Device<? extends Asset>> {
         } catch (ClassCastException e) {
             throw new IncompatibleAssetTypeException(dto.assetId, dto.type);
         } catch (ConstraintViolationException e) {
-            throw handleException(e, dto);
+            throw DeviceServiceExceptionHandler.INSTANCE.handleException(e, dto);
         }
     }
 
@@ -75,7 +73,7 @@ public class DeviceService implements PagedFilter<Device<? extends Asset>> {
         } catch (ClassCastException e) {
             throw new IncompatibleAssetTypeException(dto.assetId, dto.type);
         } catch (ConstraintViolationException e) {
-            throw handleException(e, dto);
+            throw DeviceServiceExceptionHandler.INSTANCE.handleException(e, dto);
         }
     }
 }
