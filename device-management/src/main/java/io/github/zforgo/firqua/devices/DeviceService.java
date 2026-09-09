@@ -15,11 +15,8 @@ import io.quarkus.panache.common.Sort;
 
 import io.github.zforgo.firqua.assets.Asset;
 import io.github.zforgo.firqua.assets.AssetDto;
-import io.github.zforgo.firqua.common.IncompatibleAssetTypeException;
 import io.github.zforgo.firqua.common.PagingAndSorting;
 import io.github.zforgo.firqua.filter.FilterResult;
-
-import static io.github.zforgo.firqua.devices.DeviceServiceExceptionHandler.handleException;
 
 @ApplicationScoped
 public class DeviceService implements PagedFilter<Device<? extends Asset>> {
