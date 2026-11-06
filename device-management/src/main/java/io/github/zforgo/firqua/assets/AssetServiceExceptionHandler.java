@@ -3,7 +3,7 @@ package io.github.zforgo.firqua.assets;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-import io.github.zforgo.firqua.common.ConflictException;
+import io.github.zforgo.firqua.common.NonUniqueException;
 import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
 import io.github.zforgo.firqua.common.ServiceExceptionHandler;
 
@@ -13,9 +13,9 @@ public final class AssetServiceExceptionHandler implements ServiceExceptionHandl
 
     private final Map<String, BiFunction<AssetCreateDto, Throwable, RuntimeException>> UNIQUE_CONSTRAINTS = Map
             .of(
-                    "UQ_ASSETS_NAME", (dto, cause) -> new ConflictException("name", dto.name, cause),
+                    "UQ_ASSETS_NAME", (dto, cause) -> new NonUniqueException("name", dto.name, cause),
                     "_ASSETS_STATION_ID",
-                    (dto, cause) -> new ConflictException("stationId", ((StationAwareDto) dto).getStationId(), cause),
+                    (dto, cause) -> new NonUniqueException("stationId", ((StationAwareDto) dto).getStationId(), cause),
                     "PK_ASSETS_IP_ADDRESSES",
                     (dto, cause) -> NonUniqueIpAddressException.byAddress(((IpAddressAwareDto) dto).getIpAddress(), cause)
             );
