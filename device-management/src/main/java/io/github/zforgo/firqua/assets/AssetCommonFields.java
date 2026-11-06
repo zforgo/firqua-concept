@@ -11,6 +11,8 @@ public abstract class AssetCommonFields {
     @NotBlank
     public String name;
 
+    public boolean enabled = false;
+
     @NotBlank
     public String vendor;
 

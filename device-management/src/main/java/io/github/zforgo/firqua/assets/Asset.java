@@ -28,6 +28,9 @@ public abstract class Asset extends PanacheEntity {
     @Column(name = "NAME", nullable = false)
     public String name;
 
+    @Column(name = "ENABLED", nullable = false)
+    public boolean enabled = false;
+
     @Column(name = "VENDOR_NAME", nullable = false)
     public String vendor;
 

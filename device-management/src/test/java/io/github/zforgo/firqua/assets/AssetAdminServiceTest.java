@@ -57,9 +57,14 @@ class AssetAdminServiceTest {
         var dto = assertInstanceOf(resultClass, result);
         assertAll(
                 () -> assertNotNull(result.id),
-                () -> assertTrue(result.id > 0)
+                () -> assertTrue(result.id > 0),
+                () -> assertEquals(input.name, dto.name),
+                () -> assertEquals(input.enabled, dto.enabled),
+                () -> assertEquals(input.type, dto.type),
+                () -> assertEquals(input.vendor, dto.vendor),
+                () -> assertEquals(input.model, dto.model),
+                () -> assertEquals(input.getIpAddress(), dto.getIpAddress())
         );
-        assertEquals(input.getIpAddress(), dto.getIpAddress());
     }
 
     @ParameterizedTest
@@ -217,7 +222,17 @@ class AssetAdminServiceTest {
         assertNotNull(createResult);
         var modifiedResult = assetAdminService.updateAsset(createResult.id, modified);
         var dto = assertInstanceOf(resultClass, modifiedResult);
-        assertEquals(modified.getIpAddress(), dto.getIpAddress());
+        assertAll(
+                () -> assertNotNull(modifiedResult.id),
+                () -> assertTrue(modifiedResult.id > 0),
+                () -> assertEquals(createResult.id, modifiedResult.id),
+                () -> assertEquals(modified.name, dto.name),
+                () -> assertEquals(modified.enabled, dto.enabled),
+                () -> assertEquals(modified.type, dto.type),
+                () -> assertEquals(modified.vendor, dto.vendor),
+                () -> assertEquals(modified.model, dto.model),
+                () -> assertEquals(modified.getIpAddress(), dto.getIpAddress())
+        );
     }
 
     @Test
@@ -389,6 +404,7 @@ class AssetAdminServiceTest {
         sosWithIpMod.serviceProvider = sosWithIp.serviceProvider;
         sosWithIpMod.vendor = sosWithIp.vendor;
         sosWithIpMod.model = sosWithIp.model;
+        sosWithIpMod.enabled = true;
 
         var sosWoIp = new SosAssetCreateDto();
         sosWoIp.stationId = "SOS-TEST-002";
@@ -465,6 +481,14 @@ class AssetAdminServiceTest {
         sosWoIp2.vendor = "J&R Technology";
         sosWoIp2.model = "JR321-SC";
 
+        var sosEnabled = new SosAssetCreateDto();
+        sosEnabled.stationId = "SOS-TEST-004";
+        sosEnabled.name = "SOS-004";
+        sosEnabled.serviceProvider = "AT&T";
+        sosEnabled.vendor = "J&R Technology";
+        sosEnabled.model = "JR321-SC";
+        sosEnabled.enabled = true;
+
         var metWithIp = new MeteoSensorAssetCreateDto();
         metWithIp.stationId = "MET-TEST-001";
         metWithIp.name = "MET-001";
@@ -484,6 +508,13 @@ class AssetAdminServiceTest {
         metWoIp2.vendor = "Lufft";
         metWoIp2.model = "WS500";
 
+        var meteoEnabled = new MeteoSensorAssetCreateDto();
+        meteoEnabled.stationId = "MET-TEST-004";
+        meteoEnabled.name = "MET-004";
+        meteoEnabled.vendor = "Lufft";
+        meteoEnabled.model = "WS500";
+        meteoEnabled.enabled = true;
+
         return Stream.of(
                 argumentSet("SosAssetCreateDto with ipAddress", sosWithIp, SosAssetDto.class),
                 argumentSet("SosAssetCreateDto without ipAddress", sosWoIp, SosAssetDto.class),
@@ -493,7 +524,9 @@ class AssetAdminServiceTest {
                 argumentSet(
                         "MeteoSensorAssetCreateDto without ipAddress (null must not collide)", metWoIp2,
                         MeteoSensorAssetDto.class
-                )
+                ),
+                argumentSet("SosAssetCreateDto with enabled flag ", sosEnabled, SosAssetDto.class),
+                argumentSet("MeteoSensorAssetCreateDto with enabled flag ", meteoEnabled, MeteoSensorAssetDto.class)
         );
 
     }
