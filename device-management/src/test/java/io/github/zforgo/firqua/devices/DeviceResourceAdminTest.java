@@ -28,6 +28,7 @@ import io.github.zforgo.firqua.test.liquibase.RunMode;
 
 import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.HttpHeaders.LOCATION;
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
 import static jakarta.ws.rs.core.Response.Status.CONFLICT;
 import static jakarta.ws.rs.core.Response.Status.CREATED;
 import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
@@ -377,5 +378,54 @@ public class DeviceResourceAdminTest {
         assertNotNull(response);
         assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatusCode());
         assertThat(response.body().asString(), containsString("device type is immutable"));
+    }
+
+    @Test
+    @DisplayName("Creation rejected with a readable client error when the asset has no IP address")
+    void assetWithoutIpCreate() {
+        var input = new SosDeviceCreateDto();
+        input.organisationId = 1L;
+        input.assetId = 5L;
+        input.name = "SOS-CREATE-NO-IP-001";
+        var response = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(input)
+                .post();
+
+        assertNotNull(response);
+        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
+        assertAll(
+                "Violation report",
+                () -> assertEquals("asset", response.path("violations[0].field")),
+                () -> assertEquals("Asset must have an IP address", response.path("violations[0].message"))
+        );
+    }
+
+    @Test
+    @DisplayName("Update rejected with a readable client error when the modified asset has no IP address")
+    void assetWithoutIpUpdate() {
+        var input = new MeteoSensorDeviceCreateDto();
+        input.organisationId = 1L;
+        input.assetId = 1L;
+        input.name = "MET-UPDATE-NO-IP-001";
+        var result = deviceService.createDevice(input);
+        assertNotNull(result);
+
+        input.assetId = 6L;
+        var response = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(input)
+                .pathParam("id", result.id)
+                .put("{id}");
+
+        assertNotNull(response);
+        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
+        assertAll(
+                "Violation report",
+                () -> assertEquals("asset", response.path("violations[0].field")),
+                () -> assertEquals("Asset must have an IP address", response.path("violations[0].message"))
+        );
     }
 }

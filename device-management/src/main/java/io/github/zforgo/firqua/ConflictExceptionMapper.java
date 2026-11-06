@@ -5,6 +5,7 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 import io.github.zforgo.firqua.common.ConflictException;
+import io.github.zforgo.firqua.common.NonUniqueException;
 
 @Provider
 public class ConflictExceptionMapper implements ExceptionMapper<ConflictException> {
@@ -14,10 +15,13 @@ public class ConflictExceptionMapper implements ExceptionMapper<ConflictExceptio
 
     @Override
     public Response toResponse(ConflictException exception) {
-        return Response.status(Response.Status.CONFLICT)
-                .header(HEADER_KEY, exception.getKey())
-                .header(HEADER_VALUE, exception.getValue())
-                .entity(exception.getMessage())
-                .build();
+        var response = Response.status(Response.Status.CONFLICT)
+                .entity(exception.getMessage());
+        if (exception instanceof NonUniqueException nex) {
+            response
+                    .header(HEADER_KEY, nex.getKey())
+                    .header(HEADER_VALUE, nex.getValue());
+        }
+        return response.build();
     }
 }

@@ -44,6 +44,7 @@ public abstract class Device<T extends Asset> extends PanacheEntityBase {
     @Column(name = "NAME", nullable = false, unique = true)
     public String name;
 
+    @AssetIpAddressRequired
     @OneToOne(optional = false, targetEntity = Asset.class)
     @JoinColumn(name = "ASSET_ID", nullable = false)
     public T asset;

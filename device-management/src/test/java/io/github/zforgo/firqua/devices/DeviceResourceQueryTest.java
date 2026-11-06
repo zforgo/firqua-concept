@@ -55,6 +55,7 @@ public class DeviceResourceQueryTest {
             assetCreate.name = "TEST-0000" + i;
             assetCreate.stationId = "TEST-MET-000" + i;
             assetCreate.vendor = "Lufft";
+            assetCreate.setIpAddress("192.168.30." + i);
             var asset = assetAdminService.createAsset(assetCreate);
             var deviceCreate = new MeteoSensorDeviceCreateDto();
             deviceCreate.name = "TEST-0000" + i;

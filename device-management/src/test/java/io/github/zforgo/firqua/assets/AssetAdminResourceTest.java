@@ -20,6 +20,8 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 
 import io.github.zforgo.firqua.ConflictExceptionMapper;
+import io.github.zforgo.firqua.devices.DeviceService;
+import io.github.zforgo.firqua.devices.SosDeviceCreateDto;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 import io.github.zforgo.firqua.test.liquibase.RunMode;
 
@@ -51,6 +53,9 @@ public class AssetAdminResourceTest {
 
     @Inject
     AssetAdminService service;
+
+    @Inject
+    DeviceService deviceService;
 
     @ParameterizedTest
     @MethodSource("io.github.zforgo.firqua.assets.AssetAdminServiceTest#validCreateParams")
@@ -377,6 +382,35 @@ public class AssetAdminResourceTest {
                 .put("{id}");
         assertEquals(CONFLICT.getStatusCode(), modificationResponse.getStatusCode());
         assertThat(modificationResponse.body().asString(), containsString(metWithIp.getIpAddress()));
+    }
+
+    @Test
+    @DisplayName("Update rejected when modified asset belongs to a device and ip address removed")
+    void cleanAssociatedIp() {
+        var assetDto = new SosAssetCreateDto();
+        assetDto.setIpAddress("192.168.1.1");
+        assetDto.stationId = "SOS-TEST-001";
+        assetDto.name = "FOO-001";
+        assetDto.serviceProvider = "AT&T";
+        assetDto.vendor = "J&R Technology";
+        assetDto.model = "JR321-SC";
+
+        var createdAsset = service.createAsset(assetDto);
+        var deviceDto = new SosDeviceCreateDto();
+        deviceDto.assetId = createdAsset.id;
+        deviceDto.name = "SOS-TEST-001";
+        deviceDto.organisationId = 1L;
+        deviceService.createDevice(deviceDto);
+
+        assetDto.setIpAddress(null);
+        var modificationResponse = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .pathParam("id", createdAsset.id)
+                .body(assetDto)
+                .put("{id}");
+        assertEquals(CONFLICT.getStatusCode(), modificationResponse.getStatusCode());
+        assertThat(modificationResponse.body().asString(), containsString("ipAddress"));
     }
 
     @Test

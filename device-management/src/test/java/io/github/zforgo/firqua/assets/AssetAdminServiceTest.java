@@ -14,8 +14,11 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
-import io.github.zforgo.firqua.common.ConflictException;
+import io.github.zforgo.firqua.common.NonUniqueException;
 import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
+import io.github.zforgo.firqua.common.ReferencedFieldRequiredException;
+import io.github.zforgo.firqua.devices.DeviceService;
+import io.github.zforgo.firqua.devices.SosDeviceCreateDto;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 
 import static io.github.zforgo.firqua.test.liquibase.RunMode.ALWAYS;
@@ -36,7 +39,10 @@ import static org.junit.jupiter.params.provider.Arguments.argumentSet;
 class AssetAdminServiceTest {
 
     @Inject
-    AssetAdminService service;
+    AssetAdminService assetAdminService;
+
+    @Inject
+    DeviceService deviceService;
 
     @ParameterizedTest
     @MethodSource("validCreateParams")
@@ -45,7 +51,7 @@ class AssetAdminServiceTest {
             I input,
             Class<R> resultClass
     ) {
-        var result = service.createAsset(input);
+        var result = assetAdminService.createAsset(input);
         assertNotNull(result);
 
         var dto = assertInstanceOf(resultClass, result);
@@ -63,7 +69,7 @@ class AssetAdminServiceTest {
             I input,
             I duplication, Class<R> resultClass
     ) {
-        var result = service.createAsset(input);
+        var result = assetAdminService.createAsset(input);
         assertNotNull(result);
         var dto = assertInstanceOf(resultClass, result);
         assertAll(
@@ -71,7 +77,7 @@ class AssetAdminServiceTest {
                 () -> assertTrue(result.id > 0)
         );
 
-        var ex = assertThrows(NonUniqueIpAddressException.class, () -> service.createAsset(duplication));
+        var ex = assertThrows(NonUniqueIpAddressException.class, () -> assetAdminService.createAsset(duplication));
         assertThat(ex.getMessage(), containsString(dto.getIpAddress()));
     }
 
@@ -93,14 +99,14 @@ class AssetAdminServiceTest {
         metWithIp.model = "WS500";
         metWithIp.setIpAddress("192.168.1.1");
 
-        var result = service.createAsset(sosWithIp);
+        var result = assetAdminService.createAsset(sosWithIp);
         assertNotNull(result);
         var dto = assertInstanceOf(SosAssetDto.class, result);
         assertAll(
                 () -> assertNotNull(result.id),
                 () -> assertTrue(result.id > 0)
         );
-        var ex = assertThrows(NonUniqueIpAddressException.class, () -> service.createAsset(metWithIp));
+        var ex = assertThrows(NonUniqueIpAddressException.class, () -> assetAdminService.createAsset(metWithIp));
         assertThat(ex.getMessage(), containsString(dto.getIpAddress()));
 
     }
@@ -121,14 +127,14 @@ class AssetAdminServiceTest {
         met.vendor = "Lufft";
         met.model = "WS500";
 
-        var result = service.createAsset(sos);
+        var result = assetAdminService.createAsset(sos);
         assertNotNull(result);
         assertInstanceOf(SosAssetDto.class, result);
         assertAll(
                 () -> assertNotNull(result.id),
                 () -> assertTrue(result.id > 0)
         );
-        var ex = assertThrows(ConflictException.class, () -> service.createAsset(met));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.createAsset(met));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("name", ex.getKey()),
@@ -153,14 +159,14 @@ class AssetAdminServiceTest {
         duplication.vendor = "J&R Technology";
         duplication.model = "JR321-SC";
 
-        var result = service.createAsset(sos);
+        var result = assetAdminService.createAsset(sos);
         assertNotNull(result);
         assertInstanceOf(SosAssetDto.class, result);
         assertAll(
                 () -> assertNotNull(result.id),
                 () -> assertTrue(result.id > 0)
         );
-        var ex = assertThrows(ConflictException.class, () -> service.createAsset(duplication));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.createAsset(duplication));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("stationId", ex.getKey()),
@@ -184,14 +190,14 @@ class AssetAdminServiceTest {
         duplication.vendor = "Lufft";
         duplication.model = "WS500";
 
-        var result = service.createAsset(met);
+        var result = assetAdminService.createAsset(met);
         assertNotNull(result);
         assertInstanceOf(MeteoSensorAssetDto.class, result);
         assertAll(
                 () -> assertNotNull(result.id),
                 () -> assertTrue(result.id > 0)
         );
-        var ex = assertThrows(ConflictException.class, () -> service.createAsset(duplication));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.createAsset(duplication));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("stationId", ex.getKey()),
@@ -207,9 +213,9 @@ class AssetAdminServiceTest {
             I orig,
             I modified, Class<R> resultClass
     ) {
-        var createResult = service.createAsset(orig);
+        var createResult = assetAdminService.createAsset(orig);
         assertNotNull(createResult);
-        var modifiedResult = service.updateAsset(createResult.id, modified);
+        var modifiedResult = assetAdminService.updateAsset(createResult.id, modified);
         var dto = assertInstanceOf(resultClass, modifiedResult);
         assertEquals(modified.getIpAddress(), dto.getIpAddress());
     }
@@ -229,11 +235,11 @@ class AssetAdminServiceTest {
         met.name = "METS-001";
         met.vendor = "Lufft";
         met.model = "WS500";
-        service.createAsset(sos);
-        var created = service.createAsset(met);
+        assetAdminService.createAsset(sos);
+        var created = assetAdminService.createAsset(met);
         met.name = sos.name;
 
-        var ex = assertThrows(ConflictException.class, () -> service.updateAsset(created.id, met));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.updateAsset(created.id, met));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("name", ex.getKey()),
@@ -250,7 +256,7 @@ class AssetAdminServiceTest {
         first.serviceProvider = "AT&T";
         first.vendor = "J&R Technology";
         first.model = "JR321-SC";
-        service.createAsset(first);
+        assetAdminService.createAsset(first);
 
         var second = new SosAssetCreateDto();
         second.stationId = "SOS-FOO-002";
@@ -258,10 +264,10 @@ class AssetAdminServiceTest {
         second.serviceProvider = "AT&T";
         second.vendor = "J&R Technology";
         second.model = "JR321-SC";
-        var created = service.createAsset(second);
+        var created = assetAdminService.createAsset(second);
         second.stationId = first.stationId;
 
-        var ex = assertThrows(ConflictException.class, () -> service.updateAsset(created.id, second));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.updateAsset(created.id, second));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("stationId", ex.getKey()),
@@ -277,17 +283,17 @@ class AssetAdminServiceTest {
         first.name = "METS-001";
         first.vendor = "Lufft";
         first.model = "WS500";
-        service.createAsset(first);
+        assetAdminService.createAsset(first);
 
         var second = new MeteoSensorAssetCreateDto();
         second.stationId = "MET-FOO-002";
         second.name = "METS-002";
         second.vendor = "Lufft";
         second.model = "WS500";
-        var created = service.createAsset(second);
+        var created = assetAdminService.createAsset(second);
 
         second.stationId = first.stationId;
-        var ex = assertThrows(ConflictException.class, () -> service.updateAsset(created.id, second));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.updateAsset(created.id, second));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("stationId", ex.getKey()),
@@ -313,12 +319,38 @@ class AssetAdminServiceTest {
         metWithIp.model = "WS500";
         metWithIp.setIpAddress("192.168.2.1");
 
-        var _ = service.createAsset(sosWithIp);
-        var metResult = service.createAsset(metWithIp);
+        var _ = assetAdminService.createAsset(sosWithIp);
+        var metResult = assetAdminService.createAsset(metWithIp);
         metWithIp.setIpAddress(sosWithIp.getIpAddress());
-        var ex = assertThrows(NonUniqueIpAddressException.class, () -> service.updateAsset(metResult.id, metWithIp));
+        var ex = assertThrows(NonUniqueIpAddressException.class, () -> assetAdminService.updateAsset(metResult.id, metWithIp));
         assertThat(ex.getMessage(), containsString(metWithIp.getIpAddress()));
     }
+
+    @Test
+    @DisplayName("Update rejected when modified asset belongs to a device and ip address removed")
+    void cleanAssociatedIp() {
+        var assetDto = new SosAssetCreateDto();
+        assetDto.setIpAddress("192.168.1.1");
+        assetDto.stationId = "SOS-TEST-001";
+        assetDto.name = "FOO-001";
+        assetDto.serviceProvider = "AT&T";
+        assetDto.vendor = "J&R Technology";
+        assetDto.model = "JR321-SC";
+
+        var createdAsset = assetAdminService.createAsset(assetDto);
+        var deviceDto = new SosDeviceCreateDto();
+        deviceDto.assetId = createdAsset.id;
+        deviceDto.name = "SOS-TEST-001";
+        deviceDto.organisationId = 1L;
+        deviceService.createDevice(deviceDto);
+
+        assetDto.setIpAddress(null);
+        var ex = assertThrows(
+                ReferencedFieldRequiredException.class, () -> assetAdminService.updateAsset(createdAsset.id, assetDto)
+        );
+		assertThat(ex.getMessage(), containsString("The field ipAddress must not be null due to assignment"));
+
+	}
 
     @Test
     @DisplayName("Update rejected when the modified entity type does not match the dto type")
@@ -329,7 +361,7 @@ class AssetAdminServiceTest {
         sos.serviceProvider = "AT&T";
         sos.vendor = "J&R Technology";
         sos.model = "JR321-SC";
-        var created = service.createAsset(sos);
+        var created = assetAdminService.createAsset(sos);
 
         var met = new MeteoSensorAssetCreateDto();
         met.stationId = "MET-FOO-001";
@@ -337,7 +369,7 @@ class AssetAdminServiceTest {
         met.vendor = "Lufft";
         met.model = "WS500";
 
-        var ex = assertThrows(IllegalArgumentException.class, () -> service.updateAsset(created.id, met));
+        var ex = assertThrows(IllegalArgumentException.class, () -> assetAdminService.updateAsset(created.id, met));
         assertThat(ex.getMessage(), containsString("asset type is immutable"));
     }
 
