@@ -348,9 +348,9 @@ class AssetAdminServiceTest {
         var ex = assertThrows(
                 ReferencedFieldRequiredException.class, () -> assetAdminService.updateAsset(createdAsset.id, assetDto)
         );
-		assertThat(ex.getMessage(), containsString("The field ipAddress must not be null due to assignment"));
+        assertThat(ex.getMessage(), containsString("The field ipAddress must not be null due to assignment"));
 
-	}
+    }
 
     @Test
     @DisplayName("Update rejected when the modified entity type does not match the dto type")
