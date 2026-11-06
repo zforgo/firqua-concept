@@ -72,9 +72,16 @@ public class AssetAdminResourceTest {
         assertEquals(CREATED.getStatusCode(), response.getStatusCode());
         var responseBody = assertInstanceOf(resultClass, response.body().as(resultClass));
         assertNotNull(responseBody);
+
         assertAll(
                 () -> assertNotNull(responseBody.id),
-                () -> assertTrue(responseBody.id > 0)
+                () -> assertTrue(responseBody.id > 0),
+                () -> assertEquals(input.name, responseBody.name),
+                () -> assertEquals(input.enabled, responseBody.enabled),
+                () -> assertEquals(input.type, responseBody.type),
+                () -> assertEquals(input.vendor, responseBody.vendor),
+                () -> assertEquals(input.model, responseBody.model),
+                () -> assertEquals(input.getIpAddress(), responseBody.getIpAddress())
         );
 
         var expectedLocation = UriBuilder.fromUri(assetsEndpoint)
@@ -246,7 +253,20 @@ public class AssetAdminResourceTest {
         assertEquals(OK.getStatusCode(), modificationResponse.getStatusCode());
         var modifiedAsset = modificationResponse.body().as(resultClass);
         assertNotNull(modifiedAsset);
-        assertEquals(modified.getIpAddress(), modifiedAsset.getIpAddress());
+
+        var responseBody = assertInstanceOf(resultClass, modificationResponse.body().as(resultClass));
+        assertNotNull(responseBody);
+
+        assertAll(
+                () -> assertNotNull(responseBody.id),
+                () -> assertTrue(responseBody.id > 0),
+                () -> assertEquals(modified.name, responseBody.name),
+                () -> assertEquals(modified.enabled, responseBody.enabled),
+                () -> assertEquals(modified.type, responseBody.type),
+                () -> assertEquals(modified.vendor, responseBody.vendor),
+                () -> assertEquals(modified.model, responseBody.model),
+                () -> assertEquals(modified.getIpAddress(), responseBody.getIpAddress())
+        );
     }
 
     @Test
