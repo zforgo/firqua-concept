@@ -30,7 +30,6 @@ import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.HttpHeaders.LOCATION;
 import static jakarta.ws.rs.core.Response.Status.CONFLICT;
 import static jakarta.ws.rs.core.Response.Status.CREATED;
-import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -457,7 +456,7 @@ public class AssetAdminResourceTest {
                 .pathParam("id", created.id)
                 .put("{id}");
         assertNotNull(responseFailed);
-        assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), responseFailed.getStatusCode());
+        assertEquals(CONFLICT.getStatusCode(), responseFailed.getStatusCode());
         assertThat(responseFailed.body().asString(), containsString("asset type is immutable"));
     }
 

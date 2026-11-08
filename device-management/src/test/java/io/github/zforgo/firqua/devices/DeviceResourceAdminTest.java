@@ -20,7 +20,6 @@ import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
 
 import io.github.zforgo.firqua.ConflictExceptionMapper;
-import io.github.zforgo.firqua.IncompatibleAssetTypeExceptionMapper;
 import io.github.zforgo.firqua.assets.AssetResource;
 import io.github.zforgo.firqua.assets.SosAssetDto;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
@@ -31,7 +30,6 @@ import static jakarta.ws.rs.core.HttpHeaders.LOCATION;
 import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
 import static jakarta.ws.rs.core.Response.Status.CONFLICT;
 import static jakarta.ws.rs.core.Response.Status.CREATED;
-import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -152,11 +150,11 @@ public class DeviceResourceAdminTest {
         assertEquals(CONFLICT.getStatusCode(), response.getStatusCode());
         assertAll(
                 "Conflict headers",
-                () -> assertEquals("assetId", response.header(IncompatibleAssetTypeExceptionMapper.HEADER_KEY)),
+                () -> assertEquals("assetId", response.header(ConflictExceptionMapper.HEADER_KEY)),
                 () -> assertEquals(
-                        input.assetId.toString(), response.header(IncompatibleAssetTypeExceptionMapper.HEADER_VALUE)
+                        input.assetId.toString(), response.header(ConflictExceptionMapper.HEADER_VALUE)
                 ),
-                () -> assertEquals("SOS", response.header("X-Conflict-Expected"))
+                () -> assertEquals("SOS", response.header(ConflictExceptionMapper.HEADER_EXPECTED))
         );
     }
 
@@ -276,11 +274,11 @@ public class DeviceResourceAdminTest {
         assertEquals(CONFLICT.getStatusCode(), response.getStatusCode());
         assertAll(
                 "Conflict headers",
-                () -> assertEquals("assetId", response.header(IncompatibleAssetTypeExceptionMapper.HEADER_KEY)),
+                () -> assertEquals("assetId", response.header(ConflictExceptionMapper.HEADER_KEY)),
                 () -> assertEquals(
-                        input.assetId.toString(), response.header(IncompatibleAssetTypeExceptionMapper.HEADER_VALUE)
+                        input.assetId.toString(), response.header(ConflictExceptionMapper.HEADER_VALUE)
                 ),
-                () -> assertEquals("SOS", response.header("X-Conflict-Expected"))
+                () -> assertEquals("SOS", response.header(ConflictExceptionMapper.HEADER_EXPECTED))
         );
 
     }
@@ -376,7 +374,7 @@ public class DeviceResourceAdminTest {
                 .put("{id}");
 
         assertNotNull(response);
-        assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatusCode());
+        assertEquals(CONFLICT.getStatusCode(), response.getStatusCode());
         assertThat(response.body().asString(), containsString("device type is immutable"));
     }
 

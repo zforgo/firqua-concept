@@ -15,7 +15,6 @@ import io.quarkus.test.h2.H2DatabaseTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 
 import io.github.zforgo.firqua.common.NonUniqueException;
-import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
 import io.github.zforgo.firqua.common.ReferencedFieldRequiredException;
 import io.github.zforgo.firqua.devices.DeviceService;
 import io.github.zforgo.firqua.devices.SosDeviceCreateDto;
@@ -82,7 +81,7 @@ class AssetAdminServiceTest {
                 () -> assertTrue(result.id > 0)
         );
 
-        var ex = assertThrows(NonUniqueIpAddressException.class, () -> assetAdminService.createAsset(duplication));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.createAsset(duplication));
         assertThat(ex.getMessage(), containsString(dto.getIpAddress()));
     }
 
@@ -111,7 +110,7 @@ class AssetAdminServiceTest {
                 () -> assertNotNull(result.id),
                 () -> assertTrue(result.id > 0)
         );
-        var ex = assertThrows(NonUniqueIpAddressException.class, () -> assetAdminService.createAsset(metWithIp));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.createAsset(metWithIp));
         assertThat(ex.getMessage(), containsString(dto.getIpAddress()));
 
     }
@@ -337,7 +336,7 @@ class AssetAdminServiceTest {
         var _ = assetAdminService.createAsset(sosWithIp);
         var metResult = assetAdminService.createAsset(metWithIp);
         metWithIp.setIpAddress(sosWithIp.getIpAddress());
-        var ex = assertThrows(NonUniqueIpAddressException.class, () -> assetAdminService.updateAsset(metResult.id, metWithIp));
+        var ex = assertThrows(NonUniqueException.class, () -> assetAdminService.updateAsset(metResult.id, metWithIp));
         assertThat(ex.getMessage(), containsString(metWithIp.getIpAddress()));
     }
 
@@ -384,7 +383,7 @@ class AssetAdminServiceTest {
         met.vendor = "Lufft";
         met.model = "WS500";
 
-        var ex = assertThrows(IllegalArgumentException.class, () -> assetAdminService.updateAsset(created.id, met));
+        var ex = assertThrows(ImmutableAssetTypeException.class, () -> assetAdminService.updateAsset(created.id, met));
         assertThat(ex.getMessage(), containsString("asset type is immutable"));
     }
 

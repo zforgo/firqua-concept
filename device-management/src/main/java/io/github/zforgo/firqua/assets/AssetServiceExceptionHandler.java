@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import io.github.zforgo.firqua.common.NonUniqueException;
-import io.github.zforgo.firqua.common.NonUniqueIpAddressException;
 import io.github.zforgo.firqua.common.ServiceExceptionHandler;
 
 public final class AssetServiceExceptionHandler implements ServiceExceptionHandler<AssetCreateDto> {
@@ -17,7 +16,7 @@ public final class AssetServiceExceptionHandler implements ServiceExceptionHandl
                     "_ASSETS_STATION_ID",
                     (dto, cause) -> new NonUniqueException("stationId", ((StationAwareDto) dto).getStationId(), cause),
                     "PK_ASSETS_IP_ADDRESSES",
-                    (dto, cause) -> NonUniqueIpAddressException.byAddress(((IpAddressAwareDto) dto).getIpAddress(), cause)
+                    (dto, cause) -> new NonUniqueException("ipAddress", ((IpAddressAwareDto) dto).getIpAddress(), cause)
             );
 
     private AssetServiceExceptionHandler() {
