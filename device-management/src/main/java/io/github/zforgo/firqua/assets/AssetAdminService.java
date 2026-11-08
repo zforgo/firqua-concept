@@ -1,6 +1,7 @@
 package io.github.zforgo.firqua.assets;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.LockModeType;
@@ -25,6 +26,9 @@ public class AssetAdminService {
     @Inject
     DeviceReferenceResolver referenceResolver;
 
+    @Inject
+    Event<AssetStateChangeEvent> eventManager;
+
     @Transactional
     public AssetDto createAsset(AssetCreateDto dto) {
         var asset = assetMapper.toEntity(dto);
@@ -41,14 +45,21 @@ public class AssetAdminService {
         var asset = Asset.<Asset> findByIdOptional(id, LockModeType.PESSIMISTIC_WRITE)
                 .orElseThrow(() -> new EntityNotFoundException("No asset found by id: %d".formatted(id)));
 
+        //Update blocked when the asset associated to a device and the IP address field cleared during modification
         var origIp = (asset instanceof IpAddressAware ipAware) ? ipAware.getIpAddress() : null;
         var newIp = (dto instanceof IpAddressAwareDto ipAware) ? ipAware.getIpAddress() : null;
         if (origIp != null && newIp == null && referenceResolver.isAssociatedAsset(asset.id)) {
             throw new ReferencedFieldRequiredException("ipAddress");
         }
+
+        final var enabledChanged = asset.enabled != dto.enabled;
+
         assetMapper.updateEntity(dto, asset);
         try {
             asset.persistAndFlush();
+            if (enabledChanged) {
+                eventManager.fire(new AssetStateChangeEvent(asset.id, asset.enabled));
+            }
             return assetMapper.toDto(asset);
         } catch (ConstraintViolationException e) {
             throw AssetServiceExceptionHandler.INSTANCE.handleException(e, dto);

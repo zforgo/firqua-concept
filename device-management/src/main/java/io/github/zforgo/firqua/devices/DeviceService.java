@@ -1,10 +1,12 @@
 package io.github.zforgo.firqua.devices;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.LockModeType;
 import jakarta.transaction.Transactional;
+import jakarta.transaction.Transactional.TxType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,6 +17,7 @@ import io.quarkus.panache.common.Sort;
 
 import io.github.zforgo.firqua.assets.Asset;
 import io.github.zforgo.firqua.assets.AssetDto;
+import io.github.zforgo.firqua.assets.AssetStateChangeEvent;
 import io.github.zforgo.firqua.common.PagingAndSorting;
 import io.github.zforgo.firqua.filter.FilterResult;
 
@@ -68,5 +71,12 @@ public class DeviceService implements PagedFilter<Device<? extends Asset>> {
         } catch (ConstraintViolationException e) {
             throw DeviceServiceExceptionHandler.INSTANCE.handleException(e, dto);
         }
+    }
+
+    @Transactional(TxType.MANDATORY)
+    void handleStateChange(@Observes AssetStateChangeEvent event) {
+        Device.<Device<?>> find("asset.id", event.assetId())
+                .stream()
+                .forEach(Device::evaluateState);
     }
 }
