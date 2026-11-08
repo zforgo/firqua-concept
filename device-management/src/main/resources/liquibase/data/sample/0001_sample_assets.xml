@@ -8,6 +8,7 @@
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="SOS"/>
+            <column name="ENABLED" valueBoolean="true"/>
             <column name="NAME" value="SOS-001"/>
             <column name="VENDOR_NAME" value="J&amp;R Technology"/>
             <column name="VENDOR_MODEL" value="JR321-SC"/>
@@ -20,6 +21,7 @@
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="SOS"/>
             <column name="NAME" value="SOS-002"/>
+            <column name="ENABLED" valueBoolean="true"/>
             <column name="VENDOR_NAME" value="J&amp;R Technology"/>
             <column name="VENDOR_MODEL" value="JR321-SC"/>
         </insert>
@@ -32,6 +34,7 @@
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="METEO"/>
             <column name="NAME" value="MET-001"/>
+            <column name="ENABLED" valueBoolean="true"/>
             <column name="VENDOR_NAME" value="Lufft"/>
             <column name="VENDOR_MODEL" value="WS500"/>
         </insert>
@@ -43,6 +46,7 @@
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="METEO"/>
             <column name="NAME" value="MET-002"/>
+            <column name="ENABLED" valueBoolean="true"/>
             <column name="VENDOR_NAME" value="Lufft"/>
             <column name="VENDOR_MODEL" value="WS500"/>
         </insert>

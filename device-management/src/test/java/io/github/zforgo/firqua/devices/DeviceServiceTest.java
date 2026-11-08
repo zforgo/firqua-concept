@@ -32,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 @LiquibaseMigration(runMode = PER_CLASS, dropFirst = true)
@@ -112,12 +113,14 @@ public class DeviceServiceTest {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
         input.assetId = sosAsset.id;
+        input.enabled = true;
         input.name = "SOS-CREATE-001";
         var result = deviceService.createDevice(input);
         assertNotNull(result);
         var dto = assertInstanceOf(SosDeviceDto.class, result);
         var assetDto = assertInstanceOf(SosAssetDto.class, dto.asset);
         assertEquals(sosAsset.id, assetDto.id);
+        assertEquality(input, dto);
     }
 
     @Test
@@ -131,6 +134,7 @@ public class DeviceServiceTest {
         assertNotNull(result);
         var dto = assertInstanceOf(MeteoSensorDeviceDto.class, result);
         var assetDto = assertInstanceOf(MeteoSensorAssetDto.class, dto.asset);
+        assertEquality(input, dto);
         assertEquals(metAsset.id, assetDto.id);
     }
 
@@ -198,13 +202,17 @@ public class DeviceServiceTest {
         var result = deviceService.createDevice(input);
         assertNotNull(result);
         assertNotNull(result.id);
+        assertEquality(input, result);
 
         input.name = "SOS-UPDATE-002";
         input.assetId = otherSosAsset.id;
+        input.enabled = !result.enabled;
+
         var modified = deviceService.updateDevice(result.id, input);
         assertNotNull(modified);
         assertEquals(result.id, modified.id);
         assertEquals(otherSosAsset.id, modified.asset.id);
+        assertEquality(input, modified);
     }
 
     @Test
@@ -326,7 +334,7 @@ public class DeviceServiceTest {
         assertEquals(sosAsset.id, deviceService.getById(result.id).asset.id);
     }
 
-    private void assertMissingIpViolation(ConstraintViolationException ex) {
+    private static void assertMissingIpViolation(ConstraintViolationException ex) {
         var violation = ex.getConstraintViolations().iterator().next();
         assertAll(
                 "Violation parameters",
@@ -334,5 +342,19 @@ public class DeviceServiceTest {
                 () -> assertEquals("asset", violation.getPropertyPath().toString()),
                 () -> assertEquals("Asset must have an IP address", violation.getMessage())
         );
+    }
+
+    private static void assertEquality(DeviceCreateDto expected, DeviceDto<? extends AssetDto> actual) {
+        assertAll(
+                () -> assertNotNull(actual.id),
+                () -> assertTrue(actual.id > 0),
+                () -> assertEquals(expected.type, actual.type),
+                () -> assertEquals(expected.name, actual.name),
+                () -> assertEquals(expected.enabled, actual.enabled),
+                () -> assertTrue(expected.type.isAllowedAssetType(actual.asset.type)),
+                () -> assertEquals(expected.assetId, actual.asset.id),
+                () -> assertEquals(expected.organisationId, actual.organisationUnit.id)
+        );
+
     }
 }

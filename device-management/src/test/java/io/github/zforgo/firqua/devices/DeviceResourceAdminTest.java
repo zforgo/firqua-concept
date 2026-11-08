@@ -2,6 +2,7 @@ package io.github.zforgo.firqua.devices;
 
 import java.net.URI;
 
+import io.github.zforgo.firqua.assets.AssetDto;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.UriBuilder;
@@ -81,18 +82,7 @@ public class DeviceResourceAdminTest {
         assertEquals(expectedLocation, URI.create(response.getHeader(LOCATION)));
 
         var dto = assertInstanceOf(SosDeviceDto.class, responseBody);
-        assertAll(
-                () -> assertNotNull(dto.id),
-                () -> assertTrue(dto.id > 0)
-        );
-        assertAll(
-                "Organisation Unit checks",
-                () -> assertNotNull(dto.organisationUnit),
-                () -> assertEquals("OU_FOO", dto.organisationUnit.slug)
-        );
-        assertEquals(input.name, dto.name);
-        assertNotNull(dto.asset);
-        assertEquals(input.assetId, dto.asset.id);
+        assertEquality(input, dto);
 
     }
 
@@ -103,6 +93,7 @@ public class DeviceResourceAdminTest {
         input.organisationId = 2L;
         input.assetId = 1L;
         input.name = "MET-CREATE-001";
+        input.enabled = true;
         var response = given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -118,18 +109,7 @@ public class DeviceResourceAdminTest {
         assertEquals(expectedLocation, URI.create(response.getHeader(LOCATION)));
 
         var dto = assertInstanceOf(MeteoSensorDeviceDto.class, responseBody);
-        assertAll(
-                () -> assertNotNull(dto.id),
-                () -> assertTrue(dto.id > 0)
-        );
-        assertAll(
-                "Organisation Unit checks",
-                () -> assertNotNull(dto.organisationUnit),
-                () -> assertEquals("OU_BAR", dto.organisationUnit.slug)
-        );
-        assertEquals(dto.name, input.name);
-        assertNotNull(dto.asset);
-        assertEquals(input.assetId, dto.asset.id);
+        assertEquality(input, dto);
 
     }
 
@@ -230,6 +210,7 @@ public class DeviceResourceAdminTest {
 
         input.name = "SOS-UPDATE-002";
         input.assetId = 4L;
+        input.enabled = !result.enabled;
 
         var response = given()
                 .when()
@@ -243,12 +224,8 @@ public class DeviceResourceAdminTest {
         var responseBody = response.body().as(new TypeRef<DeviceDto<?>>() {});
 
         var dto = assertInstanceOf(SosDeviceDto.class, responseBody);
-        assertAll(
-                () -> assertNotNull(dto.id),
-                () -> assertEquals(result.id, dto.id)
-        );
-        assertEquals(input.name, dto.name);
-        assertEquals(input.assetId, dto.asset.id);
+        assertEquals(result.id, dto.id);
+        assertEquality(input, dto);
     }
 
     @Test
@@ -425,5 +402,23 @@ public class DeviceResourceAdminTest {
                 () -> assertEquals("asset", response.path("violations[0].field")),
                 () -> assertEquals("Asset must have an IP address", response.path("violations[0].message"))
         );
+    }
+
+    private static void assertEquality(DeviceCreateDto expected, DeviceDto<? extends AssetDto> actual) {
+        assertAll(
+                () -> assertNotNull(actual.id),
+                () -> assertTrue(actual.id > 0),
+                () -> assertEquals(expected.type, actual.type),
+                () -> assertEquals(expected.name, actual.name),
+                () -> assertEquals(expected.enabled, actual.enabled),
+                () -> assertTrue(expected.type.isAllowedAssetType(actual.asset.type)),
+                () -> assertEquals(expected.assetId, actual.asset.id),
+                () -> assertAll(
+                        "Organisation Unit checks",
+                        () -> assertNotNull(actual.organisationUnit),
+                        () -> assertEquals(expected.organisationId, actual.organisationUnit.id)
+                )
+        );
+
     }
 }
