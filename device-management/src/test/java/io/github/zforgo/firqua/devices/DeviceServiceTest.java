@@ -286,7 +286,7 @@ public class DeviceServiceTest {
         changed.organisationId = 1L;
         changed.assetId = metAsset.id;
         changed.name = "MET-TYPE-CHANGE-001";
-        var ex = assertThrows(IllegalArgumentException.class, () -> deviceService.updateDevice(first.id, changed));
+        var ex = assertThrows(ImmutableDeviceTypeException.class, () -> deviceService.updateDevice(first.id, changed));
         assertThat(ex.getMessage(), containsString("device type is immutable"));
     }
 

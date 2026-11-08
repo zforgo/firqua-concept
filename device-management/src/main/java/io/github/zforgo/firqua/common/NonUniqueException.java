@@ -1,31 +1,13 @@
 package io.github.zforgo.firqua.common;
 
-import org.apache.commons.lang3.StringUtils;
-
-public class NonUniqueException extends ConflictException {
-
-    private final String key;
-    private final Object value;
-
-    public NonUniqueException(String key, Object value) {
-        this(key, value, null);
-    }
+public class NonUniqueException extends UnexpectedValueException {
 
     public NonUniqueException(String key, Object value, Throwable cause) {
-        this.key = key;
-        this.value = value;
-        super(
-                "The field %s with value %s must be unique"
-                        .formatted(key, StringUtils.abbreviate(String.valueOf(value), 50)),
-                cause
-        );
+        super(key, value, null, cause);
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public Object getValue() {
-        return value;
+    @Override
+    protected String buildMessage(String key, Object value, Object expected) {
+        return "Field %s must be unique, but value [%s] already exists".formatted(key, value);
     }
 }
