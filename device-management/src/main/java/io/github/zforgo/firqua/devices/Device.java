@@ -13,6 +13,8 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -43,6 +45,9 @@ public abstract class Device<T extends Asset> extends PanacheEntityBase {
     @Column(name = "ENABLED", nullable = false)
     public boolean enabled = false;
 
+    @Column(name = "EFFECTIVE_ENABLED", nullable = false)
+    private boolean effectiveEnabled = false;
+
     @NotBlank
     @Column(name = "NAME", nullable = false, unique = true)
     public String name;
@@ -58,5 +63,19 @@ public abstract class Device<T extends Asset> extends PanacheEntityBase {
 
     public void setAsset(T asset) {
         this.asset = asset;
+    }
+
+    public boolean isEffectiveEnabled() {
+        return effectiveEnabled;
+    }
+
+    @PrePersist
+    @PreUpdate
+    void guard() {
+        evaluateState();
+    }
+
+    public final void evaluateState() {
+        effectiveEnabled = enabled && asset != null && asset.enabled;
     }
 }

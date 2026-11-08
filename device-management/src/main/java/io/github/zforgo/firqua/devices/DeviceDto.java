@@ -30,6 +30,8 @@ public sealed abstract class DeviceDto<T extends AssetDto> permits SosDeviceDto,
 
     public boolean enabled;
 
+    public boolean effectiveEnabled;
+
     @NotNull
     public T asset;
 
