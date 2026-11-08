@@ -40,6 +40,9 @@ public abstract class Device<T extends Asset> extends PanacheEntityBase {
     @Enumerated(EnumType.STRING)
     public DeviceType type;
 
+    @Column(name = "ENABLED", nullable = false)
+    public boolean enabled = false;
+
     @NotBlank
     @Column(name = "NAME", nullable = false, unique = true)
     public String name;
