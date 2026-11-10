@@ -2,7 +2,6 @@ package io.github.zforgo.firqua.devices;
 
 import java.net.URI;
 
-import io.github.zforgo.firqua.assets.AssetDto;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.UriBuilder;
@@ -21,6 +20,7 @@ import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
 
 import io.github.zforgo.firqua.ConflictExceptionMapper;
+import io.github.zforgo.firqua.assets.AssetDto;
 import io.github.zforgo.firqua.assets.AssetResource;
 import io.github.zforgo.firqua.assets.SosAssetDto;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;

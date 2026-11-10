@@ -143,7 +143,9 @@ public class EffectiveStateChangeServiceTest {
         dto.vendor = "J&R Technology";
         dto.model = "JR321-SC";
         dto.enabled = enabled;
-        dto.setIpAddress("192.168.1.%d".formatted(System.nanoTime() % 250));
+        dto.setIpAddress(
+                "192.%d.1.%d".formatted(Math.abs(UUID.randomUUID().getMostSignificantBits()) % 169, System.nanoTime() % 250)
+        );
         return dto;
     }
 
