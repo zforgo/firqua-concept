@@ -2,7 +2,6 @@ package io.github.zforgo.firqua.devices;
 
 import java.net.URI;
 
-import io.github.zforgo.firqua.assets.AssetDto;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.core.UriBuilder;
