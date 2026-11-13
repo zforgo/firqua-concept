@@ -26,7 +26,9 @@ quarkus:
     database-change-log-table-name: '_LIQ_DATABASE_CHANGELOG'
     database-change-log-lock-table-name: '_LIQ_DATABASE_CHANGELOG_LOCK'
     contexts: "schema,base-data"
-
+    change-log-parameters:
+      dbz_user: ${DEBEZIUM_DB_USER:debezium}
+      dbz_password: ${DEBEZIUM_DB_PASSWORD:debezium1234}
   log:
     category:
       "liquibase.util":

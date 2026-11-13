@@ -3,7 +3,8 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <include file="shared/common_types.xml" relativeToChangelogFile="true" />
+    <include file="shared/common_types.xml" relativeToChangelogFile="true"/>
+    <include file="cdc/debezium_setup.sql" relativeToChangelogFile="true"/>
     <includeAll path="schema" relativeToChangelogFile="true" context="schema"/>
     <includeAll path="data/base" relativeToChangelogFile="true" context="base-data" errorIfMissingOrEmpty="false"/>
     <includeAll path="data/sample" relativeToChangelogFile="true" context="sample-data" errorIfMissingOrEmpty="false"/>

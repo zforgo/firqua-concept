@@ -72,5 +72,19 @@
                                  referencedTableName="DEVICES"/>
     </changeSet>
 
-
+    <changeSet id="enable_cdc_on_devices" author="zforgo" dbms="postgresql">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                <!-- @formatter:off -->
+                SELECT count(1) FROM pg_publication WHERE pubname = 'dbz_publication'
+                <!-- @formatter:on -->
+            </sqlCheck>
+        </preConditions>
+        <sql dbms="postgresql">
+            <!-- @formatter:off -->
+            CREATE PUBLICATION dbz_publication FOR TABLE public.DEVICES;
+            ALTER TABLE public.DEVICES REPLICA IDENTITY FULL;
+            <!-- @formatter:on -->
+        </sql>
+    </changeSet>
 </databaseChangeLog>
