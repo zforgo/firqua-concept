@@ -4,6 +4,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.LockModeType;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -33,6 +34,7 @@ public class DeviceDirtyPropertiesTest {
     DeviceMapper deviceMapper;
 
     @Test
+    @DisplayName("Changed properties to same value are ignored")
     void changeToSame() {
         var entity = Device.<Device<? extends Asset>> findByIdOptional(1L, LockModeType.PESSIMISTIC_WRITE)
                 .orElseThrow(() -> new EntityNotFoundException("No device found"));
@@ -47,6 +49,7 @@ public class DeviceDirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Related entity changes occurs in changeSet")
     void relationChanges() {
         var entity = Device.<Device<? extends Asset>> findByIdOptional(1L, LockModeType.PESSIMISTIC_WRITE)
                 .orElseThrow(() -> new EntityNotFoundException("No device found"));

@@ -3,6 +3,7 @@ package io.github.zforgo.firqua.hibernate;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
@@ -30,6 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class DirtyPropertiesTest {
 
     @Test
+    @DisplayName(" Transient (not yet persisted) entity has no dirty properties")
     void newEntity() {
         var input = new TestEntity();
         input.baseProperty = "base";
@@ -44,6 +46,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Newly persisted entity has no dirty properties")
     void nonChanged() {
         var input = new TestEntity();
         input.baseProperty = "base";
@@ -59,6 +62,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Changed properties to equal values are not reported")
     void changedToSame() {
         var base = "base";
         var base2 = "ba%se".formatted('s');
@@ -85,6 +89,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Changed singular attributes are reported")
     void simpleChanges() {
         var input = new TestEntity();
         input.baseProperty = "base";
@@ -106,6 +111,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Changed related entity is reported")
     void childAssigned() {
         var parent = new ParentEntity();
         parent.baseProperty = "base";
@@ -124,6 +130,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Related entity created by cascade is not reported")
     void childCreated() {
         var parent = new ParentEntity();
         parent.baseProperty = "base";
@@ -140,6 +147,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Removing an entity relation is reported")
     void childRemoved() {
         var parent = new ParentEntity();
         parent.baseProperty = "base";
@@ -157,6 +165,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Property changes of a related entity are reported")
     void manyToOneChanges() {
         var parent = new ParentEntity();
         parent.baseProperty = "base";
@@ -178,6 +187,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Embedded and basic property changes of a related entity are reported")
     void relatedObjectEmbeddedPropertyChanges() {
         var parent = new ParentEntity();
         parent.baseProperty = "base";
@@ -202,6 +212,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Related entity collection assignment on creation are ignored")
     void oneToManyCreated() {
         var holder = new HolderEntity();
         holder.baseProperty = "base";
@@ -224,6 +235,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Removing an element from the collection of related entities is reported")
     void oneToManyItemRemoved() {
         var holder = HolderEntity.<HolderEntity> findById(1L);
         holder.getTestEntities().remove(1);
@@ -232,6 +244,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Replaced related entity collection is reported")
     void oneToManyItemsReplaced() {
         var item0 = new TestEntity();
         item0.baseProperty = "baseChild0";
@@ -250,6 +263,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Adding a new element to the collection of related entities is reported")
     void oneToManyItemAdded() {
         var item0 = new TestEntity();
         item0.baseProperty = "baseChild0";
@@ -261,6 +275,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Singular attribute change in an element of the collection of related entities is reported as property path")
     void oneToManyItemChanged() {
         var holder = HolderEntity.<HolderEntity> findById(1L);
         holder.getTestEntities().getFirst().testEnum = BAZ;
@@ -269,6 +284,7 @@ class DirtyPropertiesTest {
     }
 
     @Test
+    @DisplayName("Changes of the holder entity's own properties are reported")
     void oneToManyHolderChanged() {
         var holder = HolderEntity.<HolderEntity> findById(1L);
         holder.stringValue = "changedValue";
