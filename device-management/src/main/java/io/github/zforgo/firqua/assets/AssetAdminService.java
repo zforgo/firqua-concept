@@ -45,10 +45,12 @@ public class AssetAdminService {
         var asset = Asset.<Asset> findByIdOptional(id, LockModeType.PESSIMISTIC_WRITE)
                 .orElseThrow(() -> new EntityNotFoundException("No asset found by id: %d".formatted(id)));
 
+        var referenced = referenceResolver.isAssociatedAsset(asset.id);
+
         //Update blocked when the asset associated to a device and the IP address field cleared during modification
         var origIp = (asset instanceof IpAddressAware ipAware) ? ipAware.getIpAddress() : null;
         var newIp = (dto instanceof IpAddressAwareDto ipAware) ? ipAware.getIpAddress() : null;
-        if (origIp != null && newIp == null && referenceResolver.isAssociatedAsset(asset.id)) {
+        if (referenced && origIp != null && newIp == null) {
             throw new ReferencedFieldRequiredException("ipAddress");
         }
 
