@@ -1,0 +1,80 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="dirty_properties_init" author="zforgo">
+        <createSequence sequenceName="TEST_ENTITY_SEQ" startValue="1" incrementBy="1"/>
+        <createTable tableName="TEST_ENTITY">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_TEST_ENTITY"/>
+            </column>
+            <column name="BASE_PROPERTY" type="${shortString}"/>
+            <column name="ENUM" type="${enumName}"/>
+            <column name="ENUMS" type="${shortString}"/>
+            <column name="ENABLED" type="BOOLEAN"/>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="FIRST_NAME" type="${shortString}"/>
+            <column name="LAST_NAME" type="${shortString}"/>
+        </createTable>
+
+        <createSequence sequenceName="TEST_PARENT_SEQ" startValue="1" incrementBy="1"/>
+        <createTable tableName="TEST_PARENT">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_TEST_PARENT"/>
+            </column>
+            <column name="BASE_PROPERTY" type="${shortString}"/>
+            <column name="TEST_ENTITY_ID" type="BIGINT"/>
+            <column name="STRING_VALUE" type="${shortString}"/>
+            <column name="FIRST_NAME" type="${shortString}"/>
+            <column name="LAST_NAME" type="${shortString}"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseColumnNames="TEST_ENTITY_ID"
+                                 baseTableName="TEST_PARENT"
+                                 constraintName="FK_TEST_PARENT_TO_TEST_ENTITY"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="TEST_ENTITY"/>
+
+        <createSequence incrementBy="1" sequenceName="TEST_HOLDER_SEQ" startValue="1"/>
+        <createTable tableName="TEST_HOLDER">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_TEST_HOLDER"/>
+            </column>
+            <column name="BASE_PROPERTY" type="${shortString}"/>
+            <column name="STRING_VALUE" type="${shortString}"/>
+        </createTable>
+
+        <createTable tableName="TEST_HOLDER_ENTITIES">
+            <column name="HOLDER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ENTITY_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint columnNames="ENTITY_ID"
+                             constraintName="uc_test_holder_entities_testentities"
+                             tableName="TEST_HOLDER_ENTITIES"/>
+
+        <addForeignKeyConstraint baseColumnNames="HOLDER_ID"
+                                 baseTableName="TEST_HOLDER_ENTITIES"
+                                 constraintName="fk_test_holder_enttities_to_holder_entity"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="TEST_HOLDER"/>
+
+        <addForeignKeyConstraint baseColumnNames="ENTITY_ID"
+                                 baseTableName="TEST_HOLDER_ENTITIES"
+                                 constraintName="fk_tesholder_entities_to_test_entity"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="TEST_ENTITY"/>
+
+    </changeSet>
+</databaseChangeLog>

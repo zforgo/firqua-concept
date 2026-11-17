@@ -1,0 +1,41 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="test_holder_for_dirty_check" author="zforgo" context="dirty_props">
+        <insert tableName="TEST_HOLDER">
+            <column name="ID" valueSequenceNext="TEST_HOLDER_SEQ"/>
+            <column name="STRING_VALUE" value="stringValue"/>
+        </insert>
+
+        <insert tableName="TEST_ENTITY">
+            <column name="ID" valueSequenceNext="TEST_ENTITY_SEQ"/>
+            <column name="BASE_PROPERTY" value="base01"/>
+            <column name="ENABLED" valueBoolean="true"/>
+        </insert>
+        <insert tableName="TEST_HOLDER_ENTITIES">
+            <column name="ENTITY_ID" valueSequenceCurrent="TEST_ENTITY_SEQ"/>
+            <column name="HOLDER_ID" valueSequenceCurrent="TEST_HOLDER_SEQ"/>
+        </insert>
+        <insert tableName="TEST_ENTITY">
+            <column name="ID" valueSequenceNext="TEST_ENTITY_SEQ"/>
+            <column name="BASE_PROPERTY" value="base02"/>
+            <column name="ENABLED" valueBoolean="true"/>
+        </insert>
+        <insert tableName="TEST_HOLDER_ENTITIES">
+            <column name="ENTITY_ID" valueSequenceCurrent="TEST_ENTITY_SEQ"/>
+            <column name="HOLDER_ID" valueSequenceCurrent="TEST_HOLDER_SEQ"/>
+        </insert>
+        <insert tableName="TEST_ENTITY">
+            <column name="ID" valueSequenceNext="TEST_ENTITY_SEQ"/>
+            <column name="BASE_PROPERTY" value="base02"/>
+            <column name="ENABLED" valueBoolean="true"/>
+        </insert>
+        <insert tableName="TEST_HOLDER_ENTITIES">
+            <column name="ENTITY_ID" valueSequenceCurrent="TEST_ENTITY_SEQ"/>
+            <column name="HOLDER_ID" valueSequenceCurrent="TEST_HOLDER_SEQ"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
