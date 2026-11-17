@@ -66,7 +66,7 @@ public class DeviceService implements PagedFilter<Device<? extends Asset>> {
                 .orElseThrow(() -> new EntityNotFoundException("No device found by id: %d".formatted(id)));
         try {
             deviceMapper.updateEntity(dto, device);
-			//TODO when enabling properties change tracking, call Device.evaluateState() directly to track calculated fields' changes
+            //TODO when enabling properties change tracking, call Device.evaluateState() directly to track calculated fields' changes
             device.persistAndFlush();
             return deviceMapper.toDto(device);
         } catch (ConstraintViolationException e) {
