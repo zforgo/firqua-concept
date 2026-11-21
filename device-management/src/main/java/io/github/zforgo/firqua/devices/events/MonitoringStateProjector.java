@@ -12,7 +12,7 @@ public class MonitoringStateProjector {
     void handleInternalChange(@Observes DeviceStateChanged event) {
         switch (event.eventType()) {
             case CREATED,
-                    UPDATED ->
+                 UPDATED ->
                 exportEvent(event.deviceId());
             case REMOVED -> {
                 //TODO implement later (fire exportedEvent without payload to remove tombstones
