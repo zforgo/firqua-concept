@@ -1,5 +1,7 @@
 package io.github.zforgo.firqua.assets;
 
+import java.util.Set;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
@@ -15,10 +17,13 @@ import io.quarkus.runtime.LaunchMode;
 
 import io.github.zforgo.firqua.common.ReferencedFieldRequiredException;
 import io.github.zforgo.firqua.devices.DeviceReferenceResolver;
+import io.github.zforgo.firqua.hibernate.DirtyProperties;
 
 @IfBuildProfile(anyOf = { LaunchMode.DEV_PROFILE, LaunchMode.TEST_PROFILE })
 @ApplicationScoped
 public class AssetAdminService {
+
+    private static final Set<String> changeIndicator = Set.of("ipAddress", "enabled", "stationId");
 
     @Inject
     AssetMapper assetMapper;
@@ -27,7 +32,7 @@ public class AssetAdminService {
     DeviceReferenceResolver referenceResolver;
 
     @Inject
-    Event<AssetStateChangeEvent> eventManager;
+    Event<ReferencedAssetChangeEvent> eventManager;
 
     @Transactional
     public AssetDto createAsset(AssetCreateDto dto) {
@@ -54,17 +59,20 @@ public class AssetAdminService {
             throw new ReferencedFieldRequiredException("ipAddress");
         }
 
-        final var enabledChanged = asset.enabled != dto.enabled;
-
         assetMapper.updateEntity(dto, asset);
+        var changes = DirtyProperties.collect(asset);
         try {
             asset.persistAndFlush();
-            if (enabledChanged) {
-                eventManager.fire(new AssetStateChangeEvent(asset.id, asset.enabled));
+            if (referenced && needsIndicate(changes)) {
+                eventManager.fire(new ReferencedAssetChangeEvent(asset.id));
             }
             return assetMapper.toDto(asset);
         } catch (ConstraintViolationException e) {
             throw AssetServiceExceptionHandler.INSTANCE.handleException(e, dto);
         }
+    }
+
+    private static boolean needsIndicate(Set<String> changes) {
+        return !changes.isEmpty() && changes.stream().anyMatch(changeIndicator::contains);
     }
 }
