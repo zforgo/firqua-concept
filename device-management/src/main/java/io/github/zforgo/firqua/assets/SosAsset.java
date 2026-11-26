@@ -14,7 +14,7 @@ import static io.github.zforgo.firqua.common.DataTypes.slugIdLength;
 @Entity
 @DiscriminatorValue(value = "SOS")
 @Table(name = "ASSETS_SOS_STATIONS")
-public class SosAsset extends Asset implements IpAddressAware {
+public class SosAsset extends Asset implements IpAddressAware, StationAware {
 
     {
         type = AssetType.SOS;
@@ -39,5 +39,10 @@ public class SosAsset extends Asset implements IpAddressAware {
     @Override
     public void setIpAddress(Ipv4Address ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    @Override
+    public String getStationId() {
+        return stationId;
     }
 }

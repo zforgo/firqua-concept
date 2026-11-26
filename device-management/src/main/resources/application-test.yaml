@@ -9,6 +9,9 @@ quarkus:
     change-log: liquibase/test-changeLog.xml
     contexts: "schema,test-schema,base-data,test-data"
 
+  debezium-outbox:
+    remove-after-insert: false
+
   log:
     category:
       "liquibase":

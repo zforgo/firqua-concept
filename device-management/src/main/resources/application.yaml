@@ -29,6 +29,16 @@ quarkus:
     change-log-parameters:
       dbz_user: ${DEBEZIUM_DB_USER:debezium}
       dbz_password: ${DEBEZIUM_DB_PASSWORD:debezium1234}
+  debezium-outbox:
+    table-name: DEVICE_MONITORING_OUTBOX
+    aggregate-type:
+      name: AGGREGATE_TYPE
+    aggregate-id:
+      name: AGGREGATE_ID
+    tracing-span:
+      name: TRACING_SPAN_CONTEXT
+    remove-after-insert: true
+
   log:
     category:
       "liquibase.util":
