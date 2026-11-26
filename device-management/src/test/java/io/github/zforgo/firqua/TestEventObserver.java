@@ -5,7 +5,7 @@ import java.util.List;
 
 import jakarta.enterprise.event.Observes;
 
-public class TestEventObserver<T> {
+public abstract class TestEventObserver<T> {
 
     private final List<T> events = new ArrayList<>();
 
