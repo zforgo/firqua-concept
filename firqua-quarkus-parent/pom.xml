@@ -21,6 +21,7 @@
         <quarkus.platform.version>3.38.0</quarkus.platform.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.6</surefire-plugin.version>
+        <debezium-quarkus-outbox.version>3.7.1.Final</debezium-quarkus-outbox.version>
     </properties>
 
     <dependencyManagement>
@@ -36,7 +37,11 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>liquibase-lookup-extension</artifactId>
                 <version>${project.version}</version>
-                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.debezium</groupId>
+                <artifactId>debezium-quarkus-outbox</artifactId>
+                <version>${debezium-quarkus-outbox.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

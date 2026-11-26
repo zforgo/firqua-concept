@@ -1,0 +1,45 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="sample_devices" context="sample-data" author="zforgo">
+        <ext:insertWithLookup tableName="DEVICES">
+            <column name="ID" valueSequenceNext="DEVICES_SEQ"/>
+            <lookupColumn table="ASSETS" keyColumn="NAME" keyValue="MET-001"
+                          idColumn="ID" targetColumn="ASSET_ID"/>
+
+            <column name="DEVICE_TYPE" value="METEO"/>
+            <column name="ENABLED" valueBoolean="true"/>
+            <column name="EFFECTIVE_ENABLED" valueBoolean="true"/>
+            <column name="NAME" value="DEV-METEO-001"/>
+            <lookupColumn table="ORGANISATION_UNITS" keyColumn="SLUG" keyValue="OU_FOO"
+                          idColumn="ID" targetColumn="ORGANISATION_UNIT_ID"/>
+        </ext:insertWithLookup>
+
+        <insert tableName="DEVICES_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="DEVICES_SEQ"/>
+        </insert>
+        <ext:insertWithLookup tableName="DEVICES">
+            <column name="ID" valueSequenceNext="DEVICES_SEQ"/>
+            <lookupColumn table="ASSETS" keyColumn="NAME" keyValue="SOS-001"
+                          idColumn="ID" targetColumn="ASSET_ID"/>
+
+            <column name="DEVICE_TYPE" value="SOS"/>
+            <column name="ENABLED" valueBoolean="false"/>
+            <column name="EFFECTIVE_ENABLED" valueBoolean="false"/>
+            <column name="NAME" value="DEV-SOS-001"/>
+            <lookupColumn table="ORGANISATION_UNITS" keyColumn="SLUG" keyValue="OU_BAR"
+                          idColumn="ID" targetColumn="ORGANISATION_UNIT_ID"/>
+        </ext:insertWithLookup>
+
+        <insert tableName="DEVICES_SOS_STATIONS">
+            <column name="ID" valueSequenceCurrent="DEVICES_SEQ"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
+
