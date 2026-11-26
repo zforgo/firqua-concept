@@ -14,7 +14,7 @@ public final class AssetServiceExceptionHandler implements ServiceExceptionHandl
             .of(
                     "UQ_ASSETS_NAME", (dto, cause) -> new NonUniqueException("name", dto.name, cause),
                     "_ASSETS_STATION_ID",
-                    (dto, cause) -> new NonUniqueException("stationId", ((StationAwareDto) dto).getStationId(), cause),
+                    (dto, cause) -> new NonUniqueException("stationId", ((StationAware) dto).getStationId(), cause),
                     "PK_ASSETS_IP_ADDRESSES",
                     (dto, cause) -> new NonUniqueException("ipAddress", ((IpAddressAwareDto) dto).getIpAddress(), cause)
             );
