@@ -77,13 +77,21 @@ jobs:
             ${{ needs.configure.outputs.incremental-build-root-cache-key }}-
 
       - name: Populate Maven Local Repository
-        run: ./mvnw -T2C $COMMON_MAVEN_ARGS --quiet dependency:go-offline
+        run: >-
+          ./mvnw $COMMON_MAVEN_ARGS --quiet 
+          -Dorg.slf4j.simpleLogger.log.org.apache.maven.buildcache.BuildCacheMojosExecutionStrategy=warn 
+          dependency:go-offline
 
       - name: Validate
-        run: ./mvnw  $COMMON_MAVEN_ARGS --quiet -Dno-format -Dmaven.build.cache.enabled=false process-classes
+        run: >-
+          ./mvnw $COMMON_MAVEN_ARGS --quiet 
+          -Dno-format 
+          -Dorg.slf4j.simpleLogger.log.org.apache.maven.buildcache.BuildCacheMojosExecutionStrategy=warn 
+          -Dmaven.build.cache.enabled=false 
+          process-classes
 
       - name: Build
-        run: ./mvnw  $COMMON_MAVEN_ARGS -Dno-format package
+        run: ./mvnw $COMMON_MAVEN_ARGS -Dno-format package
 
       - name: Save Incremental Build Cache
         uses: actions/cache/save@v6.1.0
