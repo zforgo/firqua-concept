@@ -30,6 +30,7 @@ jobs:
       maven-repo-monthly-cache-key: ${{ steps.cache-key.outputs.maven-repo-monthly-cache-key }}
       maven-repo-cache-key: ${{ steps.cache-key.outputs.maven-repo-cache-key }}
       incremental-build-cache-key: ${{ steps.cache-key.outputs.incremental-build-cache-key }}
+      incremental-build-root-cache-key: ${{ steps.cache-key.outputs.incremental-build-root-cache-key }}
     steps:
       - name: Generate cache key
         id: cache-key
@@ -37,11 +38,13 @@ jobs:
           CURRENT_BRANCH="${{github.base_ref || github.ref_name }}"
           CURRENT_MONTH=$(/bin/date -u "+%Y-%m")
           CURRENT_WEEK=$(/bin/date -u "+%Y-%U")
-          ROOT_CACHE_KEY="maven-repo-cache"
-          echo "maven-repo-monthly-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}" >> $GITHUB_OUTPUT
-          echo "maven-repo-monthly-branch-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
-          echo "maven-repo-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}-${CURRENT_WEEK}" >> $GITHUB_OUTPUT
-          echo "incremental-build-cache-key=maven-build-cache" >> $GITHUB_OUTPUT
+          ROOT_MAVEN_CACHE_KEY="maven-repo-cache"
+          echo "maven-repo-monthly-cache-key=${ROOT_MAVEN_CACHE_KEY}-${CURRENT_MONTH}" >> $GITHUB_OUTPUT
+          echo "maven-repo-monthly-branch-cache-key=${ROOT_MAVEN_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
+          echo "maven-repo-cache-key=${ROOT_MAVEN_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}-${CURRENT_WEEK}" >> $GITHUB_OUTPUT
+          ROOT_BUILD_CACHE_KEY="incremental-build-cache"
+          echo "incremental-build-cache-key=${ROOT_BUILD_CACHE_KEY}-${{ github.run_id }}-${{ github.run_attempt }}" >> $GITHUB_OUTPUT
+          echo "incremental-build-root-cache-key=${ROOT_BUILD_CACHE_KEY}" >> $GITHUB_OUTPUT
   build:
     name: "Build and run tests"
     needs: configure
@@ -70,6 +73,8 @@ jobs:
         with:
           path: ./.cache
           key: ${{ needs.configure.outputs.incremental-build-cache-key }}
+          restore-keys: |
+            ${{ needs.configure.outputs.incremental-build-root-cache-key }}-
 
       - name: Populate Maven Local Repository
         run: ./mvnw -T2C $COMMON_MAVEN_ARGS --quiet dependency:go-offline
