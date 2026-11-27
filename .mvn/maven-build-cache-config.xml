@@ -38,12 +38,12 @@
     <executionControl>
         <runAlways>
             <plugins>
+                <plugin artifactId="flatten-maven-plugin"/>
                 <plugin artifactId="maven-enforcer-plugin"/>
-                <plugin artifactId="maven-failsafe-plugin"/>
-                <plugin artifactId="maven-surefire-plugin"/>
                 <plugin artifactId="formatter-maven-plugin"/>
                 <plugin artifactId="impsort-maven-plugin"/>
-                <plugin artifactId="flatten-maven-plugin"/>
+                <plugin artifactId="maven-failsafe-plugin"/>
+                <plugin artifactId="maven-surefire-plugin"/>
             </plugins>
             <executions>
                 <execution artifactId="maven-dependency-plugin">
@@ -56,6 +56,14 @@
                 <goalsList artifactId="maven-install-plugin">
                     <goals>
                         <goal>install</goal>
+                    </goals>
+                </goalsList>
+                <goalsList artifactId="quarkus-maven-plugin">
+                    <goals>
+                        <goal>dev</goal>
+                        <goal>test</goal>
+                        <goal>remote-dev</goal>
+                        <goal>generate-code-tests</goal>
                     </goals>
                 </goalsList>
             </goalsLists>
