@@ -22,6 +22,8 @@ public abstract sealed class DeviceCreateDto permits SosDeviceCreateDto, MeteoSe
     @NotBlank
     public String name;
 
+    public boolean enabled = false;
+
     @NotNull
     public Long assetId;
 

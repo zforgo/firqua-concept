@@ -2,6 +2,7 @@ package io.github.zforgo.firqua.devices;
 
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolationException;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,8 +20,8 @@ import io.github.zforgo.firqua.assets.MeteoSensorAssetCreateDto;
 import io.github.zforgo.firqua.assets.MeteoSensorAssetDto;
 import io.github.zforgo.firqua.assets.SosAssetCreateDto;
 import io.github.zforgo.firqua.assets.SosAssetDto;
-import io.github.zforgo.firqua.common.ConflictException;
 import io.github.zforgo.firqua.common.IncompatibleAssetTypeException;
+import io.github.zforgo.firqua.common.NonUniqueException;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 
 import static io.github.zforgo.firqua.test.liquibase.RunMode.PER_CLASS;
@@ -31,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 @LiquibaseMigration(runMode = PER_CLASS, dropFirst = true)
@@ -45,8 +47,10 @@ public class DeviceServiceTest {
     DeviceService deviceService;
 
     private AssetDto sosAsset;
+    private AssetDto otherSosAsset;
     private AssetDto sosAssetWoIp;
     private AssetDto metAsset;
+    private AssetDto metAssetWoIp;
 
     @BeforeAll
     void init() {
@@ -59,6 +63,16 @@ public class DeviceServiceTest {
         sosWithIp.model = "JR321-SC";
         sosAsset = assetAdminService.createAsset(sosWithIp);
         assertNotNull(sosAsset.id);
+
+        var otherSos = new SosAssetCreateDto();
+        otherSos.setIpAddress("192.168.10.2");
+        otherSos.stationId = "SOS-TEST-003";
+        otherSos.name = "SOS-003";
+        otherSos.serviceProvider = "AT&T";
+        otherSos.vendor = "J&R Technology";
+        otherSos.model = "JR321-SC";
+        otherSosAsset = assetAdminService.createAsset(otherSos);
+        assertNotNull(otherSosAsset.id);
 
         var sosWoIp = new SosAssetCreateDto();
         sosWoIp.stationId = "SOS-TEST-002";
@@ -77,6 +91,14 @@ public class DeviceServiceTest {
         metWithIp.setIpAddress("192.168.20.1");
         metAsset = assetAdminService.createAsset(metWithIp);
         assertNotNull(metAsset.id);
+
+        var metWoIp = new MeteoSensorAssetCreateDto();
+        metWoIp.stationId = "MET-TEST-002";
+        metWoIp.name = "MET-002";
+        metWoIp.vendor = "Lufft";
+        metWoIp.model = "WS500";
+        metAssetWoIp = assetAdminService.createAsset(metWoIp);
+        assertNotNull(metAssetWoIp.id);
     }
 
     @Transactional
@@ -91,12 +113,14 @@ public class DeviceServiceTest {
         var input = new SosDeviceCreateDto();
         input.organisationId = 1L;
         input.assetId = sosAsset.id;
+        input.enabled = true;
         input.name = "SOS-CREATE-001";
         var result = deviceService.createDevice(input);
         assertNotNull(result);
         var dto = assertInstanceOf(SosDeviceDto.class, result);
         var assetDto = assertInstanceOf(SosAssetDto.class, dto.asset);
         assertEquals(sosAsset.id, assetDto.id);
+        assertEquality(input, dto);
     }
 
     @Test
@@ -110,6 +134,7 @@ public class DeviceServiceTest {
         assertNotNull(result);
         var dto = assertInstanceOf(MeteoSensorDeviceDto.class, result);
         var assetDto = assertInstanceOf(MeteoSensorAssetDto.class, dto.asset);
+        assertEquality(input, dto);
         assertEquals(metAsset.id, assetDto.id);
     }
 
@@ -136,7 +161,7 @@ public class DeviceServiceTest {
         met.organisationId = 1L;
         met.assetId = metAsset.id;
         met.name = sos.name;
-        var ex = assertThrows(ConflictException.class, () -> deviceService.createDevice(met));
+        var ex = assertThrows(NonUniqueException.class, () -> deviceService.createDevice(met));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("name", ex.getKey()),
@@ -159,7 +184,7 @@ public class DeviceServiceTest {
 
         input.organisationId = 2L;
         input.name = "SOS-TEST-002";
-        var ex = assertThrows(ConflictException.class, () -> deviceService.createDevice(input));
+        var ex = assertThrows(NonUniqueException.class, () -> deviceService.createDevice(input));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("assetId", ex.getKey()),
@@ -177,13 +202,17 @@ public class DeviceServiceTest {
         var result = deviceService.createDevice(input);
         assertNotNull(result);
         assertNotNull(result.id);
+        assertEquality(input, result);
 
         input.name = "SOS-UPDATE-002";
-        input.assetId = sosAssetWoIp.id;
+        input.assetId = otherSosAsset.id;
+        input.enabled = !result.enabled;
+
         var modified = deviceService.updateDevice(result.id, input);
         assertNotNull(modified);
         assertEquals(result.id, modified.id);
-        assertEquals(sosAssetWoIp.id, modified.asset.id);
+        assertEquals(otherSosAsset.id, modified.asset.id);
+        assertEquality(input, modified);
     }
 
     @Test
@@ -217,7 +246,7 @@ public class DeviceServiceTest {
         var dto = deviceService.createDevice(met);
         assertNotNull(dto);
         met.name = sos.name;
-        var ex = assertThrows(ConflictException.class, () -> deviceService.updateDevice(dto.id, met));
+        var ex = assertThrows(NonUniqueException.class, () -> deviceService.updateDevice(dto.id, met));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("name", ex.getKey()),
@@ -237,14 +266,14 @@ public class DeviceServiceTest {
 
         var input02 = new SosDeviceCreateDto();
         input02.organisationId = 1L;
-        input02.assetId = sosAssetWoIp.id;
+        input02.assetId = otherSosAsset.id;
         input02.name = "SOS-UPDATE-MULTIPLE-002";
         var second = deviceService.createDevice(input02);
         assertNotNull(second);
         assertNotNull(second.id);
 
         input02.assetId = first.asset.id;
-        var ex = assertThrows(ConflictException.class, () -> deviceService.updateDevice(second.id, input02));
+        var ex = assertThrows(NonUniqueException.class, () -> deviceService.updateDevice(second.id, input02));
         assertAll(
                 "Exception parameters",
                 () -> assertEquals("assetId", ex.getKey()),
@@ -265,7 +294,67 @@ public class DeviceServiceTest {
         changed.organisationId = 1L;
         changed.assetId = metAsset.id;
         changed.name = "MET-TYPE-CHANGE-001";
-        var ex = assertThrows(IllegalArgumentException.class, () -> deviceService.updateDevice(first.id, changed));
+        var ex = assertThrows(ImmutableDeviceTypeException.class, () -> deviceService.updateDevice(first.id, changed));
         assertThat(ex.getMessage(), containsString("device type is immutable"));
+    }
+
+    @Test
+    @DisplayName("SOS device creation rejected when the asset has no IP address")
+    void sosAssetWithoutIpCreate() {
+        var input = new SosDeviceCreateDto();
+        input.organisationId = 1L;
+        input.assetId = sosAssetWoIp.id;
+        input.name = "SOS-CREATE-NO-IP-001";
+        assertMissingIpViolation(assertThrows(ConstraintViolationException.class, () -> deviceService.createDevice(input)));
+    }
+
+    @Test
+    @DisplayName("MET device creation rejected when the asset has no IP address")
+    void meteoAssetWithoutIpCreate() {
+        var input = new MeteoSensorDeviceCreateDto();
+        input.organisationId = 1L;
+        input.assetId = metAssetWoIp.id;
+        input.name = "MET-CREATE-NO-IP-001";
+        assertMissingIpViolation(assertThrows(ConstraintViolationException.class, () -> deviceService.createDevice(input)));
+    }
+
+    @Test
+    @DisplayName("Update rejected when the modified asset has no IP address")
+    void assetWithoutIpUpdate() {
+        var input = new SosDeviceCreateDto();
+        input.organisationId = 1L;
+        input.assetId = sosAsset.id;
+        input.name = "SOS-UPDATE-NO-IP-001";
+        var result = deviceService.createDevice(input);
+
+        input.assetId = sosAssetWoIp.id;
+        assertMissingIpViolation(
+                assertThrows(ConstraintViolationException.class, () -> deviceService.updateDevice(result.id, input))
+        );
+        assertEquals(sosAsset.id, deviceService.getById(result.id).asset.id);
+    }
+
+    private static void assertMissingIpViolation(ConstraintViolationException ex) {
+        var violation = ex.getConstraintViolations().iterator().next();
+        assertAll(
+                "Violation parameters",
+                () -> assertEquals(1, ex.getConstraintViolations().size()),
+                () -> assertEquals("asset", violation.getPropertyPath().toString()),
+                () -> assertEquals("Asset must have an IP address", violation.getMessage())
+        );
+    }
+
+    private static void assertEquality(DeviceCreateDto expected, DeviceDto<? extends AssetDto> actual) {
+        assertAll(
+                () -> assertNotNull(actual.id),
+                () -> assertTrue(actual.id > 0),
+                () -> assertEquals(expected.type, actual.type),
+                () -> assertEquals(expected.name, actual.name),
+                () -> assertEquals(expected.enabled, actual.enabled),
+                () -> assertTrue(expected.type.isAllowedAssetType(actual.asset.type)),
+                () -> assertEquals(expected.assetId, actual.asset.id),
+                () -> assertEquals(expected.organisationId, actual.organisationUnit.id)
+        );
+
     }
 }

@@ -6,4 +6,5 @@
 
     <include file="test-changeLog.xml" relativeToChangelogFile="true"/>
     <include file="lookup-changeLog.xml" relativeToChangelogFile="true" context="lookup"/>
+    <include file="verbosity-changeLog.xml" relativeToChangelogFile="true" context="verbose-failed"/>
 </databaseChangeLog>

@@ -15,7 +15,7 @@ import static org.hibernate.validator.constraints.IpAddress.Type.IPv4;
 @Schema(name = "SOSAsset",
         allOf = { AssetDto.class },
         properties = @SchemaProperty(name = "type", enumeration = "SOS"))
-public final class SosAssetDto extends AssetDto implements IpAddressAwareDto, StationAwareDto {
+public final class SosAssetDto extends AssetDto implements IpAddressAwareDto, StationAware {
 
     @NotBlank
     @Length(max = slugIdLength)

@@ -1,6 +1,5 @@
 <cache xmlns="http://maven.apache.org/BUILD-CACHE-CONFIG/1.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://maven.apache.org/BUILD-CACHE-CONFIG/1.2.0 https://maven.apache.org/xsd/build-cache-config-1.2.0.xsd">
-
     <input>
         <plugins>
             <plugin artifactId="maven-surefire-plugin">
@@ -9,6 +8,11 @@
                         <excludeProperty>argLine</excludeProperty>
                     </excludeProperties>
                 </effectivePom>
+                <dirScan>
+                    <excludes>
+                        <exclude tagName="systemPropertyVariables"/>
+                    </excludes>
+                </dirScan>
             </plugin>
             <plugin artifactId="maven-failsafe-plugin">
                 <effectivePom>
@@ -16,6 +20,17 @@
                         <excludeProperty>argLine</excludeProperty>
                     </excludeProperties>
                 </effectivePom>
+                <dirScan>
+                    <excludes>
+                        <exclude tagName="systemPropertyVariables"/>
+                    </excludes>
+                </dirScan>
+            </plugin>
+            <plugin artifactId="formatter-maven-plugin">
+                <dirScan mode="skip"/>
+            </plugin>
+            <plugin artifactId="impsort-maven-plugin">
+                <dirScan mode="skip"/>
             </plugin>
         </plugins>
     </input>
@@ -23,9 +38,12 @@
     <executionControl>
         <runAlways>
             <plugins>
-                <plugin artifactId="maven-enforcer-plugin"/>
-                <plugin artifactId="maven-failsafe-plugin"/>
                 <plugin artifactId="flatten-maven-plugin"/>
+                <plugin artifactId="maven-enforcer-plugin"/>
+                <plugin artifactId="formatter-maven-plugin"/>
+                <plugin artifactId="impsort-maven-plugin"/>
+                <plugin artifactId="maven-failsafe-plugin"/>
+                <plugin artifactId="maven-surefire-plugin"/>
             </plugins>
             <executions>
                 <execution artifactId="maven-dependency-plugin">
@@ -38,6 +56,14 @@
                 <goalsList artifactId="maven-install-plugin">
                     <goals>
                         <goal>install</goal>
+                    </goals>
+                </goalsList>
+                <goalsList artifactId="quarkus-maven-plugin">
+                    <goals>
+                        <goal>dev</goal>
+                        <goal>test</goal>
+                        <goal>remote-dev</goal>
+                        <goal>generate-code-tests</goal>
                     </goals>
                 </goalsList>
             </goalsLists>
@@ -70,5 +96,11 @@
             <location>.cache/maven-build-cache</location>
             <maxBuildsCached>5</maxBuildsCached>
         </local>
+        <attachedOutputs>
+            <dirNames>
+                <dirName>classes</dirName>
+                <dirName>test-classes</dirName>
+            </dirNames>
+        </attachedOutputs>
     </configuration>
 </cache>

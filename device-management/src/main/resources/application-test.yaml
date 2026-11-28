@@ -7,7 +7,10 @@ quarkus:
 
   liquibase:
     change-log: liquibase/test-changeLog.xml
-    contexts: "schema,base-data,test-data"
+    contexts: "schema,test-schema,base-data,test-data"
+
+  debezium-outbox:
+    remove-after-insert: false
 
   log:
     category:

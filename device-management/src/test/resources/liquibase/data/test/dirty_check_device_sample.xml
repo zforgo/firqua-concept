@@ -1,0 +1,57 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="test_devices_for_dirty_check" author="zforgo" context="dirty_props">
+        <insert tableName="ASSETS_IP_ADDRESSES">
+            <column name="IP_ADDRESS" value="192.168.20.1"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="METEO"/>
+            <column name="NAME" value="MET-001"/>
+            <column name="VENDOR_NAME" value="Lufft"/>
+            <column name="VENDOR_MODEL" value="WS500"/>
+        </insert>
+        <insert tableName="ASSETS_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="MET-FOO-001"/>
+            <column name="IP_ADDRESS" value="192.168.20.1"/>
+        </insert>
+        <ext:insertWithLookup tableName="DEVICES">
+            <column name="ID" valueSequenceNext="DEVICES_SEQ"/>
+            <column name="ASSET_ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="DEVICE_TYPE" value="METEO"/>
+            <column name="ENABLED" valueBoolean="false"/>
+            <column name="EFFECTIVE_ENABLED" valueBoolean="false"/>
+            <column name="NAME" value="DEV-METEO-001"/>
+            <lookupColumn table="ORGANISATION_UNITS" keyColumn="SLUG" keyValue="OU_FOO"
+                          idColumn="ID" targetColumn="ORGANISATION_UNIT_ID"/>
+        </ext:insertWithLookup>
+        <insert tableName="DEVICES_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="DEVICES_SEQ"/>
+        </insert>
+
+        <insert tableName="ASSETS_IP_ADDRESSES">
+            <column name="IP_ADDRESS" value="192.168.20.2"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="METEO"/>
+            <column name="ENABLED" valueBoolean="true"/>
+            <column name="NAME" value="MET-002"/>
+            <column name="VENDOR_NAME" value="Lufft"/>
+            <column name="VENDOR_MODEL" value="WS500"/>
+        </insert>
+        <insert tableName="ASSETS_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="MET-FOO-002"/>
+            <column name="IP_ADDRESS" value="192.168.20.2"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

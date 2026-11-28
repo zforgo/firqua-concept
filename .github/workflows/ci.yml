@@ -1,4 +1,10 @@
 name: Firqua CI
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+
 on:
   pull_request:
     types: [ opened, synchronize, reopened, ready_for_review ]
@@ -10,7 +16,7 @@ on:
   workflow_dispatch:
 env:
   LANG: en_US.UTF-8
-  COMMON_MAVEN_ARGS: "--errors --batch-mode --fail-at-end"
+  COMMON_MAVEN_ARGS: "--errors --batch-mode --fail-at-end -T2C"
 defaults:
   run:
     shell: bash
@@ -23,6 +29,8 @@ jobs:
       maven-repo-monthly-branch-cache-key: ${{ steps.cache-key.outputs.maven-repo-monthly-branch-cache-key }}
       maven-repo-monthly-cache-key: ${{ steps.cache-key.outputs.maven-repo-monthly-cache-key }}
       maven-repo-cache-key: ${{ steps.cache-key.outputs.maven-repo-cache-key }}
+      incremental-build-cache-key: ${{ steps.cache-key.outputs.incremental-build-cache-key }}
+      incremental-build-root-cache-key: ${{ steps.cache-key.outputs.incremental-build-root-cache-key }}
     steps:
       - name: Generate cache key
         id: cache-key
@@ -30,10 +38,13 @@ jobs:
           CURRENT_BRANCH="${{github.base_ref || github.ref_name }}"
           CURRENT_MONTH=$(/bin/date -u "+%Y-%m")
           CURRENT_WEEK=$(/bin/date -u "+%Y-%U")
-          ROOT_CACHE_KEY="maven-repo-cache"
-          echo "maven-repo-monthly-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}" >> $GITHUB_OUTPUT
-          echo "maven-repo-monthly-branch-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
-          echo "maven-repo-cache-key=${ROOT_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}-${CURRENT_WEEK}" >> $GITHUB_OUTPUT
+          ROOT_MAVEN_CACHE_KEY="maven-repo-cache"
+          echo "maven-repo-monthly-cache-key=${ROOT_MAVEN_CACHE_KEY}-${CURRENT_MONTH}" >> $GITHUB_OUTPUT
+          echo "maven-repo-monthly-branch-cache-key=${ROOT_MAVEN_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}" >> $GITHUB_OUTPUT
+          echo "maven-repo-cache-key=${ROOT_MAVEN_CACHE_KEY}-${CURRENT_MONTH}-${CURRENT_BRANCH}-${CURRENT_WEEK}" >> $GITHUB_OUTPUT
+          ROOT_BUILD_CACHE_KEY="incremental-build-cache"
+          echo "incremental-build-cache-key=${ROOT_BUILD_CACHE_KEY}-${{ github.run_id }}-${{ github.run_attempt }}" >> $GITHUB_OUTPUT
+          echo "incremental-build-root-cache-key=${ROOT_BUILD_CACHE_KEY}" >> $GITHUB_OUTPUT
   build:
     name: "Build and run tests"
     needs: configure
@@ -57,11 +68,36 @@ jobs:
             ${{ needs.configure.outputs.maven-repo-monthly-branch-cache-key }}-
             ${{ needs.configure.outputs.maven-repo-monthly-cache-key }}-
 
+      - name: Restore Incremental Build Cache
+        uses: actions/cache/restore@v6.1.0
+        with:
+          path: ./.cache
+          key: ${{ needs.configure.outputs.incremental-build-cache-key }}
+          restore-keys: |
+            ${{ needs.configure.outputs.incremental-build-root-cache-key }}-
+
       - name: Populate Maven Local Repository
-        run: ./mvnw -T2C $COMMON_MAVEN_ARGS -q dependency:go-offline
+        run: >-
+          ./mvnw $COMMON_MAVEN_ARGS --quiet 
+          -Dorg.slf4j.simpleLogger.log.org.apache.maven.buildcache.BuildCacheMojosExecutionStrategy=warn 
+          dependency:go-offline
+
+      - name: Validate
+        run: >-
+          ./mvnw $COMMON_MAVEN_ARGS --quiet 
+          -Dno-format 
+          -Dorg.slf4j.simpleLogger.log.org.apache.maven.buildcache.BuildCacheMojosExecutionStrategy=warn 
+          -Dmaven.build.cache.enabled=false 
+          process-classes
 
       - name: Build
-        run: ./mvnw  $COMMON_MAVEN_ARGS -Dno-format package
+        run: ./mvnw $COMMON_MAVEN_ARGS -Dno-format package
+
+      - name: Save Incremental Build Cache
+        uses: actions/cache/save@v6.1.0
+        with:
+          path: ./.cache
+          key: ${{ needs.configure.outputs.incremental-build-cache-key }}
 
       - name: Delete snapshots from cache
         if: always()

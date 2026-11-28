@@ -5,6 +5,9 @@
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="test_assets_for_device_admin" author="zforgo" context="device_resource_admin">
+        <insert tableName="ASSETS_IP_ADDRESSES">
+            <column name="IP_ADDRESS" value="192.168.20.1"/>
+        </insert>
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="METEO"/>
@@ -15,6 +18,10 @@
         <insert tableName="ASSETS_METEO_SENSORS">
             <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
             <column name="STATION_ID" value="MET-FOO-001"/>
+            <column name="IP_ADDRESS" value="192.168.20.1"/>
+        </insert>
+        <insert tableName="ASSETS_IP_ADDRESSES">
+            <column name="IP_ADDRESS" value="192.168.20.2"/>
         </insert>
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
@@ -26,6 +33,10 @@
         <insert tableName="ASSETS_METEO_SENSORS">
             <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
             <column name="STATION_ID" value="MET-FOO-002"/>
+            <column name="IP_ADDRESS" value="192.168.20.2"/>
+        </insert>
+        <insert tableName="ASSETS_IP_ADDRESSES">
+            <column name="IP_ADDRESS" value="192.168.10.1"/>
         </insert>
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
@@ -34,9 +45,13 @@
             <column name="VENDOR_NAME" value="J&amp;R Technology"/>
             <column name="VENDOR_MODEL" value="JR321-SC"/>
         </insert>
-        <insert tableName="ASSETS_METEO_SENSORS">
+        <insert tableName="ASSETS_SOS_STATIONS">
             <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
             <column name="STATION_ID" value="SOS-FOO-001"/>
+            <column name="IP_ADDRESS" value="192.168.10.1"/>
+        </insert>
+        <insert tableName="ASSETS_IP_ADDRESSES">
+            <column name="IP_ADDRESS" value="192.168.10.2"/>
         </insert>
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
@@ -45,9 +60,32 @@
             <column name="VENDOR_NAME" value="J&amp;R Technology"/>
             <column name="VENDOR_MODEL" value="JR321-SC"/>
         </insert>
-        <insert tableName="ASSETS_METEO_SENSORS">
+        <insert tableName="ASSETS_SOS_STATIONS">
             <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
             <column name="STATION_ID" value="SOS-FOO-002"/>
+            <column name="IP_ADDRESS" value="192.168.10.2"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="SOS"/>
+            <column name="NAME" value="SOS-NO-IP"/>
+            <column name="VENDOR_NAME" value="J&amp;R Technology"/>
+            <column name="VENDOR_MODEL" value="JR321-SC"/>
+        </insert>
+        <insert tableName="ASSETS_SOS_STATIONS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="SOS-FOO-003"/>
+        </insert>
+        <insert tableName="ASSETS">
+            <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
+            <column name="ASSET_TYPE" value="METEO"/>
+            <column name="NAME" value="MET-NO-IP"/>
+            <column name="VENDOR_NAME" value="Lufft"/>
+            <column name="VENDOR_MODEL" value="WS500"/>
+        </insert>
+        <insert tableName="ASSETS_METEO_SENSORS">
+            <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="STATION_ID" value="MET-FOO-003"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

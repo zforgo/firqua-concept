@@ -10,9 +10,11 @@
 
     <property name="enumName" value="VARCHAR(50)"/>
     <property name="shortString" value="VARCHAR(255)"/>
+    <property name="longText" value="TEXT" dbms="postgresql,h2"/>
 
     <property name="date" value="DATE"/>
     <property name="dateTime" value="DATETIME"/>
+    <property name="dateTimeTz" value="TIMESTAMP(6) WITH TIME ZONE" dbms="postgresql,h2"/>
 
     <property name="bigDecimal" value="DECIMAL"/>
 

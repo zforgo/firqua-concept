@@ -20,6 +20,8 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 
 import io.github.zforgo.firqua.ConflictExceptionMapper;
+import io.github.zforgo.firqua.devices.DeviceService;
+import io.github.zforgo.firqua.devices.SosDeviceCreateDto;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
 import io.github.zforgo.firqua.test.liquibase.RunMode;
 
@@ -28,7 +30,6 @@ import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.HttpHeaders.LOCATION;
 import static jakarta.ws.rs.core.Response.Status.CONFLICT;
 import static jakarta.ws.rs.core.Response.Status.CREATED;
-import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -52,6 +53,9 @@ public class AssetAdminResourceTest {
     @Inject
     AssetAdminService service;
 
+    @Inject
+    DeviceService deviceService;
+
     @ParameterizedTest
     @MethodSource("io.github.zforgo.firqua.assets.AssetAdminServiceTest#validCreateParams")
     @DisplayName("Every valid AssetCreateDto subtype is CREATED")
@@ -67,9 +71,16 @@ public class AssetAdminResourceTest {
         assertEquals(CREATED.getStatusCode(), response.getStatusCode());
         var responseBody = assertInstanceOf(resultClass, response.body().as(resultClass));
         assertNotNull(responseBody);
+
         assertAll(
                 () -> assertNotNull(responseBody.id),
-                () -> assertTrue(responseBody.id > 0)
+                () -> assertTrue(responseBody.id > 0),
+                () -> assertEquals(input.name, responseBody.name),
+                () -> assertEquals(input.enabled, responseBody.enabled),
+                () -> assertEquals(input.type, responseBody.type),
+                () -> assertEquals(input.vendor, responseBody.vendor),
+                () -> assertEquals(input.model, responseBody.model),
+                () -> assertEquals(input.getIpAddress(), responseBody.getIpAddress())
         );
 
         var expectedLocation = UriBuilder.fromUri(assetsEndpoint)
@@ -241,7 +252,20 @@ public class AssetAdminResourceTest {
         assertEquals(OK.getStatusCode(), modificationResponse.getStatusCode());
         var modifiedAsset = modificationResponse.body().as(resultClass);
         assertNotNull(modifiedAsset);
-        assertEquals(modified.getIpAddress(), modifiedAsset.getIpAddress());
+
+        var responseBody = assertInstanceOf(resultClass, modificationResponse.body().as(resultClass));
+        assertNotNull(responseBody);
+
+        assertAll(
+                () -> assertNotNull(responseBody.id),
+                () -> assertTrue(responseBody.id > 0),
+                () -> assertEquals(modified.name, responseBody.name),
+                () -> assertEquals(modified.enabled, responseBody.enabled),
+                () -> assertEquals(modified.type, responseBody.type),
+                () -> assertEquals(modified.vendor, responseBody.vendor),
+                () -> assertEquals(modified.model, responseBody.model),
+                () -> assertEquals(modified.getIpAddress(), responseBody.getIpAddress())
+        );
     }
 
     @Test
@@ -380,6 +404,35 @@ public class AssetAdminResourceTest {
     }
 
     @Test
+    @DisplayName("Update rejected when modified asset belongs to a device and ip address removed")
+    void cleanAssociatedIp() {
+        var assetDto = new SosAssetCreateDto();
+        assetDto.setIpAddress("192.168.1.1");
+        assetDto.stationId = "SOS-TEST-001";
+        assetDto.name = "FOO-001";
+        assetDto.serviceProvider = "AT&T";
+        assetDto.vendor = "J&R Technology";
+        assetDto.model = "JR321-SC";
+
+        var createdAsset = service.createAsset(assetDto);
+        var deviceDto = new SosDeviceCreateDto();
+        deviceDto.assetId = createdAsset.id;
+        deviceDto.name = "SOS-TEST-001";
+        deviceDto.organisationId = 1L;
+        deviceService.createDevice(deviceDto);
+
+        assetDto.setIpAddress(null);
+        var modificationResponse = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .pathParam("id", createdAsset.id)
+                .body(assetDto)
+                .put("{id}");
+        assertEquals(CONFLICT.getStatusCode(), modificationResponse.getStatusCode());
+        assertThat(modificationResponse.body().asString(), containsString("ipAddress"));
+    }
+
+    @Test
     @DisplayName("Update rejected when the modified entity type does not match the dto type")
     void incompatibleUpdate() {
         var sos = new SosAssetCreateDto();
@@ -403,7 +456,7 @@ public class AssetAdminResourceTest {
                 .pathParam("id", created.id)
                 .put("{id}");
         assertNotNull(responseFailed);
-        assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), responseFailed.getStatusCode());
+        assertEquals(CONFLICT.getStatusCode(), responseFailed.getStatusCode());
         assertThat(responseFailed.body().asString(), containsString("asset type is immutable"));
     }
 

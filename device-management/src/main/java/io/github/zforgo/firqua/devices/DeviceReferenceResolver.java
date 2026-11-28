@@ -9,10 +9,10 @@ import io.github.zforgo.firqua.common.IncompatibleAssetTypeException;
 import io.github.zforgo.firqua.organisations.OrganisationUnit;
 
 @ApplicationScoped
-class DeviceReferenceResolver {
+public class DeviceReferenceResolver {
 
     @Transactional
-    <A extends Asset> A toAsset(DeviceCreateDto dto) {
+    public <A extends Asset> A toAsset(DeviceCreateDto dto) {
         var asset = Asset.<A> findByIdOptional(dto.assetId)
                 .orElseThrow(() -> new EntityNotFoundException("No asset found by id: %d".formatted(dto.assetId)));
         if (!dto.type.isAllowedAssetType(asset.type)) {
@@ -22,8 +22,12 @@ class DeviceReferenceResolver {
     }
 
     @Transactional
-    OrganisationUnit toOrganisationUnit(Long id) {
+    public OrganisationUnit toOrganisationUnit(Long id) {
         return OrganisationUnit.<OrganisationUnit> findByIdOptional(id)
                 .orElseThrow(() -> new EntityNotFoundException("No organisation unit found by id: %d".formatted(id)));
+    }
+
+    public boolean isAssociatedAsset(Long assetId) {
+        return Device.count("asset.id", assetId) > 0;
     }
 }

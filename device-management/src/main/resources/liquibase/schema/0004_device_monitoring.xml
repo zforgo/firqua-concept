@@ -1,0 +1,31 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="outbox_tale_for_devices_init" author="zforgo">
+        <createTable tableName="DEVICE_MONITORING_OUTBOX" remarks="Outbox Events for Device Monitoring and Debezium Connector">
+            <column name="ID" type="UUID" remarks="Unique identifier">
+                <constraints nullable="false"
+                             primaryKey="true"
+                             primaryKeyName="PK_DEVICE_MONITORING_OUTBOX"/>
+            </column>
+
+            <column name="AGGREGATE_TYPE" type="${shortString}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AGGREGATE_ID" type="${numericId}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TYPE" type="${slugId}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIMESTAMP" type="${dateTimeTz}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PAYLOAD" type="${longText}"/>
+            <column name="TRACING_SPAN_CONTEXT" type="${shortString}"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

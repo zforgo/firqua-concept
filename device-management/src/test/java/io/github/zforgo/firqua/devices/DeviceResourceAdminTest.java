@@ -20,7 +20,7 @@ import io.restassured.common.mapper.TypeRef;
 import io.restassured.http.ContentType;
 
 import io.github.zforgo.firqua.ConflictExceptionMapper;
-import io.github.zforgo.firqua.IncompatibleAssetTypeExceptionMapper;
+import io.github.zforgo.firqua.assets.AssetDto;
 import io.github.zforgo.firqua.assets.AssetResource;
 import io.github.zforgo.firqua.assets.SosAssetDto;
 import io.github.zforgo.firqua.test.liquibase.LiquibaseMigration;
@@ -28,9 +28,9 @@ import io.github.zforgo.firqua.test.liquibase.RunMode;
 
 import static io.restassured.RestAssured.given;
 import static jakarta.ws.rs.core.HttpHeaders.LOCATION;
+import static jakarta.ws.rs.core.Response.Status.BAD_REQUEST;
 import static jakarta.ws.rs.core.Response.Status.CONFLICT;
 import static jakarta.ws.rs.core.Response.Status.CREATED;
-import static jakarta.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static jakarta.ws.rs.core.Response.Status.OK;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -82,18 +82,7 @@ public class DeviceResourceAdminTest {
         assertEquals(expectedLocation, URI.create(response.getHeader(LOCATION)));
 
         var dto = assertInstanceOf(SosDeviceDto.class, responseBody);
-        assertAll(
-                () -> assertNotNull(dto.id),
-                () -> assertTrue(dto.id > 0)
-        );
-        assertAll(
-                "Organisation Unit checks",
-                () -> assertNotNull(dto.organisationUnit),
-                () -> assertEquals("OU_FOO", dto.organisationUnit.slug)
-        );
-        assertEquals(input.name, dto.name);
-        assertNotNull(dto.asset);
-        assertEquals(input.assetId, dto.asset.id);
+        assertEquality(input, dto);
 
     }
 
@@ -104,6 +93,7 @@ public class DeviceResourceAdminTest {
         input.organisationId = 2L;
         input.assetId = 1L;
         input.name = "MET-CREATE-001";
+        input.enabled = true;
         var response = given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -119,18 +109,7 @@ public class DeviceResourceAdminTest {
         assertEquals(expectedLocation, URI.create(response.getHeader(LOCATION)));
 
         var dto = assertInstanceOf(MeteoSensorDeviceDto.class, responseBody);
-        assertAll(
-                () -> assertNotNull(dto.id),
-                () -> assertTrue(dto.id > 0)
-        );
-        assertAll(
-                "Organisation Unit checks",
-                () -> assertNotNull(dto.organisationUnit),
-                () -> assertEquals("OU_BAR", dto.organisationUnit.slug)
-        );
-        assertEquals(dto.name, input.name);
-        assertNotNull(dto.asset);
-        assertEquals(input.assetId, dto.asset.id);
+        assertEquality(input, dto);
 
     }
 
@@ -151,11 +130,11 @@ public class DeviceResourceAdminTest {
         assertEquals(CONFLICT.getStatusCode(), response.getStatusCode());
         assertAll(
                 "Conflict headers",
-                () -> assertEquals("assetId", response.header(IncompatibleAssetTypeExceptionMapper.HEADER_KEY)),
+                () -> assertEquals("assetId", response.header(ConflictExceptionMapper.HEADER_KEY)),
                 () -> assertEquals(
-                        input.assetId.toString(), response.header(IncompatibleAssetTypeExceptionMapper.HEADER_VALUE)
+                        input.assetId.toString(), response.header(ConflictExceptionMapper.HEADER_VALUE)
                 ),
-                () -> assertEquals("SOS", response.header("X-Conflict-Expected"))
+                () -> assertEquals("SOS", response.header(ConflictExceptionMapper.HEADER_EXPECTED))
         );
     }
 
@@ -231,6 +210,7 @@ public class DeviceResourceAdminTest {
 
         input.name = "SOS-UPDATE-002";
         input.assetId = 4L;
+        input.enabled = !result.enabled;
 
         var response = given()
                 .when()
@@ -244,12 +224,8 @@ public class DeviceResourceAdminTest {
         var responseBody = response.body().as(new TypeRef<DeviceDto<?>>() {});
 
         var dto = assertInstanceOf(SosDeviceDto.class, responseBody);
-        assertAll(
-                () -> assertNotNull(dto.id),
-                () -> assertEquals(result.id, dto.id)
-        );
-        assertEquals(input.name, dto.name);
-        assertEquals(input.assetId, dto.asset.id);
+        assertEquals(result.id, dto.id);
+        assertEquality(input, dto);
     }
 
     @Test
@@ -275,11 +251,11 @@ public class DeviceResourceAdminTest {
         assertEquals(CONFLICT.getStatusCode(), response.getStatusCode());
         assertAll(
                 "Conflict headers",
-                () -> assertEquals("assetId", response.header(IncompatibleAssetTypeExceptionMapper.HEADER_KEY)),
+                () -> assertEquals("assetId", response.header(ConflictExceptionMapper.HEADER_KEY)),
                 () -> assertEquals(
-                        input.assetId.toString(), response.header(IncompatibleAssetTypeExceptionMapper.HEADER_VALUE)
+                        input.assetId.toString(), response.header(ConflictExceptionMapper.HEADER_VALUE)
                 ),
-                () -> assertEquals("SOS", response.header("X-Conflict-Expected"))
+                () -> assertEquals("SOS", response.header(ConflictExceptionMapper.HEADER_EXPECTED))
         );
 
     }
@@ -375,7 +351,74 @@ public class DeviceResourceAdminTest {
                 .put("{id}");
 
         assertNotNull(response);
-        assertEquals(INTERNAL_SERVER_ERROR.getStatusCode(), response.getStatusCode());
+        assertEquals(CONFLICT.getStatusCode(), response.getStatusCode());
         assertThat(response.body().asString(), containsString("device type is immutable"));
+    }
+
+    @Test
+    @DisplayName("Creation rejected with a readable client error when the asset has no IP address")
+    void assetWithoutIpCreate() {
+        var input = new SosDeviceCreateDto();
+        input.organisationId = 1L;
+        input.assetId = 5L;
+        input.name = "SOS-CREATE-NO-IP-001";
+        var response = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(input)
+                .post();
+
+        assertNotNull(response);
+        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
+        assertAll(
+                "Violation report",
+                () -> assertEquals("asset", response.path("violations[0].field")),
+                () -> assertEquals("Asset must have an IP address", response.path("violations[0].message"))
+        );
+    }
+
+    @Test
+    @DisplayName("Update rejected with a readable client error when the modified asset has no IP address")
+    void assetWithoutIpUpdate() {
+        var input = new MeteoSensorDeviceCreateDto();
+        input.organisationId = 1L;
+        input.assetId = 1L;
+        input.name = "MET-UPDATE-NO-IP-001";
+        var result = deviceService.createDevice(input);
+        assertNotNull(result);
+
+        input.assetId = 6L;
+        var response = given()
+                .when()
+                .contentType(ContentType.JSON)
+                .body(input)
+                .pathParam("id", result.id)
+                .put("{id}");
+
+        assertNotNull(response);
+        assertEquals(BAD_REQUEST.getStatusCode(), response.getStatusCode());
+        assertAll(
+                "Violation report",
+                () -> assertEquals("asset", response.path("violations[0].field")),
+                () -> assertEquals("Asset must have an IP address", response.path("violations[0].message"))
+        );
+    }
+
+    private static void assertEquality(DeviceCreateDto expected, DeviceDto<? extends AssetDto> actual) {
+        assertAll(
+                () -> assertNotNull(actual.id),
+                () -> assertTrue(actual.id > 0),
+                () -> assertEquals(expected.type, actual.type),
+                () -> assertEquals(expected.name, actual.name),
+                () -> assertEquals(expected.enabled, actual.enabled),
+                () -> assertTrue(expected.type.isAllowedAssetType(actual.asset.type)),
+                () -> assertEquals(expected.assetId, actual.asset.id),
+                () -> assertAll(
+                        "Organisation Unit checks",
+                        () -> assertNotNull(actual.organisationUnit),
+                        () -> assertEquals(expected.organisationId, actual.organisationUnit.id)
+                )
+        );
+
     }
 }

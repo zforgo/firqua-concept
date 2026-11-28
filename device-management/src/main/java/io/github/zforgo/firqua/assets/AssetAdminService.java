@@ -1,6 +1,9 @@
 package io.github.zforgo.firqua.assets;
 
+import java.util.Set;
+
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.LockModeType;
@@ -12,12 +15,24 @@ import org.hibernate.exception.ConstraintViolationException;
 import io.quarkus.arc.profile.IfBuildProfile;
 import io.quarkus.runtime.LaunchMode;
 
+import io.github.zforgo.firqua.common.ReferencedFieldRequiredException;
+import io.github.zforgo.firqua.devices.DeviceReferenceResolver;
+import io.github.zforgo.firqua.hibernate.DirtyProperties;
+
 @IfBuildProfile(anyOf = { LaunchMode.DEV_PROFILE, LaunchMode.TEST_PROFILE })
 @ApplicationScoped
 public class AssetAdminService {
 
+    private static final Set<String> changeIndicator = Set.of("ipAddress", "enabled", "stationId");
+
     @Inject
     AssetMapper assetMapper;
+
+    @Inject
+    DeviceReferenceResolver referenceResolver;
+
+    @Inject
+    Event<ReferencedAssetChangeEvent> eventManager;
 
     @Transactional
     public AssetDto createAsset(AssetCreateDto dto) {
@@ -35,12 +50,29 @@ public class AssetAdminService {
         var asset = Asset.<Asset> findByIdOptional(id, LockModeType.PESSIMISTIC_WRITE)
                 .orElseThrow(() -> new EntityNotFoundException("No asset found by id: %d".formatted(id)));
 
+        var referenced = referenceResolver.isAssociatedAsset(asset.id);
+
+        //Update blocked when the asset associated to a device and the IP address field cleared during modification
+        var origIp = (asset instanceof IpAddressAware ipAware) ? ipAware.getIpAddress() : null;
+        var newIp = (dto instanceof IpAddressAwareDto ipAware) ? ipAware.getIpAddress() : null;
+        if (referenced && origIp != null && newIp == null) {
+            throw new ReferencedFieldRequiredException("ipAddress");
+        }
+
         assetMapper.updateEntity(dto, asset);
+        var changes = DirtyProperties.collect(asset);
         try {
             asset.persistAndFlush();
+            if (referenced && needsIndicate(changes)) {
+                eventManager.fire(new ReferencedAssetChangeEvent(asset.id));
+            }
             return assetMapper.toDto(asset);
         } catch (ConstraintViolationException e) {
             throw AssetServiceExceptionHandler.INSTANCE.handleException(e, dto);
         }
+    }
+
+    private static boolean needsIndicate(Set<String> changes) {
+        return !changes.isEmpty() && changes.stream().anyMatch(changeIndicator::contains);
     }
 }

@@ -2,12 +2,17 @@ name: firqua-concept
 services:
   device-manager-db:
     image: postgres:18-alpine
+    command: [ "postgres", "-c", "config_file=/etc/postgresql/postgresql.conf" ]
     ports:
       - "65432:5432"
     environment:
       POSTGRES_USER: firqua
       POSTGRES_PASSWORD: firqua1234
       POSTGRES_DB: firqua
+    volumes:
+      - device-manager-data:/var/lib/postgresql
+      - ./postgresql/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./postgresql/pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB" ]
       interval: 10s
@@ -15,3 +20,6 @@ services:
       retries: 5
       start_period: 30s
       start_interval: 1s
+
+volumes:
+  device-manager-data:

@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
 
+import org.junit.platform.commons.JUnitException;
+
 import io.quarkus.arc.InstanceHandle;
 import io.quarkus.arc.Subclass;
 import io.quarkus.liquibase.LiquibaseFactory;
@@ -14,8 +16,10 @@ import io.quarkus.test.junit.callback.QuarkusTestBeforeEachCallback;
 import io.quarkus.test.junit.callback.QuarkusTestContext;
 import io.quarkus.test.junit.callback.QuarkusTestMethodContext;
 import liquibase.Contexts;
+import liquibase.Scope;
 import liquibase.UpdateSummaryOutputEnum;
 import liquibase.exception.LiquibaseException;
+import liquibase.ui.LoggerUIService;
 
 import static org.junit.platform.commons.util.AnnotationUtils.findAnnotation;
 
@@ -58,16 +62,27 @@ public class LiquibaseMigrationCallback
 
     private static void run(LiquibaseMigration ann) {
         var factory = factoryOf(ann.datasource());
-
-        try (var liquibase = factory.createLiquibase()) {
-            liquibase.setShowSummaryOutput(UpdateSummaryOutputEnum.LOG);
-            if (ann.dropFirst()) {
-                liquibase.dropAll();
-            }
-            liquibase.update(populateContext(factory.createContexts(), ann.additionalContexts()), factory.createLabels());
-        } catch (LiquibaseException e) {
-            throw new IllegalStateException(
-                    "Unable to run Liquibase migration for datasource '%s'".formatted(ann.datasource()), e
+        try {
+            Scope.child(
+                    Scope.Attr.ui, new LoggerUIService(), () -> {
+                        try (var liquibase = factory.createLiquibase()) {
+                            liquibase.setShowSummaryOutput(UpdateSummaryOutputEnum.LOG);
+                            if (ann.dropFirst()) {
+                                liquibase.dropAll();
+                            }
+                            liquibase.update(
+                                    populateContext(factory.createContexts(), ann.additionalContexts()), factory.createLabels()
+                            );
+                        } catch (LiquibaseException e) {
+                            throw new IllegalStateException(
+                                    "Unable to run Liquibase migration for datasource '%s'".formatted(ann.datasource()), e
+                            );
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            throw new JUnitException(
+                    e.getMessage() == null ? "Failed to run Liquibase Migration during tests" : e.getMessage(), e
             );
         }
     }
@@ -87,9 +102,7 @@ public class LiquibaseMigrationCallback
                 .filter(InstanceHandle::isAvailable)
                 .map(InstanceHandle::get)
                 .orElseThrow(
-                        () -> new IllegalStateException(
-                                "No Liquibase factory found for datasource '%s'".formatted(datasource)
-                        )
+                        () -> new IllegalStateException("No Liquibase factory found for datasource '%s'".formatted(datasource))
                 );
     }
 

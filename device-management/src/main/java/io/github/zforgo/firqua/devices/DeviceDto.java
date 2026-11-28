@@ -28,6 +28,10 @@ public sealed abstract class DeviceDto<T extends AssetDto> permits SosDeviceDto,
     @NotBlank
     public String name;
 
+    public boolean enabled;
+
+    public boolean effectiveEnabled;
+
     @NotNull
     public T asset;
 

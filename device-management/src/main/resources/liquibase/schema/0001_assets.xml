@@ -27,6 +27,9 @@
             <column name="NAME" type="${shortString}" remarks="Name of an Asset">
                 <constraints nullable="false" unique="true" uniqueConstraintName="UQ_ASSETS_NAME"/>
             </column>
+            <column name="ENABLED" type="boolean" defaultValueBoolean="false" remarks="Indicates whether asset is enabled (e.g turned on) or not">
+                <constraints nullable="false"/>
+            </column>
             <column name="VENDOR_NAME" type="${shortString}" remarks="Vendor's name of an Asset">
                 <constraints nullable="false"/>
             </column>

@@ -5,21 +5,27 @@
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="sample_assets" context="sample-data" author="zforgo">
+        <insert tableName="ASSETS_IP_ADDRESSES">
+            <column name="IP_ADDRESS" value="192.168.20.1"/>
+        </insert>
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="SOS"/>
+            <column name="ENABLED" valueBoolean="true"/>
             <column name="NAME" value="SOS-001"/>
             <column name="VENDOR_NAME" value="J&amp;R Technology"/>
             <column name="VENDOR_MODEL" value="JR321-SC"/>
         </insert>
         <insert tableName="ASSETS_SOS_STATIONS">
             <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="IP_ADDRESS" value="192.168.20.1"/>
             <column name="STATION_ID" value="SOS-FOO-001"/>
         </insert>
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="SOS"/>
             <column name="NAME" value="SOS-002"/>
+            <column name="ENABLED" valueBoolean="true"/>
             <column name="VENDOR_NAME" value="J&amp;R Technology"/>
             <column name="VENDOR_MODEL" value="JR321-SC"/>
         </insert>
@@ -28,21 +34,27 @@
             <column name="STATION_ID" value="SOS-FOO-002"/>
             <column name="SERVICE_PROVIDER" value="Verizon"/>
         </insert>
+        <insert tableName="ASSETS_IP_ADDRESSES">
+            <column name="IP_ADDRESS" value="192.168.30.1"/>
+        </insert>
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="METEO"/>
             <column name="NAME" value="MET-001"/>
+            <column name="ENABLED" valueBoolean="true"/>
             <column name="VENDOR_NAME" value="Lufft"/>
             <column name="VENDOR_MODEL" value="WS500"/>
         </insert>
         <insert tableName="ASSETS_METEO_SENSORS">
             <column name="ID" valueSequenceCurrent="ASSETS_SEQ"/>
+            <column name="IP_ADDRESS" value="192.168.30.1"/>
             <column name="STATION_ID" value="MET-FOO-001"/>
         </insert>
         <insert tableName="ASSETS">
             <column name="ID" valueSequenceNext="ASSETS_SEQ"/>
             <column name="ASSET_TYPE" value="METEO"/>
             <column name="NAME" value="MET-002"/>
+            <column name="ENABLED" valueBoolean="true"/>
             <column name="VENDOR_NAME" value="Lufft"/>
             <column name="VENDOR_MODEL" value="WS500"/>
         </insert>
