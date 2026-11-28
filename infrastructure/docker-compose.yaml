@@ -20,6 +20,28 @@ services:
       retries: 5
       start_period: 30s
       start_interval: 1s
+  device-simulator:
+    build: ./device-simulator
+    networks: [ device-sos-network, device-meteo-network ]
+    volumes:
+      - ./device-simulator/ranges.ini:/etc/device-simulator/conf/ranges.ini:ro
+    cap_add: [ NET_ADMIN ]
+
+networks:
+  device-sos-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.56.0.0/16 # 172.56.0.1 - 172.56.255.255
+          gateway: 172.56.0.1
+          ip_range: 172.56.255.0/24
+  device-meteo-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.57.0.0/16 # 172.57.0.1 - 172.57.255.255
+          gateway: 172.57.0.1
+          ip_range: 172.57.255.0/24
 
 volumes:
   device-manager-data:
